@@ -68,29 +68,31 @@ public class Slime extends Mob {
         if(new Date().getTime()> timerMalus){
             _malus = 0;
         }
-        if(!testCase(currentCase+1)) {
-            if (_x != chemin[currentCase].getX()) {
-                if (_x < chemin[currentCase].getX()) {
-                    currentAnimation = animeRight;
-                    _x += vitesse - _malus;
-                } else {
-                    currentAnimation = animeLeft;
-                    _x -= vitesse - _malus;
-                }
-            } else if(_y != chemin[currentCase].getY()){
-                if (_y < chemin[currentCase].getY()) {
-                    currentAnimation = animeUp;
-                    _y += vitesse - _malus;
-                } else {
-                    currentAnimation = animeDown;
-                    _y -= vitesse - _malus;
-                }
-            }else{
-                if(currentCase < chemin.length){
+
+        if (_x != chemin[currentCase].getX()) {
+            if (_x < chemin[currentCase].getX()) {
+                currentAnimation = animeRight;
+                _x += vitesse - _malus;
+            } else {
+                currentAnimation = animeLeft;
+                _x -= vitesse - _malus;
+            }
+        } else if(_y != chemin[currentCase].getY()){
+            if (_y < chemin[currentCase].getY()) {
+                currentAnimation = animeUp;
+                _y += vitesse - _malus;
+            } else {
+                currentAnimation = animeDown;
+                _y -= vitesse - _malus;
+            }
+        }else{
+            if(currentCase < chemin.length){
+                if(!testCase(currentCase+1)) {
                     currentCase++;
                 }
             }
         }
+
 
     }
 
