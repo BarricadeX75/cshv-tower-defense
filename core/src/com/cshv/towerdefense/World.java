@@ -19,7 +19,7 @@ public class World {
     public boolean[] isSolid;
     private TextureRegion[] blockImg;
     //10*16
-    final int arrayNum= 160;
+    final int arrayNum = 160;
 
     //Block Images
     private TextureRegion BLOCK_CHEMIN, BLOCK_SOL;
