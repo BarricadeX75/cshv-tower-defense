@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.cshv.towerdefense.GameScreen;
+import com.cshv.towerdefense.World;
 
 import java.util.Date;
 
@@ -17,9 +18,6 @@ import java.util.Date;
 public class Slime extends Mob {
 
     private static final float FRAME_DURATION = 0.1F;
-    private static final int NB_CASE_WIDTH = 10;
-    private static final int NB_CASE_HEIGHT = 16;
-    private static final int DEPART = 32;
     private float _x;
     private float _y;
     private float animationTimer = 0;
@@ -58,7 +56,7 @@ public class Slime extends Mob {
         currentAnimation = animeDown;
         parent = jeu;
         //chemin = parent.getChemin();
-        setPosition(chemin[0].getX()+ DEPART , chemin[0].getY());
+        setPosition(chemin[0].getX()+ World.DEPART , chemin[0].getY());
 
     }
 
@@ -113,7 +111,7 @@ public class Slime extends Mob {
 
     @Override
     public int getCurrentCase() {
-        int numCase = (int) (chemin[currentCase].x%32 + ( chemin[currentCase].y%32 * NB_CASE_WIDTH ));
+        int numCase = (int) (chemin[currentCase].x%32 + ( chemin[currentCase].y%32 * World.NB_CASE_WIDTH ));
         return numCase;
     }
 
