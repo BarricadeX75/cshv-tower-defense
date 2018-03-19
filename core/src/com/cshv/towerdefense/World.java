@@ -67,6 +67,23 @@ public class World {
         }
 
     }
+
+    public float getXcase(int numCase){
+        return blocks[numCase].getX();
+    }
+
+    public float getYcase(int numCase){
+        return blocks[numCase].getY();
+    }
+
+    public Rectangle[] getChemin(){
+        Rectangle chemin[] = new  Rectangle[_chemin.size];
+        for(int i=0 ; i< _chemin.size ; i++){
+            chemin[i] = blocks[_chemin.get(i)];
+        }
+        return chemin;
+    }
+
     public void draw(SpriteBatch batch){
         for (int i=0; i<arrayNum; i++){
             batch.draw(blockImg[i],blocks[i].x, blocks[i].y,null);
