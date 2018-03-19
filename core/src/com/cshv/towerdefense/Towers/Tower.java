@@ -1,4 +1,4 @@
-package com.cshv.towerdefense;
+package com.cshv.towerdefense.Towers;
 
 
 public abstract class Tower {

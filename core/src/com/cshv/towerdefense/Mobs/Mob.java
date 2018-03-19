@@ -1,4 +1,4 @@
-package com.cshv.towerdefense;
+package com.cshv.towerdefense.Mobs;
 
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

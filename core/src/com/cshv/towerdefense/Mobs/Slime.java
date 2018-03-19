@@ -1,4 +1,4 @@
-package com.cshv.towerdefense.Monstre;
+package com.cshv.towerdefense.Mobs;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.cshv.towerdefense.GameScreen;
-import com.cshv.towerdefense.Mob;
 
 import java.util.Date;
 
@@ -153,9 +152,6 @@ public class Slime extends Mob {
         float textureY = _y - textuteDim.getRegionHeight()/2;
         batch.draw( slim, textureX, textureY);
 
-        if(dead){
-            return true;
-        }
-        return false;
+        return dead;
     }
 }

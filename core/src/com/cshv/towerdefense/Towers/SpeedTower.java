@@ -8,13 +8,17 @@ import com.badlogic.gdx.utils.Array;
  * Created by harri on 16/03/2018.
  */
 
-public class TowerSpeed {
+public class SpeedTower extends Tower {
 
     private Animation<TextureRegion> actTower;
 
-    public TowerSpeed(Array<TextureRegion> towerAtc){
+    public SpeedTower(Array<TextureRegion> towerAtc){
 
     }
 
 
+    @Override
+    public int getTarget() {
+        return 0;
+    }
 }
