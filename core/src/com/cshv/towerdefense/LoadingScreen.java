@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -62,7 +60,7 @@ public class LoadingScreen extends ScreenAdapter {
 
     private void update() {
         if (towerDefenseGame.getAssetManager().update()) {
-            towerDefenseGame.setScreen(new StartScreen());
+            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame));
             dispose();
         }
         else {

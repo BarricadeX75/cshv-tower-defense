@@ -6,8 +6,8 @@ import com.badlogic.gdx.assets.AssetManager;
 
 public class TowerDefenseGame extends Game {
 
-    public static final float WORLD_WIDTH = 1280;
-    public static final float WORLD_HEIGHT = 800;
+    public static final float WORLD_WIDTH = 800;
+    public static final float WORLD_HEIGHT = 1280;
 
 	private final AssetManager assetManager = new AssetManager();
 
