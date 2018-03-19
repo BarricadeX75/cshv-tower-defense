@@ -27,7 +27,7 @@ public class World {
     private TextureRegion[] cheminMult = new TextureRegion[8];
     private Array<Integer> _chemin;
     private int x, y;
-    private int map;
+
 
     // Map navihation
 
@@ -42,9 +42,9 @@ public class World {
     }
 
 
-    public World(int numMap,Array<Integer> chemin){
+    public World( Array<TextureRegion> sols, Array<TextureRegion> chemins, Array<Integer> chemin){
         _chemin = chemin;
-        this.map = numMap;
+
         init();
         blocks = new Rectangle[arrayNum];
         blockImg = new TextureRegion[arrayNum];
