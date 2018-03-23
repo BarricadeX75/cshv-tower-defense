@@ -15,6 +15,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cshv.towerdefense.Mobs.Slime;
+
 import java.util.Date;
 
 
@@ -30,11 +32,14 @@ public class GameScreen extends ScreenAdapter {
     private SpriteBatch batch;
     private World world;
     private Rectangle[] chemin;
+    private Slime slime;
 
     private Array<TextureRegion> solTextures;
     private Array<TextureRegion> cheminTextures;
     private Array<TextureRegion> towerSpeedTextures;
-    private Array<TextureRegion> slimeTextures;
+    private Array<TextureRegion> slimeTexturesUp;
+    private Array<TextureRegion> slimeTexturesLeft;
+    private Array<TextureRegion> slimeTexturesRight;
 
 
 
@@ -67,9 +72,20 @@ public class GameScreen extends ScreenAdapter {
         for(int i=0 ; i<1 ; i++){
             cheminTextures.add(textureAtlas.findRegion("sol"));
         }
-        slimeTextures = new Array<TextureRegion>();
-        for(int i=0 ; i<3 ; i++){
-            slimeTextures.add(textureAtlas.findRegion("slimeVertical"+i+1));
+        slimeTexturesUp = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            slimeTexturesUp.add(textureAtlas.findRegion("slimeVertical"+i));
+            System.out.println(slimeTexturesUp.get(i-1));
+        }
+        slimeTexturesLeft = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            slimeTexturesLeft.add(textureAtlas.findRegion("slimeGauche"+i));
+            System.out.println(slimeTexturesLeft.get(i-1));
+        }
+        slimeTexturesRight = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            slimeTexturesRight.add(textureAtlas.findRegion("slimeDroite"+i));
+            System.out.println(slimeTexturesRight.get(i-1));
         }
         towerSpeedTextures = new Array<TextureRegion>();
         for(int i=0 ; i<1 ; i++){
@@ -84,6 +100,8 @@ public class GameScreen extends ScreenAdapter {
 
         world = new World( solTextures, cheminTextures, trajet);
         chemin = world.getChemin();
+        slime = new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this);
+
     }
 
     @Override
@@ -91,11 +109,15 @@ public class GameScreen extends ScreenAdapter {
         super.render(delta);
         update(delta);
         clearScreen();
-        draw();;
+        draw();
     }
 
     private void update(float delta) {
+        slime.update(delta);
+    }
 
+    public Rectangle[] getChemin(){
+        return chemin;
     }
 
     private void clearScreen() {
@@ -107,7 +129,7 @@ public class GameScreen extends ScreenAdapter {
         batch.setTransformMatrix(camera.view);
         batch.begin();
         world.draw(batch);
-
+        slime.draw(batch);
         batch.end();
     }
 

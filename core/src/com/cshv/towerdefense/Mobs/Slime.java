@@ -28,7 +28,7 @@ public class Slime extends Mob {
     private int vie;
     private int attaque;
     private int vitesse;
-    private int defence;
+    private int defense;
     private boolean dead = false;
     private long timerMalus;
     private int _malus = 0;
@@ -38,11 +38,9 @@ public class Slime extends Mob {
     private final Animation<TextureRegion> animeUp;
     private final Animation<TextureRegion> animeDown;
     private Animation<TextureRegion>currentAnimation;
-    private TextureRegion textuteDim;
 
     public Slime(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
 
-        textuteDim = left.get(0);
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);
         animeLeft.setPlayMode(Animation.PlayMode.LOOP);
         animeRight = new Animation<TextureRegion>(FRAME_DURATION,right);
@@ -55,7 +53,7 @@ public class Slime extends Mob {
         timerMalus = new Date().getTime();
         currentAnimation = animeDown;
         parent = jeu;
-        //chemin = parent.getChemin();
+        chemin = parent.getChemin();
         setPosition(chemin[0].getX()+ World.DEPART , chemin[0].getY());
 
     }
@@ -83,7 +81,7 @@ public class Slime extends Mob {
                 _y -= vitesse - _malus;
             }
         }else{
-            if(currentCase < chemin.length){
+            if(currentCase < chemin.length-1){
                 if(!testCase(currentCase+1)) {
                     currentCase++;
                 }
@@ -119,13 +117,13 @@ public class Slime extends Mob {
     public void setCarrac(int lvlStage) {
         vie = 100 + ( lvlStage * 10 );
         attaque = 10 + ( lvlStage );
-        defence = 0 + ( lvlStage );
+        defense = 0 + ( lvlStage );
         vitesse = 1 + ( lvlStage%2 );
     }
 
     @Override
     public void setDomage(int domage) {
-        int dmg = domage - defence;
+        int dmg = domage - defense;
         if( dmg > 0 ){
             vie -= dmg;
         }
@@ -146,9 +144,7 @@ public class Slime extends Mob {
     @Override
     public boolean draw(SpriteBatch batch) {
         TextureRegion slim = currentAnimation.getKeyFrame(animationTimer);
-        float textureX = _x - textuteDim.getRegionWidth()/2;
-        float textureY = _y - textuteDim.getRegionHeight()/2;
-        batch.draw( slim, textureX, textureY);
+        batch.draw( slim, _x, _y);
 
         return dead;
     }
