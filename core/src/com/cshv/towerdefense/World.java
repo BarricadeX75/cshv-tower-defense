@@ -91,7 +91,7 @@ public class World {
 
     public void draw(SpriteBatch batch){
         for (int i=0; i<arrayNum; i++){
-            batch.draw(blockImg[i],blocks[i].x, blocks[i].y,null);
+            batch.draw(blockImg[i],blocks[i].x, blocks[i].y);
         }
 
     }
