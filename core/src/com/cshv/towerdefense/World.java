@@ -44,7 +44,7 @@ public class World {
 
     public World( Array<TextureRegion> sols, Array<TextureRegion> chemins, Array<Integer> chemin){
         _chemin = chemin;
-
+        y=88;
         //init();
         BLOCK_SOL = sols.get(0);
         BLOCK_CHEMIN = chemins.get(0);
