@@ -78,7 +78,7 @@ public class GameScreen extends ScreenAdapter {
 
         //static chemin
         Array<Integer> trajet = new Array<Integer>();
-        for(int i=3 ; i<52 ; i+=6 ){
+        for(int i=5 ; i<160 ; i+=10 ){
             trajet.add(i);
         }
 
