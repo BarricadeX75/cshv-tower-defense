@@ -45,7 +45,9 @@ public class World {
     public World( Array<TextureRegion> sols, Array<TextureRegion> chemins, Array<Integer> chemin){
         _chemin = chemin;
 
-        init();
+        //init();
+        BLOCK_SOL = sols.get(0);
+        BLOCK_CHEMIN = chemins.get(0);
         blocks = new Rectangle[arrayNum];
         blockImg = new TextureRegion[arrayNum];
         isSolid = new boolean[arrayNum];
@@ -64,6 +66,7 @@ public class World {
                 blocks[i] = new Rectangle(x, y, 32, 32);
 
             x += 32;
+            System.out.print(i +"num case");
         }
         for(int i=0 ; i<_chemin.size ; i++){
             int numCase = _chemin.get(i);
@@ -91,7 +94,8 @@ public class World {
 
     public void draw(SpriteBatch batch){
         for (int i=0; i<arrayNum; i++){
-            batch.draw(blockImg[i],blocks[i].x, blocks[i].y,null);
+            System.out.print(i +"num case");
+            batch.draw(blockImg[i],blocks[i].x, blocks[i].y);
         }
 
     }

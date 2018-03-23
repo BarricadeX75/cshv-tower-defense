@@ -58,22 +58,22 @@ public class GameScreen extends ScreenAdapter {
         camera.update();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
         batch = new SpriteBatch();
-        TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("TowerDefence.atlas");
+        TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         solTextures = new Array<TextureRegion>();
         for(int i=0 ; i<1 ; i++){
-            solTextures.add(textureAtlas.findRegion("Sol-("+i+")"));
+            solTextures.add(textureAtlas.findRegion("herbe"));
         }
         cheminTextures = new Array<TextureRegion>();
         for(int i=0 ; i<1 ; i++){
-            cheminTextures.add(textureAtlas.findRegion("Chemin-("+i+")"));
+            cheminTextures.add(textureAtlas.findRegion("sol"));
         }
         slimeTextures = new Array<TextureRegion>();
-        for(int i=0 ; i<1 ; i++){
-            slimeTextures.add(textureAtlas.findRegion("Slime-("+i+")"));
+        for(int i=0 ; i<3 ; i++){
+            slimeTextures.add(textureAtlas.findRegion("slimeVertical"+i+1));
         }
         towerSpeedTextures = new Array<TextureRegion>();
         for(int i=0 ; i<1 ; i++){
-            towerSpeedTextures.add(textureAtlas.findRegion("TowerSpeed-("+i+")"));
+            towerSpeedTextures.add(textureAtlas.findRegion("tour"));
         }
 
         //static chemin
@@ -90,6 +90,8 @@ public class GameScreen extends ScreenAdapter {
     public void render(float delta) {
         super.render(delta);
         update(delta);
+        clearScreen();
+        draw();;
     }
 
     private void update(float delta) {
@@ -104,7 +106,7 @@ public class GameScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.projection);
         batch.setTransformMatrix(camera.view);
         batch.begin();
-
+        world.draw(batch);
 
         batch.end();
     }
