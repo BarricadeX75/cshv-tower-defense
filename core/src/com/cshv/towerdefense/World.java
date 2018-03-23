@@ -29,7 +29,7 @@ public class World {
     private int x, y;
 
 
-    // Map navihation
+    // Map navigation
 
 
 
