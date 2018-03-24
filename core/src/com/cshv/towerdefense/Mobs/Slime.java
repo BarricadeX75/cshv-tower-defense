@@ -85,7 +85,11 @@ public class Slime extends Mob {
             if(currentCase > 0){
                 if(!testCase(currentCase+1)) {
                     currentCase--;
+                }else{
+                    animationTimer = 0;
                 }
+            }else{
+                animationTimer = 0;
             }
         }
 
