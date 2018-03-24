@@ -35,7 +35,7 @@ public class SpeedTower extends Tower {
         actTower = new Animation<TextureRegion>(FRAME_DURATION,towerAtc);
         actTower.setPlayMode(Animation.PlayMode.LOOP);
         parent = jeu;
-        //chemin = parent.getChemin();
+        chemin = parent.getChemin();
         setStat(lvlTower);
     }
 
@@ -82,6 +82,7 @@ public class SpeedTower extends Tower {
 
     @Override
     public void draw(SpriteBatch batch) {
-
+        TextureRegion tower = actTower.getKeyFrame(animationTimer);
+        batch.draw(tower,_x,_y);
     }
 }

@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cshv.towerdefense.Mobs.Slime;
+import com.cshv.towerdefense.Towers.SpeedTower;
 
 import java.util.Date;
 
@@ -33,6 +34,7 @@ public class GameScreen extends ScreenAdapter {
     private World world;
     private Rectangle[] chemin;
     private Slime slime;
+    private SpeedTower tower;
 
     private Array<TextureRegion> solTextures;
     private Array<TextureRegion> cheminTextures;
@@ -98,7 +100,8 @@ public class GameScreen extends ScreenAdapter {
         world = new World( solTextures, cheminTextures, trajet);
         chemin = world.getChemin();
         slime = new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this);
-
+        tower = new SpeedTower(towerSpeedTextures,this,1);
+        tower.setPosition(world.getXcase(24),world.getYcase(24));
     }
 
     @Override
@@ -111,6 +114,7 @@ public class GameScreen extends ScreenAdapter {
 
     private void update(float delta) {
         slime.update(delta);
+        tower.update(delta);
     }
 
     public Rectangle[] getChemin(){
@@ -127,6 +131,7 @@ public class GameScreen extends ScreenAdapter {
         batch.begin();
         world.draw(batch);
         slime.draw(batch);
+        tower.draw(batch);
         batch.end();
     }
 
