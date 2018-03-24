@@ -142,6 +142,30 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    public void getTargetUnit(Mob mob){
+        int numCell=0;
+        for(int i=mob.getPo() ; i>0 ; i--){
+            if(mob.getCurrentCase()-i>0){
+                numCell = mob.getCurrentCase()-i;
+            }
+        }
+        Unit target = cells[numCell].getUnit();
+        int direction;
+        if(chemin[mob.getCurrentCase()].getX()>chemin[target.getCurrentCase()].getX()){
+            direction = 1;
+        }else if(chemin[mob.getCurrentCase()].getX()<chemin[target.getCurrentCase()].getX()){
+            direction = 2;
+        }else if(chemin[mob.getCurrentCase()].getY()>chemin[target.getCurrentCase()].getY()){
+            direction = 3;
+        }else{
+            direction = 4;
+        }
+    }
+
+    public void getTargetMob(Unit unit){
+
+    }
+
     public Rectangle[] getChemin(){
         return chemin;
     }

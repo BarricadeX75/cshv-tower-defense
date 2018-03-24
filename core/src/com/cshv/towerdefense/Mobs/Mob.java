@@ -13,5 +13,6 @@ public abstract class Mob {
     public abstract boolean testCase( int numCase);
     public abstract void addMalus( int malus, int timer);
     public abstract boolean draw(SpriteBatch batch);
+    public abstract int getPo();
 
 }

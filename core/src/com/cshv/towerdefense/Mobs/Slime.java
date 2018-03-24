@@ -29,6 +29,7 @@ public class Slime extends Mob {
     private int attaque;
     private int vitesse;
     private int defense;
+    private int porter;
     private boolean dead = false;
     private long timerMalus;
     private int _malus = 0;
@@ -83,11 +84,17 @@ public class Slime extends Mob {
             }
         }else{
             if(currentCase > 0){
-                if(!testCase(currentCase+1)) {
-                    currentCase--;
-                }else{
-                    animationTimer = 0;
+                for(int i=porter ; i>0 ; i--){
+                    if(currentCase-i>0){
+                        if(!testCase(currentCase-i)) {
+                            currentCase--;
+                        }else{
+                            animationTimer = 0;
+                            parent.getTargetUnit(this);
+                        }
+                    }
                 }
+
             }else{
                 animationTimer = 0;
             }
@@ -95,6 +102,7 @@ public class Slime extends Mob {
 
 
     }
+
 
     @Override
     public void update(float delta) {
@@ -124,6 +132,7 @@ public class Slime extends Mob {
         attaque = 10 + ( lvlStage );
         defense = 0 + ( lvlStage );
         vitesse = 1 + (int)( lvlStage/2 );
+        porter = 1;
     }
 
     @Override
@@ -152,5 +161,10 @@ public class Slime extends Mob {
         batch.draw( slim, _x, _y);
 
         return dead;
+    }
+
+    @Override
+    public int getPo() {
+        return porter;
     }
 }
