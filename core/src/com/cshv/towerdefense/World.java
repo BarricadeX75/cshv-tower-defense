@@ -94,7 +94,6 @@ public class World {
 
     public void draw(SpriteBatch batch){
         for (int i=0; i<arrayNum; i++){
-            System.out.print(i +"num case");
             batch.draw(blockImg[i],blocks[i].x, blocks[i].y);
         }
 

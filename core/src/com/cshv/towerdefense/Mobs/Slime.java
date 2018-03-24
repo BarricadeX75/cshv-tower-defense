@@ -54,7 +54,8 @@ public class Slime extends Mob {
         currentAnimation = animeDown;
         parent = jeu;
         chemin = parent.getChemin();
-        setPosition(chemin[0].getX()+ World.DEPART , chemin[0].getY());
+        currentCase = chemin.length-1;
+        setPosition(chemin[currentCase].getX() , chemin[currentCase].getY()+ World.DEPART);
 
     }
 
@@ -81,9 +82,9 @@ public class Slime extends Mob {
                 _y -= vitesse - _malus;
             }
         }else{
-            if(currentCase < chemin.length-1){
+            if(currentCase > 0){
                 if(!testCase(currentCase+1)) {
-                    currentCase++;
+                    currentCase--;
                 }
             }
         }
@@ -118,7 +119,7 @@ public class Slime extends Mob {
         vie = 100 + ( lvlStage * 10 );
         attaque = 10 + ( lvlStage );
         defense = 0 + ( lvlStage );
-        vitesse = 1 + ( lvlStage%2 );
+        vitesse = 1 + (int)( lvlStage/2 );
     }
 
     @Override

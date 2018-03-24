@@ -75,17 +75,14 @@ public class GameScreen extends ScreenAdapter {
         slimeTexturesUp = new Array<TextureRegion>();
         for(int i=1 ; i<4 ; i++){
             slimeTexturesUp.add(textureAtlas.findRegion("slimeVertical"+i));
-            System.out.println(slimeTexturesUp.get(i-1));
         }
         slimeTexturesLeft = new Array<TextureRegion>();
         for(int i=1 ; i<4 ; i++){
             slimeTexturesLeft.add(textureAtlas.findRegion("slimeGauche"+i));
-            System.out.println(slimeTexturesLeft.get(i-1));
         }
         slimeTexturesRight = new Array<TextureRegion>();
         for(int i=1 ; i<4 ; i++){
             slimeTexturesRight.add(textureAtlas.findRegion("slimeDroite"+i));
-            System.out.println(slimeTexturesRight.get(i-1));
         }
         towerSpeedTextures = new Array<TextureRegion>();
         for(int i=0 ; i<1 ; i++){
