@@ -33,6 +33,11 @@ public class Cell {
         units.removeValue(unit,true);
     }
 
+    public void removeAll(){
+        mobs.clear();
+        units.clear();
+    }
+
     public Mob getMob(){
         if(mobs.size>0){
             return mobs.first();

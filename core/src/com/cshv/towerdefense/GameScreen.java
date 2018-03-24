@@ -15,8 +15,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cshv.towerdefense.Mobs.Mob;
 import com.cshv.towerdefense.Mobs.Slime;
 import com.cshv.towerdefense.Towers.SpeedTower;
+import com.cshv.towerdefense.Units.Unit;
 
 import java.util.Date;
 
@@ -43,6 +45,9 @@ public class GameScreen extends ScreenAdapter {
     private Array<TextureRegion> slimeTexturesLeft;
     private Array<TextureRegion> slimeTexturesRight;
 
+    private Cell cells[];
+    private Array<Mob> mobs = new Array<Mob>();
+    private Array<Unit> units = new Array<Unit>();
 
 
 
@@ -99,6 +104,7 @@ public class GameScreen extends ScreenAdapter {
 
         world = new World( solTextures, cheminTextures, trajet);
         chemin = world.getChemin();
+        cells = new Cell[chemin.length];
         slime = new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this);
         tower = new SpeedTower(towerSpeedTextures,this,1);
         tower.setPosition(world.getXcase(24),world.getYcase(24));
@@ -115,6 +121,22 @@ public class GameScreen extends ScreenAdapter {
     private void update(float delta) {
         slime.update(delta);
         tower.update(delta);
+        updateCells();
+    }
+
+    private void updateCells(){
+        for(int i=0 ; i<cells.length ; i++){
+            cells[i].removeAll();
+        }
+
+        for(int i=0 ; i<mobs.size ; i++){
+            Mob mob = mobs.get(i);
+            cells[mob.getCurrentCase()].addMob(mob);
+        }
+        for (int i=0 ; i<units.size ; i++){
+            Unit unit = units.get(i);
+            //cells[]
+        }
     }
 
     public Rectangle[] getChemin(){
