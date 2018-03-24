@@ -10,8 +10,8 @@ import com.cshv.towerdefense.Units.Unit;
 
 public class Cell {
     private int _numChemin;
-    private Array<Mob> mobs;
-    private Array<Unit> units;
+    private Array<Mob> mobs = new Array<Mob>();
+    private Array<Unit> units = new Array<Unit>();
     private boolean vision = false;
 
     public Cell(int numChemin){

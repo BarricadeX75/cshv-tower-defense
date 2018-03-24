@@ -105,6 +105,9 @@ public class GameScreen extends ScreenAdapter {
         world = new World( solTextures, cheminTextures, trajet);
         chemin = world.getChemin();
         cells = new Cell[chemin.length];
+        for(int i=0 ; i<chemin.length ; i++){
+            cells[i] = new  Cell(i);
+        }
         slime = new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this);
         tower = new SpeedTower(towerSpeedTextures,this,1);
         tower.setPosition(world.getXcase(24),world.getYcase(24));
