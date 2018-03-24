@@ -85,7 +85,7 @@ public class Slime extends Mob {
         }else{
             if(currentCase > 0){
                 for(int i=porter ; i>0 ; i--){
-                    if(currentCase-i>0){
+                    if(currentCase-i>=0){
                         if(!testCase(currentCase-i)) {
                             currentCase--;
                         }else{
