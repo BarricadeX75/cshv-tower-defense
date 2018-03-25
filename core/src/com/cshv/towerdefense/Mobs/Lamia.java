@@ -10,12 +10,11 @@ import com.cshv.towerdefense.World;
 
 import java.util.Date;
 
-
 /**
- * Created by harri on 16/03/2018.
+ * Created by harri on 24/03/2018.
  */
 
-public class Slime extends Mob {
+public class Lamia extends Mob {
 
     private static final float FRAME_DURATION = 0.1F;
     private float _x;
@@ -40,7 +39,7 @@ public class Slime extends Mob {
     private final Animation<TextureRegion> animeDown;
     private Animation<TextureRegion>currentAnimation;
 
-    public Slime(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
+    public Lamia(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
 
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);
         animeLeft.setPlayMode(Animation.PlayMode.LOOP);
@@ -110,7 +109,7 @@ public class Slime extends Mob {
         if(vie == 0){
             dead = true;
         }else{
-             move();
+            move();
         }
 
     }
@@ -128,11 +127,11 @@ public class Slime extends Mob {
 
     @Override
     public void setCarrac(int lvlStage) {
-        vie = 100 + ( lvlStage * 10 );
-        attaque = 10 + ( lvlStage );
+        vie = 150 + ( lvlStage * 15 );
+        attaque = 20 + ( 2*lvlStage );
         defense = 0 + ( lvlStage );
         vitesse = 1 + (int)( lvlStage/2 );
-        porter = 1;
+        porter = 2;
     }
 
     @Override

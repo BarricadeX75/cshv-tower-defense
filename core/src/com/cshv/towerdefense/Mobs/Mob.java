@@ -10,7 +10,6 @@ public abstract class Mob {
     public abstract int getCurrentCase();
     public abstract void setCarrac(int lvlStage);
     public abstract void setDomage(int domage);
-    public abstract boolean testCase( int numCase);
     public abstract void addMalus( int malus, int timer);
     public abstract boolean draw(SpriteBatch batch);
     public abstract int getPo();

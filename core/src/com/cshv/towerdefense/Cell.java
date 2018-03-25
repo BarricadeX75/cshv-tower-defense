@@ -18,6 +18,22 @@ public class Cell {
         _numChemin = numChemin;
     }
 
+    public boolean testCell(int type){
+        if(type == 1){
+            if(units.size>0){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            if(mobs.size>0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+
     public void addMob(Mob mob){
         mobs.add(mob);
     }

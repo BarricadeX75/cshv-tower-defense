@@ -142,6 +142,10 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    public boolean testCase(int num , int type){
+        return cells[num].testCell(type);
+    }
+
     public void getTargetUnit(Mob mob){
         int numCell=0;
         for(int i=mob.getPo() ; i>0 ; i--){
