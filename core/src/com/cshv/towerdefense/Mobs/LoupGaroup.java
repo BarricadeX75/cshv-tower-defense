@@ -32,6 +32,7 @@ public class LoupGaroup extends Mob {
     private boolean dead = false;
     private long timerMalus;
     private int _malus = 0;
+    private boolean visible = false;
 
     private final Animation<TextureRegion> animeRight;
     private final Animation<TextureRegion> animeLeft;
@@ -64,6 +65,7 @@ public class LoupGaroup extends Mob {
         if(new Date().getTime()> timerMalus){
             _malus = 0;
         }
+        visible = parent.getVision(currentCase);
 
         if (_x != chemin[currentCase].getX()) {
             if (_x < chemin[currentCase].getX()) {
@@ -85,7 +87,7 @@ public class LoupGaroup extends Mob {
             if(currentCase > 0){
                 for(int i=porter ; i>0 ; i--){
                     if(currentCase-i>=0){
-                        if(!parent.testCase(currentCase-i,1)) {
+                        if(!parent.testCase(currentCase-i,1) ||  !visible) {
                             currentCase--;
                         }else{
                             animationTimer = 0;

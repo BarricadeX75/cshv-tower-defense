@@ -86,11 +86,9 @@ public class Griffon extends Mob {
                 for(int i=porter ; i>0 ; i--){
                     if(currentCase-i>=0){
                         if(!parent.testCase(currentCase-i,1)) {
-                            currentCase--;
-                        }else{
-                            animationTimer = 0;
                             parent.getTargetUnit(this);
                         }
+                        currentCase--;
                     }
                 }
 

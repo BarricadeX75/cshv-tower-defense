@@ -141,6 +141,9 @@ public class GameScreen extends ScreenAdapter {
             //cells[]
         }
     }
+     public boolean getVision(int numCell){
+         return cells[numCell].getVision();
+     }
 
     public boolean testCase(int num , int type){
         return cells[num].testCell(type);
