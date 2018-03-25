@@ -14,7 +14,7 @@ import java.util.Date;
  * Created by harri on 24/03/2018.
  */
 
-public class LoupGaroup extends Mob {
+public class LoupGarou extends Mob {
 
     private static final float FRAME_DURATION = 0.1F;
     private float _x;
@@ -40,7 +40,7 @@ public class LoupGaroup extends Mob {
     private final Animation<TextureRegion> animeDown;
     private Animation<TextureRegion>currentAnimation;
 
-    public LoupGaroup(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
+    public LoupGarou(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
 
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);
         animeLeft.setPlayMode(Animation.PlayMode.LOOP);
@@ -132,7 +132,7 @@ public class LoupGaroup extends Mob {
         vie = 100 + ( lvlStage * 10 );
         attaque = 10 + ( lvlStage );
         defense = 0 + ( lvlStage );
-        vitesse = 1 + (int)( lvlStage/2 );
+        vitesse = 1 + lvlStage/2;
         porter = 1;
     }
 

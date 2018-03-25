@@ -14,7 +14,7 @@ import java.util.Date;
  * Created by harri on 24/03/2018.
  */
 
-public class Centor extends Mob {
+public class Centaure extends Mob {
 
     private static final float FRAME_DURATION = 0.1F;
     private float _x;
@@ -39,7 +39,7 @@ public class Centor extends Mob {
     private final Animation<TextureRegion> animeDown;
     private Animation<TextureRegion>currentAnimation;
 
-    public Centor(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
+    public Centaure(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
 
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);
         animeLeft.setPlayMode(Animation.PlayMode.LOOP);
@@ -130,7 +130,7 @@ public class Centor extends Mob {
         vie = 180 + ( lvlStage * 10 );
         attaque = 15 + ( lvlStage );
         defense = 10 + ( lvlStage );
-        vitesse = 3 + (int)( lvlStage/2 );
+        vitesse = 3 + lvlStage/2;
         porter = 1;
     }
 
