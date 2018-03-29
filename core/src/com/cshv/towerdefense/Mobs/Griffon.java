@@ -93,7 +93,7 @@ public class Griffon extends Mob {
                 }
 
             }else{
-                animationTimer = 0;
+                //parent.getTargetUnit(this);
             }
         }
 
