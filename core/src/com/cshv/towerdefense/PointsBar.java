@@ -10,5 +10,7 @@ public class PointsBar {
     //
 
 
-    //
+    public PointsBar() {
+        //
+    }
 }
