@@ -28,7 +28,7 @@ public class Centaure extends Mob {
     private int attaque;
     private int vitesse;
     private int defense;
-    private int porter;
+    private int portee;
     private boolean dead = false;
     private long timerMalus;
     private int _malus = 0;
@@ -83,7 +83,7 @@ public class Centaure extends Mob {
             }
         }else{
             if(currentCase > 0){
-                for(int i=porter ; i>0 ; i--){
+                for(int i = portee; i>0 ; i--){
                     if(currentCase-i>=0){
                         if(!parent.testCase(currentCase-i,1)) {
                             currentCase--;
@@ -131,17 +131,17 @@ public class Centaure extends Mob {
         attaque = 15 + ( lvlStage );
         defense = 10 + ( lvlStage );
         vitesse = 3 + lvlStage/2;
-        porter = 1;
+        portee = 1;
     }
 
     @Override
     public int getPo() {
-        return porter;
+        return portee;
     }
 
     @Override
-    public void setDomage(int domage) {
-        int dmg = domage - defense;
+    public void setDegats(int degats) {
+        int dmg = degats - defense;
         if( dmg > 0 ){
             vie -= dmg;
         }

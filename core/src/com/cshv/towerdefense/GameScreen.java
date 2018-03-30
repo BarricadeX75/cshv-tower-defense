@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -114,15 +116,23 @@ public class GameScreen extends ScreenAdapter {
         tower.setPosition(world.getXcase(24),world.getYcase(24));
 
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(null, null, null, bitmapFont);
+        TextureRegion buttonUpTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonUp.png")));
+        TextureRegion buttonDownTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonDown.png")));
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(
+                new TextureRegionDrawable(buttonUpTexture),
+                new TextureRegionDrawable(buttonDownTexture),
+                null,
+                bitmapFont
+        );
         float textScale = 0.4f;
         float leftColumn = 150;
         float rightColumn = 240;
-        float row1 = 85;
+        float row1 = 80;
         float row2 = 55;
-        float row3 = 25;
+        float row3 = 30;
 
         uiStage = new Stage(viewport);
+        Gdx.input.setInputProcessor(uiStage);
 
         //
 
@@ -219,7 +229,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void clearScreen() {
-        Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
+        Gdx.gl.glClearColor(Color.DARK_GRAY.r, Color.DARK_GRAY.g, Color.DARK_GRAY.b, Color.DARK_GRAY.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
     private void draw() {

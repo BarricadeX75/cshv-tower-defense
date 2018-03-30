@@ -28,7 +28,7 @@ public class ChienSquelette extends Mob {
     private int attaque;
     private int vitesse;
     private int defense;
-    private int porter;
+    private int portee;
     private boolean dead = false;
     private long timerMalus;
     private int _malus = 0;
@@ -85,7 +85,7 @@ public class ChienSquelette extends Mob {
             }
         }else{
             if(currentCase > 0){
-                for(int i=porter ; i>0 ; i--){
+                for(int i = portee; i>0 ; i--){
                     if(currentCase-i>=0){
                         if(!parent.testCase(currentCase-i,1) || !visible) {
                             currentCase--;
@@ -132,18 +132,18 @@ public class ChienSquelette extends Mob {
         vie = 100 + ( lvlStage * 10 );
         attaque = 15 + ( lvlStage );
         defense = 0 + ( lvlStage );
-        vitesse = 2 + (int)( lvlStage/2 );
-        porter = 1;
+        vitesse = 2 + lvlStage/2;
+        portee = 1;
     }
 
     @Override
     public int getPo() {
-        return porter;
+        return portee;
     }
 
     @Override
-    public void setDomage(int domage) {
-        int dmg = domage - defense;
+    public void setDegats(int degats) {
+        int dmg = degats - defense;
         if( dmg > 0 ){
             vie -= dmg;
         }
