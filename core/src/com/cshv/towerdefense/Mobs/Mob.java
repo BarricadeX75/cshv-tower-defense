@@ -12,7 +12,7 @@ public abstract class Mob {
     protected int portee;
     protected boolean dead = false;
     protected long timerMalus;
-    protected int _malus;
+    protected float _malus;
     protected int direction;
 
     public abstract void move();

@@ -71,7 +71,7 @@ public class Chevalier extends Unit {
             if(currentCase < chemin.length-1){
                 for(int i = portee; i>0 ; i--){
                     if(currentCase-i>=0){
-                        if(!parent.testCase(currentCase+i,1)) {
+                        if(!parent.testCase(currentCase+i,2)) {
                             currentCase++;
                         }else{
                             animationTimer = 0;

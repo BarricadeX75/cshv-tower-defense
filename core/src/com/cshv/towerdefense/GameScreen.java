@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cshv.towerdefense.Mobs.Mob;
 import com.cshv.towerdefense.Mobs.Slime;
 import com.cshv.towerdefense.Towers.SpeedTower;
+import com.cshv.towerdefense.Towers.Tower;
 import com.cshv.towerdefense.Units.Unit;
 
 import java.util.Date;
@@ -388,6 +389,19 @@ public class GameScreen extends ScreenAdapter {
                 direction = 4;
             }
             unit.setDirection(direction);
+        }
+    }
+
+    public void getTargetMobTower(Tower tower, int cell, int type){
+        switch (type){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
         }
     }
 

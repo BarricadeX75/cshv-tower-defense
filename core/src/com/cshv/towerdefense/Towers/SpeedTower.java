@@ -14,8 +14,6 @@ import com.cshv.towerdefense.GameScreen;
 public class SpeedTower extends Tower {
 
     private static final float FRAME_DURATION = 0.1F;
-    private float _x;
-    private float _y;
     private float animationTimer = 0;
     private Rectangle chemin[];
     private GameScreen parent;
@@ -38,6 +36,7 @@ public class SpeedTower extends Tower {
         attaque = 10 * lvlTower;
         porter = 3 + (lvlTower%3);
         atcSpeed = 3000 - (lvlTower * 100);
+        malus = 0;
     }
 
     public void initCaseDistOk(){
@@ -60,13 +59,12 @@ public class SpeedTower extends Tower {
     }
 
     @Override
-    public int getTarget() {
+    public void getTarget() {
         for( int i=0 ; i<caseDistOk.size ; i++){
-            /*if(jeu.enemiOk(caseDistOk.get(i))){
-
-            }*/
+            if(parent.testCase(caseDistOk.get(i),2)){
+                parent.getTargetMobTower(this,caseDistOk.get(i),1);
+            }
         }
-        return 0;
     }
 
     @Override
@@ -75,8 +73,28 @@ public class SpeedTower extends Tower {
     }
 
     @Override
+    public float getMalus() {
+        return malus;
+    }
+
+    @Override
     public void draw(SpriteBatch batch) {
         TextureRegion tower = actTower.getKeyFrame(animationTimer);
         batch.draw(tower,_x,_y);
+    }
+
+    @Override
+    public float getX() {
+        return _x;
+    }
+
+    @Override
+    public float getY() {
+        return _y;
+    }
+
+    @Override
+    public int getAttaque() {
+        return attaque;
     }
 }
