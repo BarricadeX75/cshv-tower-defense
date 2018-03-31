@@ -36,7 +36,7 @@ public class ZoneTower extends Tower {
 
     public void setStat( int lvlTower){
         attaque = 10 * lvlTower;
-        porter = 3 + (lvlTower%3);
+        portee = 3 + (lvlTower%3);
         atcSpeed = 3000 - (lvlTower * 100);
         malus = 0;
     }
@@ -44,7 +44,7 @@ public class ZoneTower extends Tower {
     public void initCaseDistOk(){
         for(int i=chemin.length ; i>0 ; i--){
             int distance = (int) Math.sqrt((int)(_x/32 - chemin[i].getX()/32)*(int)(_x/32 - chemin[i].getX()/32)) + (int) Math.sqrt((int)(_y/32 - chemin[i].getY()/32)*(int)(_y/32 - chemin[i].getY()/32));
-            if( porter >= distance){
+            if( portee >= distance){
                 caseDistOk.add(i);
             }
         }

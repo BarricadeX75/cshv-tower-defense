@@ -8,7 +8,7 @@ public abstract class Tower {
     protected float _x;
     protected float _y;
     protected int attaque;
-    protected int porter;
+    protected int portee;
     protected long atcSpeed;
     protected float malus;
     protected long timer;
