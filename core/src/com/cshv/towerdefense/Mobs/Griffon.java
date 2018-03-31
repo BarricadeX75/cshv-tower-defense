@@ -128,6 +128,11 @@ public class Griffon extends Mob {
     }
 
     @Override
+    public int getDegats() {
+        return attaque;
+    }
+
+    @Override
     public int getPo() {
         return portee;
     }

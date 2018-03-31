@@ -18,6 +18,7 @@ public abstract class Unit {
     public abstract void update(float delta);
     public abstract int getCurrentCase();
     public abstract void setCarrac(int lvlStage);
+    public abstract int getDegats();
     public abstract void setDirection(int direction);
     public abstract void setDegats(int degats);
     public abstract boolean draw(SpriteBatch batch);

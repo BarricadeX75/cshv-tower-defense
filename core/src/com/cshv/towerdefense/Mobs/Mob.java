@@ -19,6 +19,7 @@ public abstract class Mob {
     public abstract void update(float delta);
     public abstract int getCurrentCase();
     public abstract void setCarrac(int lvlStage);
+    public abstract int getDegats();
     public abstract void setDegats(int degats);
     public abstract void addMalus( int malus, int timer);
     public abstract void setDirection(int direction);

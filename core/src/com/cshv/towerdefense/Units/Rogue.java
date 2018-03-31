@@ -153,7 +153,10 @@ public class Rogue extends Unit {
         }
     }
 
-
+    @Override
+    public int getDegats() {
+        return attaque;
+    }
 
     @Override
     public boolean draw(SpriteBatch batch) {

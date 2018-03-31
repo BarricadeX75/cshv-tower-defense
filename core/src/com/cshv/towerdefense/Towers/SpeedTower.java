@@ -20,11 +20,6 @@ public class SpeedTower extends Tower {
     private Rectangle chemin[];
     private GameScreen parent;
 
-    private int attaque;
-    private int porter;
-    private long atcSpeed;
-
-
     private Animation<TextureRegion> actTower;
     private Array<Integer> caseDistOk;
     //private Array<Rectangle> caseDistOk;
@@ -42,14 +37,13 @@ public class SpeedTower extends Tower {
     public void setStat( int lvlTower){
         attaque = 10 * lvlTower;
         porter = 3 + (lvlTower%3);
-        atcSpeed = 5000 - (lvlTower * 100);
+        atcSpeed = 3000 - (lvlTower * 100);
     }
 
     public void initCaseDistOk(){
         for(int i=chemin.length ; i>0 ; i--){
             int distance = (int) Math.sqrt((int)(_x/32 - chemin[i].getX()/32)*(int)(_x/32 - chemin[i].getX()/32)) + (int) Math.sqrt((int)(_y/32 - chemin[i].getY()/32)*(int)(_y/32 - chemin[i].getY()/32));
             if( porter >= distance){
-                //caseDistOk.add(chemin[i]);
                 caseDistOk.add(i);
             }
         }

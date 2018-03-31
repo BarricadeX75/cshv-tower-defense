@@ -127,6 +127,11 @@ public class Chevalier extends Unit {
     }
 
     @Override
+    public int getDegats() {
+        return attaque;
+    }
+
+    @Override
     public void setDirection(int direction) {
         switch (direction){
             case 1: currentAnimation = animeLeft;
