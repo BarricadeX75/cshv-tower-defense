@@ -125,8 +125,8 @@ public class GameScreen extends ScreenAdapter {
                 bitmapFont
         );
         float textScale = 0.4f;
-        float leftColumn = 150;
-        float rightColumn = 250;
+        float column1 = 150;
+        float column2 = 250;
         float row1 = 80;
         float row2 = 55;
         float row3 = 30;
@@ -139,25 +139,25 @@ public class GameScreen extends ScreenAdapter {
         TextButton uiButton1 = new TextButton("Unité 1", textButtonStyle);
         uiButton1.setTransform(true);
         uiButton1.setScale(textScale);
-        uiButton1.setPosition(leftColumn, row2, Align.center);
+        uiButton1.setPosition(column1, row2, Align.center);
         uiStage.addActor(uiButton1);
 
         TextButton uiButton2 = new TextButton("Unité 2", textButtonStyle);
         uiButton2.setTransform(true);
         uiButton2.setScale(textScale);
-        uiButton2.setPosition(rightColumn, row2, Align.center);
+        uiButton2.setPosition(column2, row2, Align.center);
         uiStage.addActor(uiButton2);
 
         TextButton uiButton3 = new TextButton("Unité 3", textButtonStyle);
         uiButton3.setTransform(true);
         uiButton3.setScale(textScale);
-        uiButton3.setPosition(leftColumn, row3, Align.center);
+        uiButton3.setPosition(column1, row3, Align.center);
         uiStage.addActor(uiButton3);
 
         TextButton uiButton4 = new TextButton("Unité 4", textButtonStyle);
         uiButton4.setTransform(true);
         uiButton4.setScale(textScale);
-        uiButton4.setPosition(rightColumn, row3, Align.center);
+        uiButton4.setPosition(column2, row3, Align.center);
         uiStage.addActor(uiButton4);
         ////////////////////////////////////////////////////////////////////////////////////////////
     }
