@@ -11,6 +11,7 @@ public abstract class Tower {
     protected int porter;
     protected long atcSpeed;
     protected float malus;
+    protected long timer;
 
     public abstract void getTarget();
     public abstract Rectangle getCaseDist();

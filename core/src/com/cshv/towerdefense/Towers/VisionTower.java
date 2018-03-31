@@ -9,10 +9,10 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.cshv.towerdefense.GameScreen;
 
 /**
- * Created by harri on 16/03/2018.
+ * Created by harri on 31/03/2018.
  */
 
-public class SpeedTower extends Tower {
+public class VisionTower extends Tower {
 
     private static final float FRAME_DURATION = 0.1F;
     private float animationTimer = 0;
@@ -24,7 +24,7 @@ public class SpeedTower extends Tower {
     //private Array<Rectangle> caseDistOk;
     private TextureRegion towerFireEnd;
 
-    public SpeedTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower){
+    public VisionTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower){
         towerFireEnd = towerAtc.get(towerAtc.size-1);
         actTower = new Animation<TextureRegion>(FRAME_DURATION,towerAtc);
         actTower.setPlayMode(Animation.PlayMode.LOOP);
@@ -66,7 +66,7 @@ public class SpeedTower extends Tower {
         if(TimeUtils.millis()>timer) {
             for (int i = 0; i < caseDistOk.size; i++) {
                 if (parent.testCase(caseDistOk.get(i), 2)) {
-                    parent.getTargetMobTower(this, caseDistOk.get(i), 1);
+                    parent.getTargetMobTower(this, caseDistOk.get(i), 3);
                     timer = TimeUtils.millis()+atcSpeed;
                 }
             }
