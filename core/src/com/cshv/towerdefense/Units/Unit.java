@@ -4,15 +4,14 @@ package com.cshv.towerdefense.Units;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class Unit {
-    private int vieMax;
-    private int vie;
-    private int attaque;
-    private int vitesse;
-    private int defense;
-    private int portee;
-    private boolean dead = false;
-    private long timerMalus;
-    private int _malus;
+    protected int vieMax;
+    protected int vie;
+    protected int attaque;
+    protected int vitesse;
+    protected int defense;
+    protected int portee;
+    protected boolean dead = false;
+    protected int direction;
 
     public abstract void move();
     public abstract float getVita();

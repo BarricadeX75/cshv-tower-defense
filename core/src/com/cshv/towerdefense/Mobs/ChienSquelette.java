@@ -24,14 +24,7 @@ public class ChienSquelette extends Mob {
     private Rectangle chemin[];
     private GameScreen parent;
     //carat ici pour l instant on vera apres si on les bouge dans une classe
-    private int vie;
-    private int attaque;
-    private int vitesse;
-    private int defense;
-    private int portee;
-    private boolean dead = false;
-    private long timerMalus;
-    private int _malus = 0;
+
     private boolean visible = false;
 
     private final Animation<TextureRegion> animeRight;

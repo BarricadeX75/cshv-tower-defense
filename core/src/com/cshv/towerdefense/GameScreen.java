@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,6 +26,8 @@ import com.cshv.towerdefense.Mobs.Mob;
 import com.cshv.towerdefense.Mobs.Slime;
 import com.cshv.towerdefense.Towers.SpeedTower;
 import com.cshv.towerdefense.Units.Unit;
+
+import java.util.Date;
 
 
 public class GameScreen extends ScreenAdapter {
@@ -41,6 +44,11 @@ public class GameScreen extends ScreenAdapter {
     private Rectangle[] chemin;
     private Slime slime;
     private SpeedTower tower;
+    private int lvlStage = 1;
+    private int nbMonster;
+    private int monsterCreate;
+    private long timer;
+    private int numWave;
 
     private Array<TextureRegion> solTextures;
     private Array<TextureRegion> cheminTextures;
@@ -115,6 +123,7 @@ public class GameScreen extends ScreenAdapter {
             cells[i] = new  Cell(i);
         }
         slime = new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this);
+
         tower = new SpeedTower(towerSpeedTextures,this,1);
         tower.setPosition(world.getXcase(24),world.getYcase(24));
 
@@ -178,6 +187,10 @@ public class GameScreen extends ScreenAdapter {
         uiButton4.setPosition(column2, row3, Align.center);
         uiStage.addActor(uiButton4);
         ////////////////////////////////////////////////////////////////////////////////////////////
+        timer = new Date().getTime() + 5000;
+        nbMonster = 5 + (int)lvlStage/2;
+        monsterCreate = 0;
+        numWave = 1;
     }
 
     @Override
@@ -208,6 +221,29 @@ public class GameScreen extends ScreenAdapter {
         for (int i=0 ; i<units.size ; i++){
             Unit unit = units.get(i);
             //cells[]
+        }
+    }
+
+    private void createMob(){
+        if(new  Date().getTime() > timer && monsterCreate <= nbMonster){
+            int rand = MathUtils.random(7);
+            switch (rand){
+                case 0:mobs.add(new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this));
+                    monsterCreate++;
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+            }
         }
     }
 
@@ -363,6 +399,14 @@ public class GameScreen extends ScreenAdapter {
         batch.end();
 
         uiStage.draw();
+    }
+
+    private void teckWave(){
+        if(mobs.size == 0){
+            timer = new Date().getTime()+5000;
+            monsterCreate = 0;
+            numWave++;
+        }
     }
 
 }

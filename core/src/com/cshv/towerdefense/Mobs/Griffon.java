@@ -24,14 +24,7 @@ public class Griffon extends Mob {
     private Rectangle chemin[];
     private GameScreen parent;
     //carat ici pour l instant on vera apres si on les bouge dans une classe
-    private int vie;
-    private int attaque;
-    private int vitesse;
-    private int defense;
-    private int portee;
-    private boolean dead = false;
-    private long timerMalus;
-    private int _malus = 0;
+
     private final Animation<TextureRegion> animeRight;
     private final Animation<TextureRegion> animeLeft;
     private final Animation<TextureRegion> animeUp;
