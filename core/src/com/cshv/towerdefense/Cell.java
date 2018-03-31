@@ -37,6 +37,7 @@ public class Cell {
     public void addMob(Mob mob){
         mobs.add(mob);
     }
+
     public void removeMob(Mob mob){
         mobs.removeValue(mob,true);
     }
@@ -66,6 +67,15 @@ public class Cell {
             return units.first();
         }
         return null;
+    }
+
+    public Unit getHeal(){
+        for(int i=0 ; i<units.size ; i++ ){
+            if(units.get(i).getVita() != 1 ){
+                return units.get(i);
+            }
+        }
+        return  null;
     }
 
     public void setVision(){

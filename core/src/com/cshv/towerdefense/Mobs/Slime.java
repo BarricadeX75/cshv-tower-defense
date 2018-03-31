@@ -149,6 +149,20 @@ public class Slime extends Mob {
     }
 
     @Override
+    public void setDirection(int direction) {
+        switch (direction){
+            case 1: currentAnimation = animeLeft;
+                break;
+            case 2: currentAnimation = animeRight;
+                break;
+            case 3: currentAnimation = animeDown;
+                break;
+            case 4: currentAnimation = animeUp;
+                break;
+        }
+    }
+
+    @Override
     public void addMalus(int malus, int timer) {
         _malus = malus;
         timerMalus = (new Date().getTime() + timer);

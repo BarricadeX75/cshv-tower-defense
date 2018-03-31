@@ -32,7 +32,6 @@ public class Griffon extends Mob {
     private boolean dead = false;
     private long timerMalus;
     private int _malus = 0;
-
     private final Animation<TextureRegion> animeRight;
     private final Animation<TextureRegion> animeLeft;
     private final Animation<TextureRegion> animeUp;
@@ -94,11 +93,14 @@ public class Griffon extends Mob {
 
             }else{
                 //parent.getTargetUnit(this);
+                currentAnimation = animeDown;
             }
         }
 
 
     }
+
+
 
 
     @Override
@@ -149,6 +151,20 @@ public class Griffon extends Mob {
     public void addMalus(int malus, int timer) {
         _malus = malus;
         timerMalus = (new Date().getTime() + timer);
+    }
+
+    @Override
+    public void setDirection(int direction) {
+        switch (direction){
+            case 1: currentAnimation = animeLeft;
+                break;
+            case 2: currentAnimation = animeRight;
+                break;
+            case 3: currentAnimation = animeDown;
+                break;
+            case 4: currentAnimation = animeUp;
+                break;
+        }
     }
 
     @Override

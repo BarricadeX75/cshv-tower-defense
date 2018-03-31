@@ -96,11 +96,28 @@ public class Lamia extends Mob {
 
             }else{
                 animationTimer = 0;
+                currentAnimation = animeDown;
             }
         }
 
 
     }
+
+    /*public void setDirection(){
+        if(chemin[currentCase].getX()>chemin[currentCase+1].getX()){
+            direction = 1;
+            currentAnimation = animeLeft;
+        }else if(chemin[currentCase].getX()<chemin[currentCase+1].getX()){
+            direction = 2;
+            currentAnimation = animeRight;
+        }else if(chemin[currentCase].getY()>chemin[currentCase+1].getY()){
+            direction = 3;
+            currentAnimation = animeDown;
+        }else{
+            direction = 4;
+            currentAnimation = animeUp;
+        }
+    }*/
 
 
     @Override
@@ -144,6 +161,20 @@ public class Lamia extends Mob {
         int dmg = domage - defense;
         if( dmg > 0 ){
             vie -= dmg;
+        }
+    }
+
+    @Override
+    public void setDirection(int direction) {
+        switch (direction){
+            case 1: currentAnimation = animeLeft;
+                break;
+            case 2: currentAnimation = animeRight;
+                break;
+            case 3: currentAnimation = animeDown;
+                break;
+            case 4: currentAnimation = animeUp;
+                break;
         }
     }
 

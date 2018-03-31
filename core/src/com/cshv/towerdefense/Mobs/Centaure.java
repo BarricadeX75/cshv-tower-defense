@@ -32,6 +32,7 @@ public class Centaure extends Mob {
     private boolean dead = false;
     private long timerMalus;
     private int _malus = 0;
+    private int direction = 0;
 
     private final Animation<TextureRegion> animeRight;
     private final Animation<TextureRegion> animeLeft;
@@ -96,6 +97,7 @@ public class Centaure extends Mob {
 
             }else{
                 animationTimer = 0;
+                currentAnimation = animeDown;
             }
         }
 
@@ -113,6 +115,7 @@ public class Centaure extends Mob {
         }
 
     }
+
 
     public void setPosition(float x , float y){
         _x = x;
@@ -139,6 +142,7 @@ public class Centaure extends Mob {
         return porter;
     }
 
+
     @Override
     public void setDomage(int domage) {
         int dmg = domage - defense;
@@ -151,6 +155,20 @@ public class Centaure extends Mob {
     public void addMalus(int malus, int timer) {
         _malus = malus;
         timerMalus = (new Date().getTime() + timer);
+    }
+
+    @Override
+    public void setDirection(int direction) {
+        switch (direction){
+            case 1: currentAnimation = animeLeft;
+                break;
+            case 2: currentAnimation = animeRight;
+                break;
+            case 3: currentAnimation = animeDown;
+                break;
+            case 4: currentAnimation = animeUp;
+                break;
+        }
     }
 
     @Override

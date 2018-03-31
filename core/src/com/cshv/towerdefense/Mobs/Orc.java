@@ -154,6 +154,20 @@ public class Orc extends Mob {
     }
 
     @Override
+    public void setDirection(int direction) {
+        switch (direction){
+            case 1: currentAnimation = animeLeft;
+                break;
+            case 2: currentAnimation = animeRight;
+                break;
+            case 3: currentAnimation = animeDown;
+                break;
+            case 4: currentAnimation = animeUp;
+                break;
+        }
+    }
+
+    @Override
     public boolean draw(SpriteBatch batch) {
         TextureRegion slim = currentAnimation.getKeyFrame(animationTimer);
         batch.draw( slim, _x, _y);

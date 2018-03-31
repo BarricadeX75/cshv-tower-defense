@@ -141,7 +141,8 @@ public class GameScreen extends ScreenAdapter {
             //cells[]
         }
     }
-     public boolean getVision(int numCell){
+
+    public boolean getVision(int numCell){
          return cells[numCell].getVision();
      }
 
@@ -150,27 +151,129 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void getTargetUnit(Mob mob){
-        int numCell=0;
+        Unit target = null;
         for(int i=mob.getPo() ; i>0 ; i--){
             if(mob.getCurrentCase()-i>0){
-                numCell = mob.getCurrentCase()-i;
+                if(cells[mob.getCurrentCase()-i].getUnit() != null){
+                    target = cells[mob.getCurrentCase()-i].getUnit();
+                }
             }
         }
-        Unit target = cells[numCell].getUnit();
-        int direction;
-        if(chemin[mob.getCurrentCase()].getX()>chemin[target.getCurrentCase()].getX()){
-            direction = 1;
-        }else if(chemin[mob.getCurrentCase()].getX()<chemin[target.getCurrentCase()].getX()){
-            direction = 2;
-        }else if(chemin[mob.getCurrentCase()].getY()>chemin[target.getCurrentCase()].getY()){
-            direction = 3;
-        }else{
-            direction = 4;
+        if(target != null) {
+            int direction;
+            float difX = chemin[mob.getCurrentCase()].getX() - chemin[target.getCurrentCase()].getX();
+            float difY = chemin[mob.getCurrentCase()].getY() - chemin[target.getCurrentCase()].getY();
+
+            if((difX*difX)<(difY*difY)){
+                if(difX>0){
+                    direction = 1;
+                }else{
+                    direction = 2;
+                }
+            }else {
+                if(difY>0){
+                    direction = 3;
+                }else{
+                    direction = 4;
+                }
+            }
+
+
+            if (chemin[mob.getCurrentCase()].getX() > chemin[target.getCurrentCase()].getX()) {
+                direction = 1;
+            } else if (chemin[mob.getCurrentCase()].getX() < chemin[target.getCurrentCase()].getX()) {
+                direction = 2;
+            } else if (chemin[mob.getCurrentCase()].getY() > chemin[target.getCurrentCase()].getY()) {
+                direction = 3;
+            } else {
+                direction = 4;
+            }
+
+            mob.setDirection(direction);
+        }
+    }
+
+    public void getTargetHeal(Unit unit){
+        Unit target = null;
+        for(int i=unit.getPo() ; i>0 ; i--){
+            if(unit.getCurrentCase()+i<chemin.length-1){
+                if(cells[unit.getCurrentCase()-i].getHeal() != null){
+                    target = cells[unit.getCurrentCase()-i].getHeal();
+                }
+            }
+        }
+        if(target != null) {
+            int direction;
+            float difX = chemin[unit.getCurrentCase()].getX() - chemin[target.getCurrentCase()].getX();
+            float difY = chemin[unit.getCurrentCase()].getY() - chemin[target.getCurrentCase()].getY();
+
+            if((difX*difX)<(difY*difY)){
+                if(difX>0){
+
+                }else{
+
+                }
+            }else {
+                if(difY>0){
+
+                }else{
+
+                }
+            }
+
+            if (chemin[unit.getCurrentCase()].getX() > chemin[target.getCurrentCase()].getX()) {
+                direction = 1;
+            } else if (chemin[unit.getCurrentCase()].getX() < chemin[target.getCurrentCase()].getX()) {
+                direction = 2;
+            } else if (chemin[unit.getCurrentCase()].getY() > chemin[target.getCurrentCase()].getY()) {
+                direction = 3;
+            } else {
+                direction = 4;
+            }
+
+            unit.setDirection(direction);
         }
     }
 
     public void getTargetMob(Unit unit){
+        Mob target = null;
+        for(int i=unit.getPo() ; i>0 ; i--){
+            if(unit.getCurrentCase()+i<chemin.length-1){
+                if(cells[unit.getCurrentCase()+i].getMob() != null){
+                    target = cells[unit.getCurrentCase()+i].getMob();
+                }
+            }
+        }
+        if(target != null) {
+            int direction;
+            float difX = chemin[unit.getCurrentCase()].getX() - chemin[target.getCurrentCase()].getX();
+            float difY = chemin[unit.getCurrentCase()].getY() - chemin[target.getCurrentCase()].getY();
 
+            if((difX*difX)<(difY*difY)){
+                if(difX>0){
+
+                }else{
+
+                }
+            }else {
+                if(difY>0){
+
+                }else{
+
+                }
+            }
+
+            if (chemin[unit.getCurrentCase()].getX() > chemin[target.getCurrentCase()].getX()) {
+                direction = 1;
+            } else if (chemin[unit.getCurrentCase()].getX() < chemin[target.getCurrentCase()].getX()) {
+                direction = 2;
+            } else if (chemin[unit.getCurrentCase()].getY() > chemin[target.getCurrentCase()].getY()) {
+                direction = 3;
+            } else {
+                direction = 4;
+            }
+            unit.setDirection(direction);
+        }
     }
 
     public Rectangle[] getChemin(){

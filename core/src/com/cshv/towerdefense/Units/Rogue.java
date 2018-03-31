@@ -1,4 +1,4 @@
-package com.cshv.towerdefense.Mobs;
+package com.cshv.towerdefense.Units;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,11 +11,10 @@ import com.cshv.towerdefense.World;
 import java.util.Date;
 
 /**
- * Created by harri on 24/03/2018.
+ * Created by harri on 30/03/2018.
  */
 
-public class LoupGarou extends Mob {
-
+public class Rogue extends Unit {
     private static final float FRAME_DURATION = 0.1F;
     private float _x;
     private float _y;
@@ -24,6 +23,7 @@ public class LoupGarou extends Mob {
     private Rectangle chemin[];
     private GameScreen parent;
     //carat ici pour l instant on vera apres si on les bouge dans une classe
+    private int vieMax;
     private int vie;
     private int attaque;
     private int vitesse;
@@ -32,7 +32,6 @@ public class LoupGarou extends Mob {
     private boolean dead = false;
     private long timerMalus;
     private int _malus = 0;
-    private boolean visible = false;
 
     private final Animation<TextureRegion> animeRight;
     private final Animation<TextureRegion> animeLeft;
@@ -40,7 +39,7 @@ public class LoupGarou extends Mob {
     private final Animation<TextureRegion> animeDown;
     private Animation<TextureRegion>currentAnimation;
 
-    public LoupGarou(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
+    public Rogue(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
 
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);
         animeLeft.setPlayMode(Animation.PlayMode.LOOP);
@@ -55,8 +54,8 @@ public class LoupGarou extends Mob {
         currentAnimation = animeDown;
         parent = jeu;
         chemin = parent.getChemin();
-        currentCase = chemin.length-1;
-        setPosition(chemin[currentCase].getX() , chemin[currentCase].getY()+ World.DEPART);
+        currentCase = 0;
+        setPosition(chemin[currentCase].getX() , chemin[currentCase].getY()- World.DEPART);
 
     }
 
@@ -65,7 +64,6 @@ public class LoupGarou extends Mob {
         if(new Date().getTime()> timerMalus){
             _malus = 0;
         }
-        visible = parent.getVision(currentCase);
 
         if (_x != chemin[currentCase].getX()) {
             if (_x < chemin[currentCase].getX()) {
@@ -84,27 +82,30 @@ public class LoupGarou extends Mob {
                 _y -= vitesse - _malus;
             }
         }else{
-            if(currentCase > 0){
+            if(currentCase < chemin.length-1){
                 for(int i=porter ; i>0 ; i--){
                     if(currentCase-i>=0){
-                        if(!parent.testCase(currentCase-i,1) ||  !visible) {
-                            currentCase--;
+                        if(!parent.testCase(currentCase+i,1)) {
+                            currentCase++;
                         }else{
                             animationTimer = 0;
-                            parent.getTargetUnit(this);
+                            parent.getTargetMob(this);
                         }
                     }
                 }
 
             }else{
                 animationTimer = 0;
-                currentAnimation = animeDown;
             }
         }
 
 
     }
 
+    @Override
+    public float getVita() {
+        return vie/vieMax;
+    }
 
 
     @Override
@@ -131,24 +132,12 @@ public class LoupGarou extends Mob {
 
     @Override
     public void setCarrac(int lvlStage) {
-        vie = 100 + ( lvlStage * 10 );
+        vieMax = 100 + ( lvlStage * 10 );
+        vie = vieMax;
         attaque = 10 + ( lvlStage );
         defense = 0 + ( lvlStage );
-        vitesse = 1 + lvlStage/2;
+        vitesse = 1 + (int)( lvlStage/2 );
         porter = 1;
-    }
-
-    @Override
-    public int getPo() {
-        return porter;
-    }
-
-    @Override
-    public void setDomage(int domage) {
-        int dmg = domage - defense;
-        if( dmg > 0 ){
-            vie -= dmg;
-        }
     }
 
     @Override
@@ -166,10 +155,19 @@ public class LoupGarou extends Mob {
     }
 
     @Override
-    public void addMalus(int malus, int timer) {
-        _malus = malus;
-        timerMalus = (new Date().getTime() + timer);
+    public int getPo() {
+        return porter;
     }
+
+    @Override
+    public void setDomage(int domage) {
+        int dmg = domage - defense;
+        if( dmg > 0 ){
+            vie -= dmg;
+        }
+    }
+
+
 
     @Override
     public boolean draw(SpriteBatch batch) {
@@ -178,6 +176,4 @@ public class LoupGarou extends Mob {
 
         return dead;
     }
-
-
 }
