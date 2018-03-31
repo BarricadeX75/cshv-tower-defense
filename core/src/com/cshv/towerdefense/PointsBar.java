@@ -7,10 +7,12 @@ package com.cshv.towerdefense;
 
 public class PointsBar {
 
-    //
+    private Player player;
 
 
-    public PointsBar() {
+    public PointsBar(Player player) {
+        this.player = player;
+
         //
     }
 }

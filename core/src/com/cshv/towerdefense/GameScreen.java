@@ -126,7 +126,7 @@ public class GameScreen extends ScreenAdapter {
         );
         float textScale = 0.4f;
         float leftColumn = 150;
-        float rightColumn = 240;
+        float rightColumn = 250;
         float row1 = 80;
         float row2 = 55;
         float row3 = 30;
@@ -229,7 +229,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void clearScreen() {
-        Gdx.gl.glClearColor(Color.DARK_GRAY.r, Color.DARK_GRAY.g, Color.DARK_GRAY.b, Color.DARK_GRAY.a);
+        Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
     private void draw() {
