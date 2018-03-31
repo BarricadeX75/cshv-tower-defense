@@ -22,16 +22,6 @@ public class Chevalier extends Unit {
     private int currentCase = 0;//enplacement dans chemin
     private Rectangle chemin[];
     private GameScreen parent;
-    //carat ici pour l instant on vera apres si on les bouge dans une classe
-    private int vieMax;
-    private int vie;
-    private int attaque;
-    private int vitesse;
-    private int defense;
-    private int portee;
-    private boolean dead = false;
-    private long timerMalus;
-    private int _malus = 0;
 
     private final Animation<TextureRegion> animeRight;
     private final Animation<TextureRegion> animeLeft;
@@ -50,7 +40,6 @@ public class Chevalier extends Unit {
         animeUp = new Animation<TextureRegion>(FRAME_DURATION,up);
         animeUp.setPlayMode(Animation.PlayMode.LOOP);
         setCarrac(lvlStage);
-        timerMalus = new Date().getTime();
         currentAnimation = animeDown;
         parent = jeu;
         chemin = parent.getChemin();
@@ -61,25 +50,22 @@ public class Chevalier extends Unit {
 
     @Override
     public void move() {
-        if(new Date().getTime()> timerMalus){
-            _malus = 0;
-        }
 
         if (_x != chemin[currentCase].getX()) {
             if (_x < chemin[currentCase].getX()) {
                 currentAnimation = animeRight;
-                _x += vitesse - _malus;
+                _x += vitesse;
             } else {
                 currentAnimation = animeLeft;
-                _x -= vitesse - _malus;
+                _x -= vitesse;
             }
         } else if(_y != chemin[currentCase].getY()){
             if (_y < chemin[currentCase].getY()) {
                 currentAnimation = animeUp;
-                _y += vitesse - _malus;
+                _y += vitesse;
             } else {
                 currentAnimation = animeDown;
-                _y -= vitesse - _malus;
+                _y -= vitesse;
             }
         }else{
             if(currentCase < chemin.length-1){

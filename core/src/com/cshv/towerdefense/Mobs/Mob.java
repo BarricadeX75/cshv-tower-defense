@@ -5,14 +5,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class Mob {
 
-    private int vie;
-    private int attaque;
-    private int vitesse;
-    private int defense;
-    private int porter;
-    private boolean dead = false;
-    private long timerMalus;
-    private int _malus;
+    protected int vie;
+    protected int attaque;
+    protected int vitesse;
+    protected int defense;
+    protected int portee;
+    protected boolean dead = false;
+    protected long timerMalus;
+    protected int _malus;
+    protected int direction;
 
     public abstract void move();
     public abstract void update(float delta);
