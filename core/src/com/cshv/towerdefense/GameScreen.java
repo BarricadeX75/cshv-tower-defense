@@ -136,7 +136,6 @@ public class GameScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(uiStage);
 
         PlayerBar playerBar = new PlayerBar(player, 0, TowerDefenseGame.WORLD_WIDTH, row1);
-        playerBar.setPosition(0, row1, Align.center);
         uiStage.addActor(playerBar);
 
         TextButton uiButton1 = new TextButton("Unité 1", textButtonStyle);
