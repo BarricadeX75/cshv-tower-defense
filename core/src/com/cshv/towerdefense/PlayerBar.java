@@ -46,23 +46,53 @@ public class PlayerBar extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        
+        TextureRegion lifeLeftTexture, lifeRightTexture;
+        TextureRegion manaLeftTexture, manaRightTexture;
+        
+        if (player.getVieCombat() > 0)
+            lifeLeftTexture = barLifeLeft;
+        else
+            lifeLeftTexture = barBackLeft;
+        
+        if (player.getVieCombat() == player.getVie())
+            lifeRightTexture = barLifeRight;
+        else
+            lifeRightTexture = barBackRight;
+        
+        if (player.getManaCombat() > 0)
+            manaRightTexture = barManaRight;
+        else
+            manaRightTexture = barBackRight;
+        
+        if (player.getManaCombat() == player.getMana())
+            manaLeftTexture = barManaLeft;
+        else
+            manaLeftTexture = barBackLeft;
 
         batch.draw(
-                barLifeLeft,
+                lifeLeftTexture,
                 leftEdge,
                 getY() - BARS_HEIGHT,
                 UNIT_WIDTH,
                 BARS_HEIGHT
         );
         batch.draw(
-                barLifeMid,
+                barBackMid,
                 leftEdge + UNIT_WIDTH,
                 getY() - BARS_HEIGHT,
                 BARS_WIDTH - UNIT_WIDTH*2,
                 BARS_HEIGHT
         );
         batch.draw(
-                barLifeRight,
+                barLifeMid,
+                leftEdge + UNIT_WIDTH,
+                getY() - BARS_HEIGHT,
+                (BARS_WIDTH - UNIT_WIDTH*2) * (player.getVieCombat() / player.getVie()),
+                BARS_HEIGHT
+        );
+        batch.draw(
+                lifeRightTexture,
                 leftEdge + BARS_WIDTH - UNIT_WIDTH,
                 getY() - BARS_HEIGHT,
                 UNIT_WIDTH,
@@ -70,21 +100,28 @@ public class PlayerBar extends Actor {
         );
 
         batch.draw(
-                barManaLeft,
+                manaLeftTexture,
                 rightEdge - BARS_WIDTH,
                 getY() - BARS_HEIGHT,
                 UNIT_WIDTH,
                 BARS_HEIGHT
         );
         batch.draw(
-                barManaMid,
+                barBackMid,
                 rightEdge - BARS_WIDTH + UNIT_WIDTH,
                 getY() - BARS_HEIGHT,
                 BARS_WIDTH - UNIT_WIDTH*2,
                 BARS_HEIGHT
         );
         batch.draw(
-                barManaRight,
+                barManaMid,
+                (rightEdge - UNIT_WIDTH - (BARS_WIDTH - UNIT_WIDTH*2) * (player.getManaCombat() / player.getMana())),
+                getY() - BARS_HEIGHT,
+                (BARS_WIDTH - UNIT_WIDTH*2) * (player.getManaCombat() / player.getMana()),
+                BARS_HEIGHT
+        );
+        batch.draw(
+                manaRightTexture,
                 rightEdge - UNIT_WIDTH,
                 getY() - BARS_HEIGHT,
                 UNIT_WIDTH,

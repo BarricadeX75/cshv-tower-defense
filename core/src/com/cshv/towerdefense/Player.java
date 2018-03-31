@@ -7,7 +7,7 @@ package com.cshv.towerdefense;
 public class Player {
 
     private String nom;
-    private int vie, vieCombat, mana, manaCombat;
+    private float vie, vieCombat, mana, manaCombat;
 
     public Player() {
         nom = "Brioche";
@@ -20,27 +20,28 @@ public class Player {
     public String getNom() {
         return nom;
     }
-    public int getVie() {
+
+    public float getVie() {
         return vie;
     }
 
-    public int getVieCombat() {
+    public float getVieCombat() {
         return vieCombat;
     }
 
-    public void setVieCombat(int vieCombat) {
+    public void setVieCombat(float vieCombat) {
         this.vieCombat = vieCombat;
     }
 
-    public int getMana() {
+    public float getMana() {
         return mana;
     }
 
-    public int getManaCombat() {
+    public float getManaCombat() {
         return manaCombat;
     }
 
-    public void setManaCombat(int manaCombat) {
+    public void setManaCombat(float manaCombat) {
         this.manaCombat = manaCombat;
     }
 
