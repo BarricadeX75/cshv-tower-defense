@@ -10,8 +10,11 @@ public class Player {
     private int vie, vieCombat, mana, manaCombat;
 
     public Player() {
+        nom = "Brioche";
         vie = 100;
         mana = 100;
+
+        resetStatsCombat();
     }
 
     public String getNom() {

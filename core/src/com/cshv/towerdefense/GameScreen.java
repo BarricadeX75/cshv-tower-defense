@@ -51,6 +51,7 @@ public class GameScreen extends ScreenAdapter {
     private Array<Mob> mobs = new Array<Mob>();
     private Array<Unit> units = new Array<Unit>();
 
+    private Player player = new Player();
     private Stage uiStage;
 
 
@@ -127,14 +128,16 @@ public class GameScreen extends ScreenAdapter {
         float textScale = 0.4f;
         float column1 = 150;
         float column2 = 250;
-        float row1 = 80;
+        float row1 = 70;
         float row2 = 55;
         float row3 = 30;
 
         uiStage = new Stage(viewport);
         Gdx.input.setInputProcessor(uiStage);
 
-        //
+        PlayerBar playerBar = new PlayerBar(player, 0, TowerDefenseGame.WORLD_WIDTH, row1);
+        playerBar.setPosition(0, row1, Align.center);
+        uiStage.addActor(playerBar);
 
         TextButton uiButton1 = new TextButton("Unité 1", textButtonStyle);
         uiButton1.setTransform(true);
