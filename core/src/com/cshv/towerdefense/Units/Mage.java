@@ -28,7 +28,7 @@ public class Mage extends Unit {
     private int attaque;
     private int vitesse;
     private int defense;
-    private int porter;
+    private int portee;
     private boolean dead = false;
     private long timerMalus;
     private int _malus = 0;
@@ -83,7 +83,7 @@ public class Mage extends Unit {
             }
         }else{
             if(currentCase < chemin.length-1){
-                for(int i=porter ; i>0 ; i--){
+                for(int i = portee; i>0 ; i--){
                     if(currentCase-i>=0){
                         if(!parent.testCase(currentCase+i,1)) {
                             currentCase++;
@@ -136,8 +136,8 @@ public class Mage extends Unit {
         vie = vieMax;
         attaque = 10 + ( lvlStage );
         defense = 0 + ( lvlStage );
-        vitesse = 1 + (int)( lvlStage/2 );
-        porter = 1;
+        vitesse = 1 + lvlStage/2;
+        portee = 1;
     }
 
     @Override
@@ -156,12 +156,12 @@ public class Mage extends Unit {
 
     @Override
     public int getPo() {
-        return porter;
+        return portee;
     }
 
     @Override
-    public void setDomage(int domage) {
-        int dmg = domage - defense;
+    public void setDegats(int degats) {
+        int dmg = degats - defense;
         if( dmg > 0 ){
             vie -= dmg;
         }
