@@ -28,7 +28,7 @@ public class Lamia extends Mob {
     private int attaque;
     private int vitesse;
     private int defense;
-    private int porter;
+    private int portee;
     private boolean dead = false;
     private long timerMalus;
     private int _malus = 0;
@@ -83,7 +83,7 @@ public class Lamia extends Mob {
             }
         }else{
             if(currentCase > 0){
-                for(int i=porter ; i>0 ; i--){
+                for(int i = portee; i>0 ; i--){
                     if(currentCase-i>=0){
                         if(!parent.testCase(currentCase-i,1)) {
                             currentCase--;
@@ -147,18 +147,18 @@ public class Lamia extends Mob {
         vie = 150 + ( lvlStage * 15 );
         attaque = 20 + ( 2*lvlStage );
         defense = 0 + ( lvlStage );
-        vitesse = 1 + (int)( lvlStage/2 );
-        porter = 2;
+        vitesse = 1 + lvlStage/2;
+        portee = 2;
     }
 
     @Override
     public int getPo() {
-        return porter;
+        return portee;
     }
 
     @Override
-    public void setDomage(int domage) {
-        int dmg = domage - defense;
+    public void setDegats(int degats) {
+        int dmg = degats - defense;
         if( dmg > 0 ){
             vie -= dmg;
         }

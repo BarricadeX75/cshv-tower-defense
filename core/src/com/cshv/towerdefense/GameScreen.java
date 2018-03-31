@@ -6,12 +6,16 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -19,8 +23,6 @@ import com.cshv.towerdefense.Mobs.Mob;
 import com.cshv.towerdefense.Mobs.Slime;
 import com.cshv.towerdefense.Towers.SpeedTower;
 import com.cshv.towerdefense.Units.Unit;
-
-import java.util.Date;
 
 
 public class GameScreen extends ScreenAdapter {
@@ -49,7 +51,7 @@ public class GameScreen extends ScreenAdapter {
     private Array<Mob> mobs = new Array<Mob>();
     private Array<Unit> units = new Array<Unit>();
 
-
+    private Stage uiStage;
 
 
     public GameScreen(TowerDefenseGame towerDefenseGame) {
@@ -70,6 +72,7 @@ public class GameScreen extends ScreenAdapter {
         camera.update();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
         batch = new SpriteBatch();
+        bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
         TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         solTextures = new Array<TextureRegion>();
         for(int i=0 ; i<1 ; i++){
@@ -111,6 +114,52 @@ public class GameScreen extends ScreenAdapter {
         slime = new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this);
         tower = new SpeedTower(towerSpeedTextures,this,1);
         tower.setPosition(world.getXcase(24),world.getYcase(24));
+
+        /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
+        TextureRegion buttonUpTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonUp.png")));
+        TextureRegion buttonDownTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonDown.png")));
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(
+                new TextureRegionDrawable(buttonUpTexture),
+                new TextureRegionDrawable(buttonDownTexture),
+                null,
+                bitmapFont
+        );
+        float textScale = 0.4f;
+        float column1 = 150;
+        float column2 = 250;
+        float row1 = 80;
+        float row2 = 55;
+        float row3 = 30;
+
+        uiStage = new Stage(viewport);
+        Gdx.input.setInputProcessor(uiStage);
+
+        //
+
+        TextButton uiButton1 = new TextButton("Unité 1", textButtonStyle);
+        uiButton1.setTransform(true);
+        uiButton1.setScale(textScale);
+        uiButton1.setPosition(column1, row2, Align.center);
+        uiStage.addActor(uiButton1);
+
+        TextButton uiButton2 = new TextButton("Unité 2", textButtonStyle);
+        uiButton2.setTransform(true);
+        uiButton2.setScale(textScale);
+        uiButton2.setPosition(column2, row2, Align.center);
+        uiStage.addActor(uiButton2);
+
+        TextButton uiButton3 = new TextButton("Unité 3", textButtonStyle);
+        uiButton3.setTransform(true);
+        uiButton3.setScale(textScale);
+        uiButton3.setPosition(column1, row3, Align.center);
+        uiStage.addActor(uiButton3);
+
+        TextButton uiButton4 = new TextButton("Unité 4", textButtonStyle);
+        uiButton4.setTransform(true);
+        uiButton4.setScale(textScale);
+        uiButton4.setPosition(column2, row3, Align.center);
+        uiStage.addActor(uiButton4);
+        ////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     @Override
@@ -125,6 +174,8 @@ public class GameScreen extends ScreenAdapter {
         slime.update(delta);
         tower.update(delta);
         updateCells();
+
+        uiStage.act(delta);
     }
 
     private void updateCells(){
@@ -292,6 +343,8 @@ public class GameScreen extends ScreenAdapter {
         slime.draw(batch);
         tower.draw(batch);
         batch.end();
+
+        uiStage.draw();
     }
 
 }
