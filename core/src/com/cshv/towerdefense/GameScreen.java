@@ -12,8 +12,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -142,12 +144,26 @@ public class GameScreen extends ScreenAdapter {
         uiButton1.setTransform(true);
         uiButton1.setScale(textScale);
         uiButton1.setPosition(column1, row2, Align.center);
+        uiButton1.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                player.recevoirDegats(1);
+            }
+        });
         uiStage.addActor(uiButton1);
 
         TextButton uiButton2 = new TextButton("Unité 2", textButtonStyle);
         uiButton2.setTransform(true);
         uiButton2.setScale(textScale);
         uiButton2.setPosition(column2, row2, Align.center);
+        uiButton2.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                player.depenserMana(1);
+            }
+        });
         uiStage.addActor(uiButton2);
 
         TextButton uiButton3 = new TextButton("Unité 3", textButtonStyle);

@@ -50,7 +50,7 @@ public class Player {
         manaCombat = mana;
     }
 
-    public void recevoirDegats(int degats) {
+    public void recevoirDegats(float degats) {
         if (degats > 0) {
             vieCombat -= degats;
 
@@ -59,7 +59,7 @@ public class Player {
         }
     }
 
-    public void depenserMana(int mana) {
+    public void depenserMana(float mana) {
         if (mana > 0) {
             manaCombat -= mana;
 
