@@ -6,6 +6,7 @@ package com.cshv.towerdefense;
 
 public class Player {
 
+    private String nom;
     private int vie, vieCombat, mana, manaCombat;
 
     public Player() {
@@ -13,6 +14,9 @@ public class Player {
         mana = 100;
     }
 
+    public String getNom() {
+        return nom;
+    }
     public int getVie() {
         return vie;
     }
@@ -21,12 +25,20 @@ public class Player {
         return vieCombat;
     }
 
+    public void setVieCombat(int vieCombat) {
+        this.vieCombat = vieCombat;
+    }
+
     public int getMana() {
         return mana;
     }
 
     public int getManaCombat() {
         return manaCombat;
+    }
+
+    public void setManaCombat(int manaCombat) {
+        this.manaCombat = manaCombat;
     }
 
     public void resetStatsCombat() {
@@ -40,6 +52,15 @@ public class Player {
 
             if (vieCombat < 0)
                 vieCombat = 0;
+        }
+    }
+
+    public void depenserMana(int mana) {
+        if (mana > 0) {
+            manaCombat -= mana;
+
+            if (manaCombat < 0)
+                manaCombat = 0;
         }
     }
 }
