@@ -46,25 +46,25 @@ public class PlayerBar extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        
+
         TextureRegion lifeLeftTexture, lifeRightTexture;
         TextureRegion manaLeftTexture, manaRightTexture;
-        
+
         if (player.getVieCombat() > 0)
             lifeLeftTexture = barLifeLeft;
         else
             lifeLeftTexture = barBackLeft;
-        
+
         if (player.getVieCombat() == player.getVie())
             lifeRightTexture = barLifeRight;
         else
             lifeRightTexture = barBackRight;
-        
+
         if (player.getManaCombat() > 0)
             manaRightTexture = barManaRight;
         else
             manaRightTexture = barBackRight;
-        
+
         if (player.getManaCombat() == player.getMana())
             manaLeftTexture = barManaLeft;
         else
