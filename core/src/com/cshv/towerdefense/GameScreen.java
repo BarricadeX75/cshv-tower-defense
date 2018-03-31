@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -136,23 +137,32 @@ public class GameScreen extends ScreenAdapter {
                 null,
                 bitmapFont
         );
+        Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
+        float nameScale = 0.5f;
         float textScale = 0.4f;
-        float column1 = 150;
-        float column2 = 250;
+        float column1 = 80;
+        float column2 = 160;
+        float column3 = 240;
+        float column4 = 320;
         float row1 = 70;
-        float row2 = 55;
+        float row2 = 50;
         float row3 = 30;
 
         uiStage = new Stage(viewport);
         Gdx.input.setInputProcessor(uiStage);
 
-        PlayerBar playerBar = new PlayerBar(player, 0, TowerDefenseGame.WORLD_WIDTH, row1);
+        Label nameLabel = new Label(player.getNom(), labelStyle);
+        nameLabel.setFontScale(nameScale);
+        nameLabel.setPosition(TowerDefenseGame.WORLD_WIDTH / 2 + ((nameLabel.getWidth() / 2) * nameScale), row1, Align.center);
+        uiStage.addActor(nameLabel);
+
+        PlayerBar playerBar = new PlayerBar(player, 0, TowerDefenseGame.WORLD_WIDTH, row2, bitmapFont, textScale);
         uiStage.addActor(playerBar);
 
         TextButton uiButton1 = new TextButton("Unité 1", textButtonStyle);
         uiButton1.setTransform(true);
         uiButton1.setScale(textScale);
-        uiButton1.setPosition(column1, row2, Align.center);
+        uiButton1.setPosition(column1, row3, Align.center);
         uiButton1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -165,7 +175,7 @@ public class GameScreen extends ScreenAdapter {
         TextButton uiButton2 = new TextButton("Unité 2", textButtonStyle);
         uiButton2.setTransform(true);
         uiButton2.setScale(textScale);
-        uiButton2.setPosition(column2, row2, Align.center);
+        uiButton2.setPosition(column2, row3, Align.center);
         uiButton2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -178,13 +188,13 @@ public class GameScreen extends ScreenAdapter {
         TextButton uiButton3 = new TextButton("Unité 3", textButtonStyle);
         uiButton3.setTransform(true);
         uiButton3.setScale(textScale);
-        uiButton3.setPosition(column1, row3, Align.center);
+        uiButton3.setPosition(column3, row3, Align.center);
         uiStage.addActor(uiButton3);
 
         TextButton uiButton4 = new TextButton("Unité 4", textButtonStyle);
         uiButton4.setTransform(true);
         uiButton4.setScale(textScale);
-        uiButton4.setPosition(column2, row3, Align.center);
+        uiButton4.setPosition(column4, row3, Align.center);
         uiStage.addActor(uiButton4);
         ////////////////////////////////////////////////////////////////////////////////////////////
         timer = new Date().getTime() + 5000;
