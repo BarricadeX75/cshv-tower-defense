@@ -32,6 +32,7 @@ public class SpeedTower extends Tower {
         chemin = parent.getChemin();
         setStat(lvlTower);
         timer = TimeUtils.millis();
+        initCaseDistOk();
     }
 
     public void setStat( int lvlTower){
@@ -42,7 +43,8 @@ public class SpeedTower extends Tower {
     }
 
     public void initCaseDistOk(){
-        for(int i=chemin.length ; i>0 ; i--){
+        caseDistOk = new Array<Integer>();
+        for(int i=chemin.length-1 ; i>0 ; i--){
             int distance = (int) Math.sqrt((int)(_x/32 - chemin[i].getX()/32)*(int)(_x/32 - chemin[i].getX()/32)) + (int) Math.sqrt((int)(_y/32 - chemin[i].getY()/32)*(int)(_y/32 - chemin[i].getY()/32));
             if( portee >= distance){
                 caseDistOk.add(i);
@@ -64,7 +66,7 @@ public class SpeedTower extends Tower {
     @Override
     public void getTarget() {
         if(TimeUtils.millis()>timer) {
-            for (int i = 0; i < caseDistOk.size; i++) {
+            for (int i = 0; i < caseDistOk.size-1; i++) {
                 if (parent.testCase(caseDistOk.get(i), 2)) {
                     parent.getTargetMobTower(this, caseDistOk.get(i), 1);
                     timer = TimeUtils.millis()+atcSpeed;

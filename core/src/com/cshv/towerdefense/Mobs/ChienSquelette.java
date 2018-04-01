@@ -172,7 +172,7 @@ public class ChienSquelette extends Mob {
     }
 
     @Override
-    public void addMalus(int malus, int timer) {
+    public void addMalus(float malus, int timer) {
         _malus = malus;
         timerMalus = (new Date().getTime() + timer);
     }
