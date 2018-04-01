@@ -190,16 +190,31 @@ public class GameScreen extends ScreenAdapter {
         uiButton3.setTransform(true);
         uiButton3.setScale(textScale);
         uiButton3.setPosition(column3, row3, Align.center);
+        uiButton3.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //
+            }
+        });
         uiStage.addActor(uiButton3);
 
         TextButton uiButton4 = new TextButton("Unité 4", textButtonStyle);
         uiButton4.setTransform(true);
         uiButton4.setScale(textScale);
         uiButton4.setPosition(column4, row3, Align.center);
+        uiButton4.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //
+            }
+        });
         uiStage.addActor(uiButton4);
         ////////////////////////////////////////////////////////////////////////////////////////////
+
         timer = new Date().getTime() + 5000;
-        nbMonster = 5 + (int)lvlStage/2;
+        nbMonster = 5 + lvlStage /2;
         monsterCreate = 0;
         numWave = 1;
     }
