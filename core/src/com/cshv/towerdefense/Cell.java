@@ -78,6 +78,13 @@ public class Cell {
         return  null;
     }
 
+    public void degatZone(int degat){
+
+        for(int i=0 ; i<mobs.size ; i++){
+            mobs.get(i).setDegats(degat);
+        }
+    }
+
     public void setVision(){
         vision = true;
     }

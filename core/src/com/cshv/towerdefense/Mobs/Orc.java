@@ -136,6 +136,16 @@ public class Orc extends Mob {
     }
 
     @Override
+    public float getX() {
+        return chemin[currentCase].getX();
+    }
+
+    @Override
+    public float getY() {
+        return chemin[currentCase].getY();
+    }
+
+    @Override
     public void setDegats(int degats) {
         int dmg = degats - defense;
         if( dmg > 0 ){

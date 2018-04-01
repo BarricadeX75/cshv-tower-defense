@@ -23,4 +23,6 @@ public abstract class Unit {
     public abstract void setDegats(int degats);
     public abstract boolean draw(SpriteBatch batch);
     public abstract int getPo();
+    public abstract float getX();
+    public abstract float getY();
 }

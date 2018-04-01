@@ -139,6 +139,15 @@ public class Centaure extends Mob {
         return portee;
     }
 
+    @Override
+    public float getX() {
+        return chemin[currentCase].getX();
+    }
+
+    @Override
+    public float getY() {
+        return chemin[currentCase].getY();
+    }
 
     @Override
     public void setDegats(int degats) {
