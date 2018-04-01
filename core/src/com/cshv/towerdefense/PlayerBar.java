@@ -21,9 +21,9 @@ public class PlayerBar extends Actor {
     private static final float BAR_HEIGHT = 9f;
 
     private Player player;
-    private TextureRegion barBackMid;
-    private TextureRegion barLifeMid;
-    private TextureRegion barManaMid;
+    private TextureRegion barBack;
+    private TextureRegion barLife;
+    private TextureRegion barMana;
     private float leftEdge, rightEdge;
 
     private Label lifeLabel, manaLabel;
@@ -35,9 +35,9 @@ public class PlayerBar extends Actor {
         this.rightEdge = rightEdge;
         setBounds(leftEdge, y, rightEdge - leftEdge, BAR_HEIGHT * (1 + fontScale));
 
-        barBackMid = new TextureRegion(new Texture(Gdx.files.internal("barBackMid.png")));
-        barLifeMid = new TextureRegion(new Texture(Gdx.files.internal("barRedMid.png")));
-        barManaMid = new TextureRegion(new Texture(Gdx.files.internal("barBlueMid.png")));
+        barBack = new TextureRegion(new Texture(Gdx.files.internal("barBack.png")));
+        barLife = new TextureRegion(new Texture(Gdx.files.internal("barRed.png")));
+        barMana = new TextureRegion(new Texture(Gdx.files.internal("barBlue.png")));
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
 
@@ -66,14 +66,14 @@ public class PlayerBar extends Actor {
         manaLabel.draw(batch, parentAlpha);
 
         batch.draw(
-                barBackMid,
+                barBack,
                 leftEdge,
                 getY() - BAR_HEIGHT,
                 BAR_WIDTH,
                 BAR_HEIGHT
         );
         batch.draw(
-                barLifeMid,
+                barLife,
                 leftEdge,
                 getY() - BAR_HEIGHT,
                 BAR_WIDTH * (player.getVieCombat() / player.getVie()),
@@ -81,14 +81,14 @@ public class PlayerBar extends Actor {
         );
 
         batch.draw(
-                barBackMid,
+                barBack,
                 rightEdge - BAR_WIDTH,
                 getY() - BAR_HEIGHT,
                 BAR_WIDTH,
                 BAR_HEIGHT
         );
         batch.draw(
-                barManaMid,
+                barMana,
                 rightEdge - BAR_WIDTH * (player.getManaCombat() / player.getMana()),
                 getY() - BAR_HEIGHT,
                 BAR_WIDTH * (player.getManaCombat() / player.getMana()),
