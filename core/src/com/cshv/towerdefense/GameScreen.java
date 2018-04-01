@@ -229,7 +229,7 @@ public class GameScreen extends ScreenAdapter {
 
     private void update(float delta) {
         slime.update(delta);
-        tower.update(delta);
+        //tower.update(delta);
         updateCells();
 
         uiStage.act(delta);

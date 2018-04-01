@@ -9,7 +9,7 @@ import com.cshv.towerdefense.Towers.Tower;
  * Created by harri on 31/03/2018.
  */
 
-public class ProjectileTower extends Spell{
+public class TowerProjectile extends Spell{
 
     private TextureRegion projectile;
     private Tower tower;
@@ -22,7 +22,7 @@ public class ProjectileTower extends Spell{
     private float vitesseX;
     private float vitesseY;
 
-    public ProjectileTower(TextureRegion projectile, Tower tower,Cell cell, int type){
+    public TowerProjectile(TextureRegion projectile, Tower tower, Cell cell, int type){
         this.projectile = projectile;
         this.tower = tower;
         this.cell = cell;
@@ -63,9 +63,6 @@ public class ProjectileTower extends Spell{
     @Override
     public boolean draw(SpriteBatch batch) {
         batch.draw(projectile,x,y);
-        if(x == xTarget && y == yTarget){
-            return true;
-        }
-        return false;
+        return x == xTarget && y == yTarget;
     }
 }
