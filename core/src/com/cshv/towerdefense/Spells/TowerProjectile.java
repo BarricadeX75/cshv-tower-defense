@@ -1,5 +1,6 @@
 package com.cshv.towerdefense.Spells;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cshv.towerdefense.Cell;
@@ -21,6 +22,7 @@ public class TowerProjectile extends Spell{
     private float yTarget;
     private float vitesseX;
     private float vitesseY;
+    private int conter;
 
     public TowerProjectile(TextureRegion projectile, Tower tower, Cell cell, int type){
         this.projectile = projectile;
@@ -31,8 +33,9 @@ public class TowerProjectile extends Spell{
         y = tower.getY();
         xTarget = cell.getMob().getX();
         yTarget = cell.getMob().getY();
-        vitesseX = (x-xTarget)/5;
-        vitesseY = (y-yTarget)/5;
+        vitesseX = (x-xTarget)/10;
+        vitesseY = (y-yTarget)/10;
+        conter = 0;
 
     }
 
@@ -51,18 +54,25 @@ public class TowerProjectile extends Spell{
 
     @Override
     public void move() {
-        x+= vitesseX;
-        y+= vitesseY;
+            x -= vitesseX;
+            y -= vitesseY;
     }
 
     @Override
     public void update(float delta) {
         move();
+        conter++;
     }
 
     @Override
     public boolean draw(SpriteBatch batch) {
         batch.draw(projectile,x,y);
-        return x == xTarget && y == yTarget;
+
+        if(conter ==10){
+            setDegat();
+            return true;
+        }
+
+        return  false;
     }
 }

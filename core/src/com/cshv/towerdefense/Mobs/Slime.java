@@ -113,8 +113,8 @@ public class Slime extends Mob {
 
     @Override
     public int getCurrentCase() {
-        int numCase = (int) (chemin[currentCase].x%32 + ( chemin[currentCase].y%32 * World.NB_CASE_WIDTH ));
-        return numCase;
+        //int numCase = (int) (chemin[currentCase].x%32 + ( chemin[currentCase].y%32 * World.NB_CASE_WIDTH ));
+        return currentCase;
     }
 
     @Override

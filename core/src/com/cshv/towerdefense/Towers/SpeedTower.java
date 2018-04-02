@@ -1,5 +1,6 @@
 package com.cshv.towerdefense.Towers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,7 +25,7 @@ public class SpeedTower extends Tower {
     //private Array<Rectangle> caseDistOk;
     private TextureRegion towerFireEnd;
 
-    public SpeedTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower){
+    public SpeedTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower, float x, float y){
         towerFireEnd = towerAtc.get(towerAtc.size-1);
         actTower = new Animation<TextureRegion>(FRAME_DURATION,towerAtc);
         actTower.setPlayMode(Animation.PlayMode.LOOP);
@@ -32,6 +33,7 @@ public class SpeedTower extends Tower {
         chemin = parent.getChemin();
         setStat(lvlTower);
         timer = TimeUtils.millis();
+        setPosition(x,y);
         initCaseDistOk();
     }
 
@@ -44,8 +46,9 @@ public class SpeedTower extends Tower {
 
     public void initCaseDistOk(){
         caseDistOk = new Array<Integer>();
+
         for(int i=chemin.length-1 ; i>0 ; i--){
-            int distance = (int) Math.sqrt((int)(_x/32 - chemin[i].getX()/32)*(int)(_x/32 - chemin[i].getX()/32)) + (int) Math.sqrt((int)(_y/32 - chemin[i].getY()/32)*(int)(_y/32 - chemin[i].getY()/32));
+            int distance = (int) Math.sqrt((_x/32 - chemin[i].getX()/32)*(_x/32 - chemin[i].getX()/32)) + (int) Math.sqrt((_y/32 - chemin[i].getY()/32)*(_y/32 - chemin[i].getY()/32));
             if( portee >= distance){
                 caseDistOk.add(i);
             }
@@ -66,7 +69,7 @@ public class SpeedTower extends Tower {
     @Override
     public void getTarget() {
         if(TimeUtils.millis()>timer) {
-            for (int i = 0; i < caseDistOk.size-1; i++) {
+            for (int i = 0; i < caseDistOk.size; i++) {
                 if (parent.testCase(caseDistOk.get(i), 2)) {
                     parent.getTargetMobTower(this, caseDistOk.get(i), 1);
                     timer = TimeUtils.millis()+atcSpeed;

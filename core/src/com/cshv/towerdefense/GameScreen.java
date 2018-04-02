@@ -25,6 +25,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cshv.towerdefense.Mobs.Mob;
 import com.cshv.towerdefense.Mobs.Slime;
+import com.cshv.towerdefense.Spells.Spell;
+import com.cshv.towerdefense.Spells.TowerProjectile;
 import com.cshv.towerdefense.Towers.SpeedTower;
 import com.cshv.towerdefense.Towers.Tower;
 import com.cshv.towerdefense.Units.Unit;
@@ -58,10 +60,12 @@ public class GameScreen extends ScreenAdapter {
     private Array<TextureRegion> slimeTexturesUp;
     private Array<TextureRegion> slimeTexturesLeft;
     private Array<TextureRegion> slimeTexturesRight;
+    private Array<TextureRegion> projectileTexture;
 
     private Cell cells[];
     private Array<Mob> mobs = new Array<Mob>();
     private Array<Unit> units = new Array<Unit>();
+    private Array<Spell>spells = new Array<Spell>();
 
     private Player player = new Player();
     private Stage uiStage;
@@ -111,6 +115,10 @@ public class GameScreen extends ScreenAdapter {
         for(int i=0 ; i<1 ; i++){
             towerSpeedTextures.add(textureAtlas.findRegion("tour"));
         }
+        projectileTexture = new Array<TextureRegion>();
+        for(int i=1; i<2 ; i++){
+            projectileTexture.add(textureAtlas.findRegion("projectile"+i));
+        }
 
         //static chemin
         Array<Integer> trajet = new Array<Integer>();
@@ -125,9 +133,9 @@ public class GameScreen extends ScreenAdapter {
             cells[i] = new  Cell(i);
         }
         slime = new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this);
+        mobs.add(slime);
+        tower = new SpeedTower(towerSpeedTextures,this,1,world.getXcase(24),world.getYcase(24));
 
-        tower = new SpeedTower(towerSpeedTextures,this,1);
-        tower.setPosition(world.getXcase(24),world.getYcase(24));
 
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
         TextureRegion buttonUpTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonUp.png")));
@@ -231,8 +239,15 @@ public class GameScreen extends ScreenAdapter {
         slime.update(delta);
         tower.update(delta);
         updateCells();
+        updateSpell(delta);
 
         uiStage.act(delta);
+    }
+
+    private void updateSpell(float delta){
+        for(int i=0 ; i<spells.size ; i++){
+            spells.get(i).update(delta);
+        }
     }
 
     private void updateCells(){
@@ -409,7 +424,7 @@ public class GameScreen extends ScreenAdapter {
 
     public void getTargetMobTower(Tower tower, int cell, int type){
         switch (type){
-            case 1:
+            case 1: spells.add(new TowerProjectile(projectileTexture.get(0),tower,cells[cell],1));
                 break;
             case 2:
                 break;
@@ -433,11 +448,20 @@ public class GameScreen extends ScreenAdapter {
         batch.setTransformMatrix(camera.view);
         batch.begin();
         world.draw(batch);
+        drawSpell();
         slime.draw(batch);
         tower.draw(batch);
         batch.end();
 
         uiStage.draw();
+    }
+
+    private void drawSpell(){
+        for(int i=0 ; i<spells.size ; i++){
+            if(spells.get(i).draw(batch)){
+                spells.removeIndex(i);
+            }
+        }
     }
 
     private void teckWave(){
