@@ -58,10 +58,12 @@ public class SpeedTower extends Tower {
     public void initCaseDistOk(){
         caseDistOk = new Array<Integer>();
 
-        for(int i=chemin.length-1 ; i>0 ; i--){
+        for(int i=chemin.length-1 ; i>=0 ; i--){
             int distance = (int) Math.sqrt((_x/32 - chemin[i].getX()/32)*(_x/32 - chemin[i].getX()/32)) + (int) Math.sqrt((_y/32 - chemin[i].getY()/32)*(_y/32 - chemin[i].getY()/32));
+            Gdx.app.log(" distance case", "dist  "+distance);
             if( portee >= distance){
                 caseDistOk.add(i);
+                Gdx.app.log(" init ok", "case  "+i);
             }
         }
     }
@@ -79,7 +81,6 @@ public class SpeedTower extends Tower {
 
     @Override
     public void getTarget() {
-        Gdx.app.log("ici", "je c pas");
         if(tireOK){
             for (int i = 0; i < caseDistOk.size; i++) {
                 if (parent.testCase(caseDistOk.get(i), 2)) {

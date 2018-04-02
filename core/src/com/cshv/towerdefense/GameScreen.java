@@ -423,8 +423,10 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void getTargetMobTower(Tower tower, int cell, int type){
-        switch (type){
-            case 1: spells.add(new TowerProjectile(projectileTexture.get(0),tower,cells[cell],1));
+
+        switch (type) {
+            case 1:
+                spells.add(new TowerProjectile(projectileTexture.get(0), tower, cells, cells[cell].getMob(), 1));
                 break;
             case 2:
                 break;
@@ -433,6 +435,7 @@ public class GameScreen extends ScreenAdapter {
             case 4:
                 break;
         }
+
     }
 
     public Rectangle[] getChemin(){

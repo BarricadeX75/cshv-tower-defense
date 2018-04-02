@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cshv.towerdefense.Cell;
+import com.cshv.towerdefense.Mobs.Mob;
 import com.cshv.towerdefense.Towers.Tower;
 
 /**
@@ -14,7 +15,8 @@ public class TowerProjectile extends Spell{
 
     private TextureRegion projectile;
     private Tower tower;
-    private Cell cell;
+    private Cell cell[];
+    private Mob mob;
     private int typeTower;
     private float x;
     private float y;
@@ -24,15 +26,16 @@ public class TowerProjectile extends Spell{
     private float vitesseY;
     private int conter;
 
-    public TowerProjectile(TextureRegion projectile, Tower tower, Cell cell, int type){
+    public TowerProjectile(TextureRegion projectile, Tower tower, Cell[] cell, Mob mob, int type){
         this.projectile = projectile;
         this.tower = tower;
         this.cell = cell;
         typeTower = type;
         x = tower.getX();
         y = tower.getY();
-        xTarget = cell.getMob().getX();
-        yTarget = cell.getMob().getY();
+        this.mob = mob;
+        xTarget = mob.getX();
+        yTarget = mob.getY();
         vitesseX = (x-xTarget)/10;
         vitesseY = (y-yTarget)/10;
         conter = 0;
@@ -42,12 +45,13 @@ public class TowerProjectile extends Spell{
     public void setDegat(){
         int dmg = tower.getAttaque();
         switch(typeTower){
-            case 1: cell.getMob().setDegats(dmg);
+            case 1: mob.setDegats(dmg);
+                Gdx.app.log("degat", "degat");
                 break;
-            case 2: cell.getMob().setDegats(dmg);
-                cell.getMob().addMalus(tower.getMalus(),4000);
+            case 2: mob.setDegats(dmg);
+                mob.addMalus(tower.getMalus(),4000);
                 break;
-            case 3: cell.degatZone(dmg);
+            case 3: cell[mob.getCurrentCase()].degatZone(dmg);
                 break;
         }
     }
