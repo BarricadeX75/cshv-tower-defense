@@ -1,11 +1,8 @@
 package com.cshv.towerdefense.Spells;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.cshv.towerdefense.Cell;
 import com.cshv.towerdefense.Mobs.Mob;
-import com.cshv.towerdefense.Towers.Tower;
 import com.cshv.towerdefense.Units.Unit;
 
 /**
