@@ -147,10 +147,12 @@ public class GameScreen extends ScreenAdapter {
         Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
         float nameScale = 0.5f;
         float textScale = 0.4f;
-        float column1 = 80;
-        float column2 = 160;
-        float column3 = 240;
-        float column4 = 320;
+        float columnShift = 6;
+        float column1 = 64;
+        float column2 = 128;
+        float column3 = 192;
+        float column4 = 256;
+        float column5 = 320;
         float row1 = 70;
         float row2 = 50;
         float row3 = 30;
@@ -169,7 +171,7 @@ public class GameScreen extends ScreenAdapter {
         TextButton uiButton1 = new TextButton("Unité 1", textButtonStyle);
         uiButton1.setTransform(true);
         uiButton1.setScale(textScale);
-        uiButton1.setPosition(column1, row3, Align.center);
+        uiButton1.setPosition(column1 + columnShift, row3, Align.center);
         uiButton1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -182,7 +184,7 @@ public class GameScreen extends ScreenAdapter {
         TextButton uiButton2 = new TextButton("Unité 2", textButtonStyle);
         uiButton2.setTransform(true);
         uiButton2.setScale(textScale);
-        uiButton2.setPosition(column2, row3, Align.center);
+        uiButton2.setPosition(column2 + columnShift, row3, Align.center);
         uiButton2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -195,7 +197,7 @@ public class GameScreen extends ScreenAdapter {
         TextButton uiButton3 = new TextButton("Unité 3", textButtonStyle);
         uiButton3.setTransform(true);
         uiButton3.setScale(textScale);
-        uiButton3.setPosition(column3, row3, Align.center);
+        uiButton3.setPosition(column3 + columnShift, row3, Align.center);
         uiButton3.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -208,7 +210,7 @@ public class GameScreen extends ScreenAdapter {
         TextButton uiButton4 = new TextButton("Unité 4", textButtonStyle);
         uiButton4.setTransform(true);
         uiButton4.setScale(textScale);
-        uiButton4.setPosition(column4, row3, Align.center);
+        uiButton4.setPosition(column4 + columnShift, row3, Align.center);
         uiButton4.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -217,6 +219,19 @@ public class GameScreen extends ScreenAdapter {
             }
         });
         uiStage.addActor(uiButton4);
+
+        TextButton uiButton5 = new TextButton("Unité 5", textButtonStyle);
+        uiButton5.setTransform(true);
+        uiButton5.setScale(textScale);
+        uiButton5.setPosition(column5 + columnShift, row3, Align.center);
+        uiButton5.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //
+            }
+        });
+        uiStage.addActor(uiButton5);
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         timer = new Date().getTime() + 5000;
