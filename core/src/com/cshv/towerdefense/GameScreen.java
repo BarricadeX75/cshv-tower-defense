@@ -243,7 +243,6 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         super.render(delta);
-        Gdx.app.log("ici ok ","aloa");
         update(delta);
         clearScreen();
         draw();
@@ -505,7 +504,6 @@ public class GameScreen extends ScreenAdapter {
             if(mobs.get(i).draw(batch)){
 
                 mobs.removeIndex(i);
-                Gdx.app.log("taill", " == "+mobs.size);
             }
         }
     }
