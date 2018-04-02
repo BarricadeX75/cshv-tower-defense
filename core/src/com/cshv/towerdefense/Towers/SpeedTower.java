@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 
 /**
@@ -19,6 +20,8 @@ public class SpeedTower extends Tower {
     private float animationTimer = 0;
     private Rectangle chemin[];
     private GameScreen parent;
+    private Timer.Task getTarget;
+    private boolean tireOK = true;
 
     private Animation<TextureRegion> actTower;
     private Array<Integer> caseDistOk;
@@ -35,6 +38,14 @@ public class SpeedTower extends Tower {
         timer = TimeUtils.millis();
         setPosition(x,y);
         initCaseDistOk();
+        getTarget = new Timer.Task() {
+            @Override
+            public void run() {
+                //Gdx.app.log()
+                tireOK = true;
+            }
+        };
+
     }
 
     public void setStat( int lvlTower){
@@ -68,11 +79,14 @@ public class SpeedTower extends Tower {
 
     @Override
     public void getTarget() {
-        if(TimeUtils.millis()>timer) {
+        Gdx.app.log("ici", "je c pas");
+        if(tireOK){
             for (int i = 0; i < caseDistOk.size; i++) {
                 if (parent.testCase(caseDistOk.get(i), 2)) {
                     parent.getTargetMobTower(this, caseDistOk.get(i), 1);
-                    timer = TimeUtils.millis()+atcSpeed;
+
+                    Timer.schedule(getTarget, 1);
+                    tireOK = false;
                 }
             }
         }
