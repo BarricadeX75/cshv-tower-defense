@@ -98,7 +98,7 @@ public class Slime extends Mob {
     @Override
     public void update(float delta) {
         animationTimer += delta;
-        if(vie == 0){
+        if(vie <= 0){
             dead = true;
         }else{
              move();

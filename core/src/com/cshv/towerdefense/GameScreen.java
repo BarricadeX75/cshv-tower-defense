@@ -46,8 +46,6 @@ public class GameScreen extends ScreenAdapter {
     private SpriteBatch batch;
     private World world;
     private Rectangle[] chemin;
-    private Slime slime;
-    private SpeedTower tower;
     private int lvlStage = 1;
     private int nbMonster;
     private int monsterCreate;
@@ -65,7 +63,8 @@ public class GameScreen extends ScreenAdapter {
     private Cell cells[];
     private Array<Mob> mobs = new Array<Mob>();
     private Array<Unit> units = new Array<Unit>();
-    private Array<Spell>spells = new Array<Spell>();
+    private Array<Spell> spells = new Array<Spell>();
+    private Array<Tower> towers = new Array<Tower>();
 
     private Player player = new Player();
     private Stage uiStage;
@@ -132,10 +131,9 @@ public class GameScreen extends ScreenAdapter {
         for(int i=0 ; i<chemin.length ; i++){
             cells[i] = new  Cell(i);
         }
-        slime = new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this);
-        mobs.add(slime);
-        tower = new SpeedTower(towerSpeedTextures,this,1,world.getXcase(24),world.getYcase(24));
 
+        mobs.add(new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this));
+        towers.add(new SpeedTower(towerSpeedTextures,this,1,world.getXcase(24),world.getYcase(24)));
 
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
         TextureRegion buttonUpTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonUp.png")));
@@ -230,25 +228,46 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         super.render(delta);
+        Gdx.app.log("ici ok ","aloa");
         update(delta);
         clearScreen();
         draw();
     }
 
     private void update(float delta) {
-        slime.update(delta);
-        tower.update(delta);
         updateCells();
-        updateSpell(delta);
+        updateMobs(delta);
+        updateTowers(delta);
+        updateUnits(delta);
+        updateSpells(delta);
 
         uiStage.act(delta);
     }
 
-    private void updateSpell(float delta){
+    private void updateSpells(float delta){
         for(int i=0 ; i<spells.size ; i++){
             spells.get(i).update(delta);
         }
     }
+
+    private void updateTowers(float delta){
+        for(int i=0 ; i<towers.size ; i++){
+            towers.get(i).update(delta);
+        }
+    }
+
+    private void updateMobs(float delta){
+        for(int i=0 ; i<mobs.size ; i++){
+            mobs.get(i).update(delta);
+        }
+    }
+
+    private void updateUnits(float delta){
+        for(int i=0 ; i<units.size ; i++){
+            units.get(i).update(delta);
+        }
+    }
+
 
     private void updateCells(){
         for(int i=0 ; i<cells.length ; i++){
@@ -451,15 +470,40 @@ public class GameScreen extends ScreenAdapter {
         batch.setTransformMatrix(camera.view);
         batch.begin();
         world.draw(batch);
-        drawSpell();
-        slime.draw(batch);
-        tower.draw(batch);
+        drawSpells();
+        drawMobs();
+        drawUnits();
+        drawTowers();
         batch.end();
 
         uiStage.draw();
     }
 
-    private void drawSpell(){
+    private void drawTowers(){
+        for(int i=0 ; i<towers.size ; i++){
+            towers.get(i).draw(batch);
+        }
+    }
+
+    private void drawMobs(){
+        for(int i=0 ; i<mobs.size ; i++){
+            if(mobs.get(i).draw(batch)){
+
+                mobs.removeIndex(i);
+                Gdx.app.log("taill", " == "+mobs.size);
+            }
+        }
+    }
+
+    private void drawUnits(){
+        for(int i=0 ; i<units.size ; i++){
+            if(units.get(i).draw(batch)){
+                units.removeIndex(i);
+            }
+        }
+    }
+
+    private void drawSpells(){
         for(int i=0 ; i<spells.size ; i++){
             if(spells.get(i).draw(batch)){
                 spells.removeIndex(i);
