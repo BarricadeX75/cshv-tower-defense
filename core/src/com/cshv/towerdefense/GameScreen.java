@@ -173,7 +173,7 @@ public class GameScreen extends ScreenAdapter {
                 barBack, barRed, barBlue);
         uiStage.addActor(playerBar);
 
-        TextButton uiButton1 = new TextButton("Unité 1", textButtonStyle);
+        TextButton uiButton1 = new TextButton("Chevalier", textButtonStyle);
         uiButton1.setTransform(true);
         uiButton1.setScale(textScale);
         uiButton1.setPosition(column1 + columnShift, row3, Align.center);
@@ -181,12 +181,13 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                player.recevoirDegats(1);
+                player.depenserMana(1);
+                //
             }
         });
         uiStage.addActor(uiButton1);
 
-        TextButton uiButton2 = new TextButton("Unité 2", textButtonStyle);
+        TextButton uiButton2 = new TextButton("Mage", textButtonStyle);
         uiButton2.setTransform(true);
         uiButton2.setScale(textScale);
         uiButton2.setPosition(column2 + columnShift, row3, Align.center);
@@ -195,11 +196,12 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
+                //
             }
         });
         uiStage.addActor(uiButton2);
 
-        TextButton uiButton3 = new TextButton("Unité 3", textButtonStyle);
+        TextButton uiButton3 = new TextButton("Moine", textButtonStyle);
         uiButton3.setTransform(true);
         uiButton3.setScale(textScale);
         uiButton3.setPosition(column3 + columnShift, row3, Align.center);
@@ -207,12 +209,13 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                player.depenserMana(1);
                 //
             }
         });
         uiStage.addActor(uiButton3);
 
-        TextButton uiButton4 = new TextButton("Unité 4", textButtonStyle);
+        TextButton uiButton4 = new TextButton("Rogue", textButtonStyle);
         uiButton4.setTransform(true);
         uiButton4.setScale(textScale);
         uiButton4.setPosition(column4 + columnShift, row3, Align.center);
@@ -220,12 +223,13 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                player.depenserMana(1);
                 //
             }
         });
         uiStage.addActor(uiButton4);
 
-        TextButton uiButton5 = new TextButton("Unité 5", textButtonStyle);
+        TextButton uiButton5 = new TextButton("Healer", textButtonStyle);
         uiButton5.setTransform(true);
         uiButton5.setScale(textScale);
         uiButton5.setPosition(column5 + columnShift, row3, Align.center);
@@ -233,6 +237,7 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                player.depenserMana(1);
                 //
             }
         });
