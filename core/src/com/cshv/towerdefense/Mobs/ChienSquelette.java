@@ -1,5 +1,6 @@
 package com.cshv.towerdefense.Mobs;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -179,8 +180,17 @@ public class ChienSquelette extends Mob {
 
     @Override
     public boolean draw(SpriteBatch batch) {
-        TextureRegion slim = currentAnimation.getKeyFrame(animationTimer);
-        batch.draw( slim, _x, _y);
+        TextureRegion texture = currentAnimation.getKeyFrame(animationTimer);
+
+        if (visible) {
+            Color c = batch.getColor();
+            batch.setColor(c.r, c.g, c.b, 0.5f);
+            batch.draw(texture, _x, _y);
+            batch.setColor(c.r, c.g, c.b, c.a);
+        }
+        else {
+            batch.draw(texture, _x, _y);
+        }
 
         return dead;
     }
