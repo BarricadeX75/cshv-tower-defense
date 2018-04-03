@@ -14,7 +14,7 @@ import com.cshv.towerdefense.GameScreen;
  * Created by harri on 16/03/2018.
  */
 
-public class SpeedTower extends Tower {
+public class FastTower extends Tower {
 
     private static final float FRAME_DURATION = 0.1F;
     private float animationTimer = 0;
@@ -28,7 +28,7 @@ public class SpeedTower extends Tower {
     //private Array<Rectangle> caseDistOk;
     private TextureRegion towerFireEnd;
 
-    public SpeedTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower, float x, float y){
+    public FastTower(Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower, float x, float y){
         towerFireEnd = towerAtc.get(towerAtc.size-1);
         actTower = new Animation<TextureRegion>(FRAME_DURATION,towerAtc);
         actTower.setPlayMode(Animation.PlayMode.LOOP);

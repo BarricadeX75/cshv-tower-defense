@@ -27,7 +27,7 @@ import com.cshv.towerdefense.Mobs.Mob;
 import com.cshv.towerdefense.Mobs.Slime;
 import com.cshv.towerdefense.Spells.Spell;
 import com.cshv.towerdefense.Spells.TowerProjectile;
-import com.cshv.towerdefense.Towers.SpeedTower;
+import com.cshv.towerdefense.Towers.FastTower;
 import com.cshv.towerdefense.Towers.Tower;
 import com.cshv.towerdefense.Units.Unit;
 
@@ -133,7 +133,7 @@ public class GameScreen extends ScreenAdapter {
         }
 
         mobs.add(new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this));
-        towers.add(new SpeedTower(towerSpeedTextures,this,1,world.getXcase(24),world.getYcase(24)));
+        towers.add(new FastTower(towerSpeedTextures,this,1,world.getXcase(24),world.getYcase(24)));
 
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
         TextureRegion buttonUpTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonUp.png")));
