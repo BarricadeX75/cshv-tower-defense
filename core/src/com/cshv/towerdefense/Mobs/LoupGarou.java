@@ -182,7 +182,7 @@ public class LoupGarou extends Mob {
     public boolean draw(SpriteBatch batch) {
         TextureRegion texture = currentAnimation.getKeyFrame(animationTimer);
 
-        if (visible) {
+        if (!visible) {
             Color c = batch.getColor();
             batch.setColor(c.r, c.g, c.b, 0.5f);
             batch.draw(texture, _x, _y);
