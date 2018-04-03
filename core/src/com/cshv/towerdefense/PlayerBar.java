@@ -1,8 +1,6 @@
 package com.cshv.towerdefense;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -29,15 +27,15 @@ public class PlayerBar extends Actor {
     private Label lifeLabel, manaLabel;
 
 
-    public PlayerBar(Player player, float leftEdge, float rightEdge, float y, BitmapFont bitmapFont, float fontScale) {
+    public PlayerBar(Player player, float leftEdge, float rightEdge, float y, BitmapFont bitmapFont, float fontScale,
+                     TextureRegion barBack, TextureRegion barLife, TextureRegion barMana) {
         this.player = player;
         this.leftEdge = leftEdge;
         this.rightEdge = rightEdge;
+        this.barBack = barBack;
+        this.barLife = barLife;
+        this.barMana = barMana;
         setBounds(leftEdge, y, rightEdge - leftEdge, BAR_HEIGHT * (1 + fontScale));
-
-        barBack = new TextureRegion(new Texture(Gdx.files.internal("barBack.png")));
-        barLife = new TextureRegion(new Texture(Gdx.files.internal("barRed.png")));
-        barMana = new TextureRegion(new Texture(Gdx.files.internal("barBlue.png")));
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
 

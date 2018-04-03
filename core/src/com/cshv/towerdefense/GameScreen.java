@@ -59,6 +59,7 @@ public class GameScreen extends ScreenAdapter {
     private Array<TextureRegion> slimeTexturesLeft;
     private Array<TextureRegion> slimeTexturesRight;
     private Array<TextureRegion> projectileTexture;
+    private TextureRegion barBack, barRed, barBlue;
 
     private Cell cells[];
     private Array<Mob> mobs = new Array<Mob>();
@@ -118,6 +119,9 @@ public class GameScreen extends ScreenAdapter {
         for(int i=1; i<2 ; i++){
             projectileTexture.add(textureAtlas.findRegion("projectile"+i));
         }
+        barBack = new TextureRegion(new Texture(Gdx.files.internal("barBack.png")));
+        barRed = new TextureRegion(new Texture(Gdx.files.internal("barRed.png")));
+        barBlue = new TextureRegion(new Texture(Gdx.files.internal("barBlue.png")));
 
         //static chemin
         Array<Integer> trajet = new Array<Integer>();
@@ -133,7 +137,7 @@ public class GameScreen extends ScreenAdapter {
         }
 
         mobs.add(new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this));
-        towers.add(new FastTower(towerSpeedTextures,this,1,world.getXcase(24),world.getYcase(24)));
+        towers.add(new FastTower(towerSpeedTextures,this,1,world.getXcase(24),world.getYcase(24), barBack, barBlue));
 
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
         TextureRegion buttonUpTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonUp.png")));
@@ -165,7 +169,8 @@ public class GameScreen extends ScreenAdapter {
         nameLabel.setPosition(TowerDefenseGame.WORLD_WIDTH / 2 + ((nameLabel.getWidth() / 2) * nameScale), row1, Align.center);
         uiStage.addActor(nameLabel);
 
-        PlayerBar playerBar = new PlayerBar(player, 0, TowerDefenseGame.WORLD_WIDTH, row2, bitmapFont, textScale);
+        PlayerBar playerBar = new PlayerBar(player, 0, TowerDefenseGame.WORLD_WIDTH, row2, bitmapFont, textScale,
+                barBack, barRed, barBlue);
         uiStage.addActor(playerBar);
 
         TextButton uiButton1 = new TextButton("Unité 1", textButtonStyle);

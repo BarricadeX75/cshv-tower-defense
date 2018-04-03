@@ -1,7 +1,6 @@
 package com.cshv.towerdefense.Towers;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -15,16 +14,17 @@ import com.cshv.towerdefense.GameScreen;
 public class ZoneTower extends Tower {
 
     private static final float FRAME_DURATION = 0.1F;
-    private float animationTimer = 0;
     private Rectangle chemin[];
     private GameScreen parent;
 
-    private Animation<TextureRegion> actTower;
     private Array<Integer> caseDistOk;
     //private Array<Rectangle> caseDistOk;
     private TextureRegion towerFireEnd;
 
-    public ZoneTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower){
+    public ZoneTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower,
+                      TextureRegion barBack, TextureRegion barFront) {
+        super(barBack, barFront);
+
         towerFireEnd = towerAtc.get(towerAtc.size-1);
         actTower = new Animation<TextureRegion>(FRAME_DURATION,towerAtc);
         actTower.setPlayMode(Animation.PlayMode.LOOP);
@@ -50,17 +50,6 @@ public class ZoneTower extends Tower {
         }
     }
 
-    public void setPosition(float x , float y){
-        _x = x;
-        _y = y;
-    }
-
-    @Override
-    public void update(float delta) {
-        animationTimer += delta;
-        getTarget();
-    }
-
     @Override
     public void getTarget() {
         if(TimeUtils.millis()>timer) {
@@ -71,36 +60,5 @@ public class ZoneTower extends Tower {
                 }
             }
         }
-    }
-
-    @Override
-    public Rectangle getCaseDist() {
-        return null;
-    }
-
-    @Override
-    public float getMalus() {
-        return malus;
-    }
-
-    @Override
-    public void draw(SpriteBatch batch) {
-        TextureRegion tower = actTower.getKeyFrame(animationTimer);
-        batch.draw(tower,_x,_y);
-    }
-
-    @Override
-    public float getX() {
-        return _x;
-    }
-
-    @Override
-    public float getY() {
-        return _y;
-    }
-
-    @Override
-    public int getAttaque() {
-        return attaque;
     }
 }

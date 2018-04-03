@@ -2,11 +2,9 @@ package com.cshv.towerdefense.Towers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 
@@ -17,28 +15,28 @@ import com.cshv.towerdefense.GameScreen;
 public class FastTower extends Tower {
 
     private static final float FRAME_DURATION = 0.1F;
-    private float animationTimer = 0;
     private Rectangle chemin[];
     private GameScreen parent;
-    private Timer.Task getTarget;
+    private Timer.Task getTargetTask;
     private boolean tireOK = true;
 
-    private Animation<TextureRegion> actTower;
     private Array<Integer> caseDistOk;
     //private Array<Rectangle> caseDistOk;
     private TextureRegion towerFireEnd;
 
-    public FastTower(Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower, float x, float y){
+    public FastTower(Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower, float x, float y,
+                     TextureRegion barBack, TextureRegion barFront) {
+        super(barBack, barFront);
+
         towerFireEnd = towerAtc.get(towerAtc.size-1);
         actTower = new Animation<TextureRegion>(FRAME_DURATION,towerAtc);
         actTower.setPlayMode(Animation.PlayMode.LOOP);
         parent = jeu;
         chemin = parent.getChemin();
         setStat(lvlTower);
-        timer = TimeUtils.millis();
         setPosition(x,y);
         initCaseDistOk();
-        getTarget = new Timer.Task() {
+        getTargetTask = new Timer.Task() {
             @Override
             public void run() {
                 //Gdx.app.log()
@@ -68,17 +66,6 @@ public class FastTower extends Tower {
         }
     }
 
-    public void setPosition(float x , float y){
-        _x = x;
-        _y = y;
-    }
-
-    @Override
-    public void update(float delta) {
-        animationTimer += delta;
-        getTarget();
-    }
-
     @Override
     public void getTarget() {
         if(tireOK){
@@ -86,41 +73,10 @@ public class FastTower extends Tower {
                 if (parent.testCase(caseDistOk.get(i), 2)) {
                     parent.getTargetMobTower(this, caseDistOk.get(i), 1);
 
-                    Timer.schedule(getTarget, 1);
+                    Timer.schedule(getTargetTask, 1);
                     tireOK = false;
                 }
             }
         }
-    }
-
-    @Override
-    public Rectangle getCaseDist() {
-        return null;
-    }
-
-    @Override
-    public float getMalus() {
-        return malus;
-    }
-
-    @Override
-    public void draw(SpriteBatch batch) {
-        TextureRegion tower = actTower.getKeyFrame(animationTimer);
-        batch.draw(tower,_x,_y);
-    }
-
-    @Override
-    public float getX() {
-        return _x;
-    }
-
-    @Override
-    public float getY() {
-        return _y;
-    }
-
-    @Override
-    public int getAttaque() {
-        return attaque;
     }
 }
