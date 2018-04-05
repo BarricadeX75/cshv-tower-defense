@@ -383,7 +383,7 @@ public class GameScreen extends ScreenAdapter {
         return false;
     }
 
-    public void getTargetHeal(Unit unit){
+    public boolean getTargetHeal(Unit unit){
         Unit target = null;
         for(int i=unit.getPo() ; i>0 ; i--){
             if(unit.getCurrentCase()+i<chemin.length-1){
@@ -422,10 +422,12 @@ public class GameScreen extends ScreenAdapter {
             }
 
             unit.setDirection(direction);
+            return true;
         }
+        return false;
     }
 
-    public void getTargetMob(Unit unit){
+    public boolean getTargetMob(Unit unit){
         Mob target = null;
         for(int i=unit.getPo() ; i>0 ; i--){
             if(unit.getCurrentCase()+i<chemin.length-1){
@@ -463,7 +465,9 @@ public class GameScreen extends ScreenAdapter {
                 direction = 4;
             }
             unit.setDirection(direction);
+            return true;
         }
+        return false;
     }
 
     public void getTargetMobTower(Tower tower, int cell, int type){
