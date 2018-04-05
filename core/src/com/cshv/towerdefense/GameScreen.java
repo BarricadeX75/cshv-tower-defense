@@ -52,12 +52,80 @@ public class GameScreen extends ScreenAdapter {
     private long timer;
     private int numWave;
 
+    private TextureAtlas textureAtlas;
     private Array<TextureRegion> solTextures;
     private Array<TextureRegion> cheminTextures;
     private Array<TextureRegion> towerSpeedTextures;
-    private Array<TextureRegion> slimeTexturesUp;
-    private Array<TextureRegion> slimeTexturesLeft;
-    private Array<TextureRegion> slimeTexturesRight;
+    private Array<TextureRegion> slime_TexturesUp;
+    private Array<TextureRegion> slime_TexturesLeft;
+    private Array<TextureRegion> slime_TexturesRight;
+    private Array<TextureRegion> slime_TextureDown;
+    private Array<TextureRegion> chienSquelette_TexturesUp;
+    private Array<TextureRegion> chienSquelette_TexturesLeft;
+    private Array<TextureRegion> chienSquelette_TexturesRight;
+    private Array<TextureRegion> chienSquelette_TextureDown;
+    private Array<TextureRegion> griffon_TexturesUp;
+    private Array<TextureRegion> griffon_TexturesLeft;
+    private Array<TextureRegion> griffon_TexturesRight;
+    private Array<TextureRegion> griffon_TextureDown;
+    private Array<TextureRegion> lamia_TexturesUp;
+    private Array<TextureRegion> lamia_TexturesLeft;
+    private Array<TextureRegion> lamia_TexturesRight;
+    private Array<TextureRegion> lamia_TextureDown;
+    private Array<TextureRegion> loupGarou_TexturesUp;
+    private Array<TextureRegion> loupGarou_TexturesLeft;
+    private Array<TextureRegion> loupGarou_TexturesRight;
+    private Array<TextureRegion> loupGarou_TextureDown;
+    private Array<TextureRegion> orc_TexturesUp;
+    private Array<TextureRegion> orc_TexturesLeft;
+    private Array<TextureRegion> orc_TexturesRight;
+    private Array<TextureRegion> orc_TextureDown;
+    private Array<TextureRegion> centaure_TexturesUp;
+    private Array<TextureRegion> centaure_TexturesLeft;
+    private Array<TextureRegion> centaure_TexturesRight;
+    private Array<TextureRegion> centaure_TextureDown;
+    private Array<TextureRegion> chevalier_TexturesUp;
+    private Array<TextureRegion> chevalier_TexturesLeft;
+    private Array<TextureRegion> chevalier_TexturesRight;
+    private Array<TextureRegion> chevalier_TextureDown;
+    private Array<TextureRegion> chevalier_atk_TexturesUp;
+    private Array<TextureRegion> chevalier_atk_TexturesLeft;
+    private Array<TextureRegion> chevalier_atk_TexturesRight;
+    private Array<TextureRegion> chevalier_atk_TextureDown;
+    private Array<TextureRegion> healer_TexturesUp;
+    private Array<TextureRegion> healer_TexturesLeft;
+    private Array<TextureRegion> healer_TexturesRight;
+    private Array<TextureRegion> healer_TextureDown;;
+    private Array<TextureRegion> healer_atk_TexturesUp;
+    private Array<TextureRegion> healer_atk_TexturesLeft;
+    private Array<TextureRegion> healer_atk_TexturesRight;
+    private Array<TextureRegion> healer_atk_TextureDown;
+    private Array<TextureRegion> moine_TexturesUp;
+    private Array<TextureRegion> moine_TexturesLeft;
+    private Array<TextureRegion> moine_TexturesRight;
+    private Array<TextureRegion> moine_TextureDown;
+    private Array<TextureRegion> moine_atk_TexturesUp;
+    private Array<TextureRegion> moine_atk_TexturesLeft;
+    private Array<TextureRegion> moine_atk_TexturesRight;
+    private Array<TextureRegion> moine_atk_TextureDown;
+    private Array<TextureRegion> rogue_TexturesUp;
+    private Array<TextureRegion> rogue_TexturesLeft;
+    private Array<TextureRegion> rogue_TexturesRight;
+    private Array<TextureRegion> rogue_TextureDown;
+    private Array<TextureRegion> rogue_atk_TexturesUp;
+    private Array<TextureRegion> rogue_atk_TexturesLeft;
+    private Array<TextureRegion> rogue_atk_TexturesRight;
+    private Array<TextureRegion> rogue_atk_TextureDown;
+    private Array<TextureRegion> mage_TexturesUp;
+    private Array<TextureRegion> mage_TexturesLeft;
+    private Array<TextureRegion> mage_TexturesRight;
+    private Array<TextureRegion> mage_TextureDown;
+    private Array<TextureRegion> mage_atk_TexturesUp;
+    private Array<TextureRegion> mage_atk_TexturesLeft;
+    private Array<TextureRegion> mage_atk_TexturesRight;
+    private Array<TextureRegion> mage_atk_TextureDown;
+
+
     private Array<TextureRegion> projectileTexture;
     private TextureRegion barBack, barRed, barBlue;
 
@@ -90,35 +158,10 @@ public class GameScreen extends ScreenAdapter {
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
         batch = new SpriteBatch();
         bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
-        TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
-        solTextures = new Array<TextureRegion>();
-        for(int i=0 ; i<1 ; i++){
-            solTextures.add(textureAtlas.findRegion("herbe"));
-        }
-        cheminTextures = new Array<TextureRegion>();
-        for(int i=0 ; i<1 ; i++){
-            cheminTextures.add(textureAtlas.findRegion("sol"));
-        }
-        slimeTexturesUp = new Array<TextureRegion>();
-        for(int i=1 ; i<4 ; i++){
-            slimeTexturesUp.add(textureAtlas.findRegion("slimeVertical"+i));
-        }
-        slimeTexturesLeft = new Array<TextureRegion>();
-        for(int i=1 ; i<4 ; i++){
-            slimeTexturesLeft.add(textureAtlas.findRegion("slimeGauche"+i));
-        }
-        slimeTexturesRight = new Array<TextureRegion>();
-        for(int i=1 ; i<4 ; i++){
-            slimeTexturesRight.add(textureAtlas.findRegion("slimeDroite"+i));
-        }
-        towerSpeedTextures = new Array<TextureRegion>();
-        for(int i=0 ; i<1 ; i++){
-            towerSpeedTextures.add(textureAtlas.findRegion("tour"));
-        }
-        projectileTexture = new Array<TextureRegion>();
-        for(int i=1; i<2 ; i++){
-            projectileTexture.add(textureAtlas.findRegion("projectile"+i));
-        }
+
+        textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
+        initTextures();
+
         barBack = new TextureRegion(new Texture(Gdx.files.internal("barBack.png")));
         barRed = new TextureRegion(new Texture(Gdx.files.internal("barRed.png")));
         barBlue = new TextureRegion(new Texture(Gdx.files.internal("barBlue.png")));
@@ -136,7 +179,7 @@ public class GameScreen extends ScreenAdapter {
             cells[i] = new  Cell(i);
         }
 
-        mobs.add(new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this));
+        mobs.add(new Slime(slime_TexturesLeft,slime_TexturesRight,slime_TexturesUp,slime_TexturesUp,1,this));
         towers.add(new FastTower(towerSpeedTextures,this,1,world.getXcase(24),world.getYcase(24), barBack, barBlue));
 
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
@@ -246,6 +289,35 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void initTextures(){
+        solTextures = new Array<TextureRegion>();
+        for(int i=0 ; i<1 ; i++){
+            solTextures.add(textureAtlas.findRegion("herbe"));
+        }
+        cheminTextures = new Array<TextureRegion>();
+        for(int i=0 ; i<1 ; i++){
+            cheminTextures.add(textureAtlas.findRegion("sol"));
+        }
+        slime_TexturesUp = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            slime_TexturesUp.add(textureAtlas.findRegion("slimeVertical"+i));
+        }
+        slime_TexturesLeft = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            slime_TexturesLeft.add(textureAtlas.findRegion("slimeGauche"+i));
+        }
+        slime_TexturesRight = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            slime_TexturesRight.add(textureAtlas.findRegion("slimeDroite"+i));
+        }
+        towerSpeedTextures = new Array<TextureRegion>();
+        for(int i=0 ; i<1 ; i++){
+            towerSpeedTextures.add(textureAtlas.findRegion("tour"));
+        }
+        projectileTexture = new Array<TextureRegion>();
+        for(int i=1; i<2 ; i++){
+            projectileTexture.add(textureAtlas.findRegion("projectile"+i));
+        }
+
 
     }
 
@@ -311,7 +383,7 @@ public class GameScreen extends ScreenAdapter {
         if(new  Date().getTime() > timer && monsterCreate <= nbMonster){
             int rand = MathUtils.random(7);
             switch (rand){
-                case 0:mobs.add(new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this));
+                case 0:mobs.add(new Slime(slime_TexturesLeft,slime_TexturesRight,slime_TexturesUp,slime_TexturesUp,1,this));
                     monsterCreate++;
                     break;
                 case 1:
