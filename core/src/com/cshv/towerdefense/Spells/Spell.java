@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class Spell {
 
-    public abstract void move();
     public abstract void update(float delta);
     public abstract boolean draw(SpriteBatch batch);
 }

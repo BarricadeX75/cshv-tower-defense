@@ -245,6 +245,10 @@ public class GameScreen extends ScreenAdapter {
         numWave = 1;
     }
 
+    public void initTextures(){
+
+    }
+
     @Override
     public void render(float delta) {
         super.render(delta);

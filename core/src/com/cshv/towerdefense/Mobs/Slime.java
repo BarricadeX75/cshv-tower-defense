@@ -18,18 +18,6 @@ import java.util.Date;
 public class Slime extends Mob {
 
     private static final float FRAME_DURATION = 0.1F;
-    private float _x;
-    private float _y;
-    private float animationTimer = 0;
-    private int currentCase = 0;//enplacement dans chemin
-    private Rectangle chemin[];
-    private GameScreen parent;
-
-    private final Animation<TextureRegion> animeRight;
-    private final Animation<TextureRegion> animeLeft;
-    private final Animation<TextureRegion> animeUp;
-    private final Animation<TextureRegion> animeDown;
-    private Animation<TextureRegion>currentAnimation;
 
     public Slime(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
 
@@ -94,29 +82,6 @@ public class Slime extends Mob {
 
     }
 
-
-    @Override
-    public void update(float delta) {
-        animationTimer += delta;
-        if(vie <= 0){
-            dead = true;
-        }else{
-             move();
-        }
-
-    }
-
-    public void setPosition(float x , float y){
-        _x = x;
-        _y = y;
-    }
-
-    @Override
-    public int getCurrentCase() {
-        //int numCase = (int) (chemin[currentCase].x%32 + ( chemin[currentCase].y%32 * World.NB_CASE_WIDTH ));
-        return currentCase;
-    }
-
     @Override
     public void setCarrac(int lvlStage) {
         vie = 100 + ( lvlStage * 10 );
@@ -124,48 +89,6 @@ public class Slime extends Mob {
         defense = 0 + ( lvlStage );
         vitesse = 1 + lvlStage/2;
         portee = 1;
-    }
-
-    @Override
-    public int getDegats() {
-        return attaque;
-    }
-
-    @Override
-    public int getPo() {
-        return portee;
-    }
-
-    @Override
-    public float getX() {
-        return chemin[currentCase].getX();
-    }
-
-    @Override
-    public float getY() {
-        return chemin[currentCase].getY();
-    }
-
-    @Override
-    public void setDegats(int degats) {
-        int dmg = degats - defense;
-        if( dmg > 0 ){
-            vie -= dmg;
-        }
-    }
-
-    @Override
-    public void setDirection(int direction) {
-        switch (direction){
-            case 1: currentAnimation = animeLeft;
-                break;
-            case 2: currentAnimation = animeRight;
-                break;
-            case 3: currentAnimation = animeDown;
-                break;
-            case 4: currentAnimation = animeUp;
-                break;
-        }
     }
 
     @Override

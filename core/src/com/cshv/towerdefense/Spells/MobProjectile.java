@@ -41,7 +41,6 @@ public class MobProjectile extends Spell {
         unit.setDegats(dmg);
     }
 
-    @Override
     public void move() {
         x -= vitesseX;
         y -= vitesseY;

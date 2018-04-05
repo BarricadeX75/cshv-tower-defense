@@ -25,4 +25,12 @@ public abstract class Unit {
     public abstract int getPo();
     public abstract float getX();
     public abstract float getY();
+    public void setHeal(int heal){
+        if((vie+heal) <= vieMax){
+            vie += heal;
+        }
+        else {
+            vie = vieMax;
+        }
+    }
 }
