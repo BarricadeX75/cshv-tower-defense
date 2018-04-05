@@ -29,56 +29,11 @@ public class Lamia extends Mob {
         animeUp = new Animation<TextureRegion>(FRAME_DURATION,up);
         animeUp.setPlayMode(Animation.PlayMode.LOOP);
         setCarrac(lvlStage);
-        timerMalus = new Date().getTime();
         currentAnimation = animeDown;
         parent = jeu;
         chemin = parent.getChemin();
         currentCase = chemin.length-1;
         setPosition(chemin[currentCase].getX() , chemin[currentCase].getY()+ World.DEPART);
-
-    }
-
-    @Override
-    public void move() {
-        if(new Date().getTime()> timerMalus){
-            _malus = 0;
-        }
-
-        if (_x != chemin[currentCase].getX()) {
-            if (_x < chemin[currentCase].getX()) {
-                currentAnimation = animeRight;
-                _x += vitesse - _malus;
-            } else {
-                currentAnimation = animeLeft;
-                _x -= vitesse - _malus;
-            }
-        } else if(_y != chemin[currentCase].getY()){
-            if (_y < chemin[currentCase].getY()) {
-                currentAnimation = animeUp;
-                _y += vitesse - _malus;
-            } else {
-                currentAnimation = animeDown;
-                _y -= vitesse - _malus;
-            }
-        }else{
-            if(currentCase > 0){
-                for(int i = portee; i>0 ; i--){
-                    if(currentCase-i>=0){
-                        if(!parent.testCase(currentCase-i,1)) {
-                            currentCase--;
-                        }else{
-                            animationTimer = 0;
-                            parent.getTargetUnit(this);
-                        }
-                    }
-                }
-
-            }else{
-                animationTimer = 0;
-                currentAnimation = animeDown;
-            }
-        }
-
 
     }
 
@@ -90,20 +45,5 @@ public class Lamia extends Mob {
         vitesse = 1 + lvlStage/2;
         portee = 2;
     }
-
-    @Override
-    public void addMalus(float malus, int timer) {
-        _malus = malus;
-        timerMalus = (new Date().getTime() + timer);
-    }
-
-    @Override
-    public boolean draw(SpriteBatch batch) {
-        TextureRegion slim = currentAnimation.getKeyFrame(animationTimer);
-        batch.draw( slim, _x, _y);
-
-        return dead;
-    }
-
 
 }

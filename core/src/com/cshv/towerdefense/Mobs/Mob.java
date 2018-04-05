@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 
 public abstract class Mob {
@@ -26,11 +27,68 @@ public abstract class Mob {
     protected int defense;
     protected int portee;
     protected boolean dead = false;
-    protected long timerMalus;
+    protected boolean malusOn = false;
     protected float _malus;
     protected int direction;
+    protected boolean attaqueOk = true;
+    protected Timer.Task malusOff = new Timer.Task() {
+        @Override
+        public void run() {
+            malusOn = false;
+        }
+    };
+    protected Timer.Task getAttaque = new Timer.Task() {
+        @Override
+        public void run() {
+            attaqueOk = true;
+        }
+    };
 
-    public abstract void move();
+    public void move() {
+        if(!malusOn){
+            _malus = 0;
+        }
+
+        if (_x != chemin[currentCase].getX()) {
+            if (_x < chemin[currentCase].getX()) {
+                currentAnimation = animeRight;
+                _x += vitesse - _malus;
+            } else {
+                currentAnimation = animeLeft;
+                _x -= vitesse - _malus;
+            }
+        } else if(_y != chemin[currentCase].getY()){
+            if (_y < chemin[currentCase].getY()) {
+                currentAnimation = animeUp;
+                _y += vitesse - _malus;
+            } else {
+                currentAnimation = animeDown;
+                _y -= vitesse - _malus;
+            }
+        }else{
+            if(currentCase > 0 && attaqueOk){
+                for(int i = portee; i>0 ; i--){
+                    if(currentCase-i>=0){
+                        if(!parent.testCase(currentCase-i,1)) {
+                            currentCase--;
+                        }else{
+                            animationTimer = 0;
+                           if(parent.getTargetUnit(this)) {
+                               attaqueOk = false;
+                               Timer.schedule(getAttaque, 2.5F);
+                           }
+                        }
+                    }
+                }
+
+            }else{
+                animationTimer = 0;
+                currentAnimation = animeDown;
+            }
+        }
+
+
+    }
     public void update(float delta) {
         animationTimer += delta;
         if(vie <= 0){
@@ -77,8 +135,16 @@ public abstract class Mob {
                 break;
         }
     }
-    public abstract void addMalus( float malus, int timer);
-    public abstract boolean draw(SpriteBatch batch);
+    public void addMalus(float malus, int timer) {
+        _malus = malus;
+        Timer.schedule(malusOff,5);
+    }
+    public boolean draw(SpriteBatch batch) {
+        TextureRegion anime = currentAnimation.getKeyFrame(animationTimer);
+        batch.draw( anime, _x, _y);
+
+        return dead;
+    }
 
 
 }

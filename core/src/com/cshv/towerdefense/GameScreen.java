@@ -338,7 +338,7 @@ public class GameScreen extends ScreenAdapter {
         return cells[num].testCell(type);
     }
 
-    public void getTargetUnit(Mob mob){
+    public boolean getTargetUnit(Mob mob){
         Unit target = null;
         for(int i=mob.getPo() ; i>0 ; i--){
             if(mob.getCurrentCase()-i>0){
@@ -378,7 +378,9 @@ public class GameScreen extends ScreenAdapter {
             }
 
             mob.setDirection(direction);
+            return true;
         }
+        return false;
     }
 
     public void getTargetHeal(Unit unit){

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 import com.cshv.towerdefense.World;
 
@@ -31,7 +32,6 @@ public class ChienSquelette extends Mob {
         animeUp = new Animation<TextureRegion>(FRAME_DURATION,up);
         animeUp.setPlayMode(Animation.PlayMode.LOOP);
         setCarrac(lvlStage);
-        timerMalus = new Date().getTime();
         currentAnimation = animeDown;
         parent = jeu;
         chemin = parent.getChemin();
@@ -42,7 +42,7 @@ public class ChienSquelette extends Mob {
 
     @Override
     public void move() {
-        if(new Date().getTime()> timerMalus){
+        if(!malusOn){
             _malus = 0;
         }
         visible = parent.getVision(currentCase);
@@ -64,14 +64,17 @@ public class ChienSquelette extends Mob {
                 _y -= vitesse - _malus;
             }
         }else{
-            if(currentCase > 0){
+            if(currentCase > 0 && attaqueOk){
                 for(int i = portee; i>0 ; i--){
                     if(currentCase-i>=0){
                         if(!parent.testCase(currentCase-i,1) || !visible) {
                             currentCase--;
                         }else{
                             animationTimer = 0;
-                            parent.getTargetUnit(this);
+                            if(parent.getTargetUnit(this)) {
+                                attaqueOk = false;
+                                Timer.schedule(getAttaque, 2.5F);
+                            }
                         }
                     }
                 }
@@ -91,12 +94,6 @@ public class ChienSquelette extends Mob {
         defense = 0 + ( lvlStage );
         vitesse = 2 + lvlStage/2;
         portee = 1;
-    }
-
-    @Override
-    public void addMalus(float malus, int timer) {
-        _malus = malus;
-        timerMalus = (new Date().getTime() + timer);
     }
 
     @Override
