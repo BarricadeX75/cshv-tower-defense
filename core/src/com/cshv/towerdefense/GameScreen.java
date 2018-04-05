@@ -95,7 +95,7 @@ public class GameScreen extends ScreenAdapter {
     private Array<TextureRegion> healer_TexturesUp;
     private Array<TextureRegion> healer_TexturesLeft;
     private Array<TextureRegion> healer_TexturesRight;
-    private Array<TextureRegion> healer_TextureDown;;
+    private Array<TextureRegion> healer_TextureDown;
     private Array<TextureRegion> healer_atk_TexturesUp;
     private Array<TextureRegion> healer_atk_TexturesLeft;
     private Array<TextureRegion> healer_atk_TexturesRight;
@@ -207,7 +207,7 @@ public class GameScreen extends ScreenAdapter {
         Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
         float nameScale = 0.5f;
         float textScale = 0.4f;
-        float columnShift = 6;
+        float columnShift = 15;
         float column1 = 64;
         float column2 = 128;
         float column3 = 192;
