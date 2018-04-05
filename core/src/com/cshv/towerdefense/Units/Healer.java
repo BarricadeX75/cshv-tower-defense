@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 import com.cshv.towerdefense.World;
 
@@ -16,18 +17,6 @@ import java.util.Date;
 
 public class Healer extends Unit {
     private static final float FRAME_DURATION = 0.1F;
-    private float _x;
-    private float _y;
-    private float animationTimer = 0;
-    private int currentCase = 0;//enplacement dans chemin
-    private Rectangle chemin[];
-    private GameScreen parent;
-
-    private final Animation<TextureRegion> animeRight;
-    private final Animation<TextureRegion> animeLeft;
-    private final Animation<TextureRegion> animeUp;
-    private final Animation<TextureRegion> animeDown;
-    private Animation<TextureRegion>currentAnimation;
 
     public Healer(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
 
@@ -48,7 +37,6 @@ public class Healer extends Unit {
 
     }
 
-    @Override
     public void move() {
 
         if (_x != chemin[currentCase].getX()) {
@@ -68,14 +56,17 @@ public class Healer extends Unit {
                 _y -= vitesse;
             }
         }else{
-            if(currentCase < chemin.length-1){
+            if(currentCase < chemin.length-1 && attaqueOk){
                 for(int i = portee; i>0 ; i--){
                     if(currentCase-i>=0){
                         if(!parent.testCase(currentCase+i,2)) {
                             currentCase++;
                         }else{
                             animationTimer = 0;
-                            parent.getTargetHeal(this);
+                            if(parent.getTargetHeal(this)) {
+                                attaqueOk = false;
+                                Timer.schedule(getAttaque, 2.5F);
+                            }
                         }
                     }
                 }
@@ -84,37 +75,6 @@ public class Healer extends Unit {
                 animationTimer = 0;
             }
         }
-
-
-    }
-
-    @Override
-    public float getVita() {
-        return vie/vieMax;
-    }
-
-
-
-    @Override
-    public void update(float delta) {
-        animationTimer += delta;
-        if(vie == 0){
-            dead = true;
-        }else{
-            move();
-        }
-
-    }
-
-    public void setPosition(float x , float y){
-        _x = x;
-        _y = y;
-    }
-
-    @Override
-    public int getCurrentCase() {
-        int numCase = (int) (chemin[currentCase].x%32 + ( chemin[currentCase].y%32 * World.NB_CASE_WIDTH ));
-        return numCase;
     }
 
     @Override
@@ -125,57 +85,5 @@ public class Healer extends Unit {
         defense = 0 + ( lvlStage );
         vitesse = 1 + lvlStage/2;
         portee = 1;
-    }
-
-    @Override
-    public int getDegats() {
-        return attaque;
-    }
-
-    @Override
-    public void setDirection(int direction) {
-        switch (direction){
-            case 1: currentAnimation = animeLeft;
-                break;
-            case 2: currentAnimation = animeRight;
-                break;
-            case 3: currentAnimation = animeDown;
-                break;
-            case 4: currentAnimation = animeUp;
-                break;
-        }
-    }
-
-    @Override
-    public int getPo() {
-        return portee;
-    }
-
-    @Override
-    public float getX() {
-        return chemin[currentCase].getX();
-    }
-
-    @Override
-    public float getY() {
-        return chemin[currentCase].getY();
-    }
-
-    @Override
-    public void setDegats(int degats) {
-        int dmg = degats - defense;
-        if( dmg > 0 ){
-            vie -= dmg;
-        }
-    }
-
-
-
-    @Override
-    public boolean draw(SpriteBatch batch) {
-        TextureRegion slim = currentAnimation.getKeyFrame(animationTimer);
-        batch.draw( slim, _x, _y);
-
-        return dead;
     }
 }

@@ -52,12 +52,93 @@ public class GameScreen extends ScreenAdapter {
     private long timer;
     private int numWave;
 
+    private TextureAtlas textureAtlas;
     private Array<TextureRegion> solTextures;
     private Array<TextureRegion> cheminTextures;
     private Array<TextureRegion> towerSpeedTextures;
-    private Array<TextureRegion> slimeTexturesUp;
-    private Array<TextureRegion> slimeTexturesLeft;
-    private Array<TextureRegion> slimeTexturesRight;
+    private Array<TextureRegion> slime_TexturesUp;
+    private Array<TextureRegion> slime_TexturesLeft;
+    private Array<TextureRegion> slime_TexturesRight;
+    private Array<TextureRegion> slime_TextureDown;
+    private Array<TextureRegion> chienSquelette_TexturesUp;
+    private Array<TextureRegion> chienSquelette_TexturesLeft;
+    private Array<TextureRegion> chienSquelette_TexturesRight;
+    private Array<TextureRegion> chienSquelette_TextureDown;
+    private Array<TextureRegion> griffon_TexturesUp;
+    private Array<TextureRegion> griffon_TexturesLeft;
+    private Array<TextureRegion> griffon_TexturesRight;
+    private Array<TextureRegion> griffon_TextureDown;
+    private Array<TextureRegion> lamia_TexturesUp;
+    private Array<TextureRegion> lamia_TexturesLeft;
+    private Array<TextureRegion> lamia_TexturesRight;
+    private Array<TextureRegion> lamia_TextureDown;
+    private Array<TextureRegion> loupGarou_TexturesUp;
+    private Array<TextureRegion> loupGarou_TexturesLeft;
+    private Array<TextureRegion> loupGarou_TexturesRight;
+    private Array<TextureRegion> loupGarou_TextureDown;
+    private Array<TextureRegion> orc_TexturesUp;
+    private Array<TextureRegion> orc_TexturesLeft;
+    private Array<TextureRegion> orc_TexturesRight;
+    private Array<TextureRegion> orc_TextureDown;
+    private Array<TextureRegion> centaure_TexturesUp;
+    private Array<TextureRegion> centaure_TexturesLeft;
+    private Array<TextureRegion> centaure_TexturesRight;
+    private Array<TextureRegion> centaure_TextureDown;
+    private Array<TextureRegion> chevalier_TexturesUp;
+    private Array<TextureRegion> chevalier_TexturesLeft;
+    private Array<TextureRegion> chevalier_TexturesRight;
+    private Array<TextureRegion> chevalier_TextureDown;
+    private Array<TextureRegion> chevalier_atk_TexturesUp;
+    private Array<TextureRegion> chevalier_atk_TexturesLeft;
+    private Array<TextureRegion> chevalier_atk_TexturesRight;
+    private Array<TextureRegion> chevalier_atk_TextureDown;
+    private Array<TextureRegion> healer_TexturesUp;
+    private Array<TextureRegion> healer_TexturesLeft;
+    private Array<TextureRegion> healer_TexturesRight;
+    private Array<TextureRegion> healer_TextureDown;;
+    private Array<TextureRegion> healer_atk_TexturesUp;
+    private Array<TextureRegion> healer_atk_TexturesLeft;
+    private Array<TextureRegion> healer_atk_TexturesRight;
+    private Array<TextureRegion> healer_atk_TextureDown;
+    private Array<TextureRegion> moine_TexturesUp;
+    private Array<TextureRegion> moine_TexturesLeft;
+    private Array<TextureRegion> moine_TexturesRight;
+    private Array<TextureRegion> moine_TextureDown;
+    private Array<TextureRegion> moine_atk_TexturesUp;
+    private Array<TextureRegion> moine_atk_TexturesLeft;
+    private Array<TextureRegion> moine_atk_TexturesRight;
+    private Array<TextureRegion> moine_atk_TextureDown;
+    private Array<TextureRegion> rogue_TexturesUp;
+    private Array<TextureRegion> rogue_TexturesLeft;
+    private Array<TextureRegion> rogue_TexturesRight;
+    private Array<TextureRegion> rogue_TextureDown;
+    private Array<TextureRegion> rogue_atk_TexturesUp;
+    private Array<TextureRegion> rogue_atk_TexturesLeft;
+    private Array<TextureRegion> rogue_atk_TexturesRight;
+    private Array<TextureRegion> rogue_atk_TextureDown;
+    private Array<TextureRegion> mage_TexturesUp;
+    private Array<TextureRegion> mage_TexturesLeft;
+    private Array<TextureRegion> mage_TexturesRight;
+    private Array<TextureRegion> mage_TextureDown;
+    private Array<TextureRegion> mage_atk_TexturesUp;
+    private Array<TextureRegion> mage_atk_TexturesLeft;
+    private Array<TextureRegion> mage_atk_TexturesRight;
+    private Array<TextureRegion> mage_atk_TextureDown;
+    private Array<TextureRegion> slash_left;
+    private Array<TextureRegion> slash_right;
+    private Array<TextureRegion> atk_mage;
+    private Array<TextureRegion> atk_moine_left;
+    private Array<TextureRegion> atk_moine_right;
+    private Array<TextureRegion> atk_rogue_left;
+    private Array<TextureRegion> atk_rogue_right;
+    private Array<TextureRegion> heal_left;
+    private Array<TextureRegion> heal_right;
+    private Array<TextureRegion> sort_eau;
+    private Array<TextureRegion> sort_feu;
+    private Array<TextureRegion> atk_cac_mob_left;
+    private Array<TextureRegion> atk_cac_mob_right;
+
+
     private Array<TextureRegion> projectileTexture;
     private TextureRegion barBack, barRed, barBlue;
 
@@ -90,35 +171,10 @@ public class GameScreen extends ScreenAdapter {
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
         batch = new SpriteBatch();
         bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
-        TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
-        solTextures = new Array<TextureRegion>();
-        for(int i=0 ; i<1 ; i++){
-            solTextures.add(textureAtlas.findRegion("herbe"));
-        }
-        cheminTextures = new Array<TextureRegion>();
-        for(int i=0 ; i<1 ; i++){
-            cheminTextures.add(textureAtlas.findRegion("sol"));
-        }
-        slimeTexturesUp = new Array<TextureRegion>();
-        for(int i=1 ; i<4 ; i++){
-            slimeTexturesUp.add(textureAtlas.findRegion("slimeVertical"+i));
-        }
-        slimeTexturesLeft = new Array<TextureRegion>();
-        for(int i=1 ; i<4 ; i++){
-            slimeTexturesLeft.add(textureAtlas.findRegion("slimeGauche"+i));
-        }
-        slimeTexturesRight = new Array<TextureRegion>();
-        for(int i=1 ; i<4 ; i++){
-            slimeTexturesRight.add(textureAtlas.findRegion("slimeDroite"+i));
-        }
-        towerSpeedTextures = new Array<TextureRegion>();
-        for(int i=0 ; i<1 ; i++){
-            towerSpeedTextures.add(textureAtlas.findRegion("tour"));
-        }
-        projectileTexture = new Array<TextureRegion>();
-        for(int i=1; i<2 ; i++){
-            projectileTexture.add(textureAtlas.findRegion("projectile"+i));
-        }
+
+        textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
+        initTextures();
+
         barBack = new TextureRegion(new Texture(Gdx.files.internal("barBack.png")));
         barRed = new TextureRegion(new Texture(Gdx.files.internal("barRed.png")));
         barBlue = new TextureRegion(new Texture(Gdx.files.internal("barBlue.png")));
@@ -136,7 +192,7 @@ public class GameScreen extends ScreenAdapter {
             cells[i] = new  Cell(i);
         }
 
-        mobs.add(new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this));
+        mobs.add(new Slime(slime_TexturesLeft,slime_TexturesRight,slime_TexturesUp,slime_TexturesUp,1,this));
         towers.add(new FastTower(towerSpeedTextures,this,1,world.getXcase(24),world.getYcase(24), barBack, barBlue));
 
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
@@ -250,6 +306,251 @@ public class GameScreen extends ScreenAdapter {
         numWave = 1;
     }
 
+    public void initTextures(){
+        solTextures = new Array<TextureRegion>();
+        for(int i=0 ; i<1 ; i++){
+            solTextures.add(textureAtlas.findRegion("herbe"));
+        }
+        cheminTextures = new Array<TextureRegion>();
+        for(int i=0 ; i<1 ; i++){
+            cheminTextures.add(textureAtlas.findRegion("sol"));
+        }
+        slime_TexturesUp = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            slime_TexturesUp.add(textureAtlas.findRegion("slimeVertical"+i));
+        }
+        slime_TexturesLeft = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            slime_TexturesLeft.add(textureAtlas.findRegion("slimeGauche"+i));
+        }
+        slime_TexturesRight = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            slime_TexturesRight.add(textureAtlas.findRegion("slimeDroite"+i));
+        }
+        towerSpeedTextures = new Array<TextureRegion>();
+        for(int i=0 ; i<1 ; i++){
+            towerSpeedTextures.add(textureAtlas.findRegion("tour"));
+        }
+        projectileTexture = new Array<TextureRegion>();
+        for(int i=1; i<2 ; i++){
+            projectileTexture.add(textureAtlas.findRegion("projectile"+i));
+        }
+        chevalier_TextureDown = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            chevalier_TextureDown.add(textureAtlas.findRegion("chevalier_down ("+i+")"));
+        }
+        chevalier_TexturesUp = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            chevalier_TexturesUp.add(textureAtlas.findRegion("chevalier_up ("+i+")"));
+        }
+        chevalier_TexturesLeft = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            chevalier_TexturesLeft.add(textureAtlas.findRegion("chevalier_left ("+i+")"));
+        }
+        chevalier_TexturesRight = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            chevalier_TexturesRight.add(textureAtlas.findRegion("chevalier_right ("+i+")"));
+        }
+        chevalier_atk_TextureDown = new Array<TextureRegion>();
+        for(int i=1 ; i<3 ; i++){
+            chevalier_atk_TextureDown.add(textureAtlas.findRegion("chevalier_atc_down ("+i+")"));
+        }
+        chevalier_atk_TexturesUp = new Array<TextureRegion>();
+        for(int i=1 ; i<3 ; i++){
+            chevalier_atk_TexturesUp.add(textureAtlas.findRegion("chevalier_atc_up ("+i+")"));
+        }
+        chevalier_atk_TexturesLeft = new Array<TextureRegion>();
+        for(int i=1 ; i<3 ; i++){
+            chevalier_atk_TexturesLeft.add(textureAtlas.findRegion("chevalier_atc_left ("+i+")"));
+        }
+        chevalier_atk_TexturesRight = new Array<TextureRegion>();
+        for(int i=1 ; i<3 ; i++){
+            chevalier_atk_TexturesRight.add(textureAtlas.findRegion("chevalier_atc_right ("+i+")"));
+        }
+        mage_TextureDown = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            mage_TextureDown.add(textureAtlas.findRegion("mage_down ("+i+")"));
+        }
+        mage_TexturesUp = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            mage_TexturesUp.add(textureAtlas.findRegion("mage_up ("+i+")"));
+        }
+        mage_TexturesLeft = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            mage_TexturesLeft.add(textureAtlas.findRegion("mage_left ("+i+")"));
+        }
+        mage_TexturesRight = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            mage_TexturesRight.add(textureAtlas.findRegion("mage_right ("+i+")"));
+        }
+        mage_atk_TextureDown = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            mage_atk_TextureDown.add(textureAtlas.findRegion("mage_atc_down ("+i+")"));
+        }
+        mage_atk_TexturesUp = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            mage_atk_TexturesUp.add(textureAtlas.findRegion("mage_atc_up ("+i+")"));
+        }
+        mage_atk_TexturesLeft = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            mage_atk_TexturesLeft.add(textureAtlas.findRegion("mage_atc_left ("+i+")"));
+        }
+        mage_atk_TexturesRight = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            mage_atk_TexturesRight.add(textureAtlas.findRegion("mage_atc_right ("+i+")"));
+        }
+        healer_TextureDown = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            healer_TextureDown.add(textureAtlas.findRegion("healer_down ("+i+")"));
+        }
+        healer_TexturesUp = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            healer_TexturesUp.add(textureAtlas.findRegion("healer_up ("+i+")"));
+        }
+        healer_TexturesLeft = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            healer_TexturesLeft.add(textureAtlas.findRegion("healer_left ("+i+")"));
+        }
+        healer_TexturesRight = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            healer_TexturesRight.add(textureAtlas.findRegion("healer_right ("+i+")"));
+        }
+        healer_atk_TextureDown = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            healer_atk_TextureDown.add(textureAtlas.findRegion("healer_atc_down ("+i+")"));
+        }
+        healer_atk_TexturesUp = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            healer_atk_TexturesUp.add(textureAtlas.findRegion("healer_atc_up ("+i+")"));
+        }
+        healer_atk_TexturesLeft = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            healer_atk_TexturesLeft.add(textureAtlas.findRegion("healer_atc_left ("+i+")"));
+        }
+        healer_atk_TexturesRight = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            healer_atk_TexturesRight.add(textureAtlas.findRegion("healer_atc_right ("+i+")"));
+        }
+        moine_TextureDown = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            moine_TextureDown.add(textureAtlas.findRegion("moine_down ("+i+")"));
+        }
+        moine_TexturesUp = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            moine_TexturesUp.add(textureAtlas.findRegion("moine_up ("+i+")"));
+        }
+        moine_TexturesLeft = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            moine_TexturesLeft.add(textureAtlas.findRegion("moine_left ("+i+")"));
+        }
+        moine_TexturesRight = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            moine_TexturesRight.add(textureAtlas.findRegion("moine_right ("+i+")"));
+        }
+        moine_atk_TextureDown = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            moine_atk_TextureDown.add(textureAtlas.findRegion("moine_atc_down ("+i+")"));
+        }
+        moine_atk_TexturesUp = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            moine_atk_TexturesUp.add(textureAtlas.findRegion("moine_atc_up ("+i+")"));
+        }
+        moine_atk_TexturesLeft = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            moine_atk_TexturesLeft.add(textureAtlas.findRegion("moine_atc_left ("+i+")"));
+        }
+        moine_atk_TexturesRight = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            moine_atk_TexturesRight.add(textureAtlas.findRegion("moine_atc_right ("+i+")"));
+        }
+        rogue_TextureDown = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            rogue_TextureDown.add(textureAtlas.findRegion("rogue_down ("+i+")"));
+        }
+        rogue_TexturesUp = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            rogue_TexturesUp.add(textureAtlas.findRegion("rogue_up ("+i+")"));
+        }
+        rogue_TexturesLeft = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            rogue_TexturesLeft.add(textureAtlas.findRegion("rogue_left ("+i+")"));
+        }
+        rogue_TexturesRight = new Array<TextureRegion>();
+        for(int i=1 ; i<7 ; i++){
+            rogue_TexturesRight.add(textureAtlas.findRegion("rogue_right ("+i+")"));
+        }
+        rogue_atk_TextureDown = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            rogue_atk_TextureDown.add(textureAtlas.findRegion("rogue_atc_down ("+i+")"));
+        }
+        rogue_atk_TexturesUp = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            rogue_atk_TexturesUp.add(textureAtlas.findRegion("rogue_atc_up ("+i+")"));
+        }
+        rogue_atk_TexturesLeft = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            rogue_atk_TexturesLeft.add(textureAtlas.findRegion("rogue_atc_left ("+i+")"));
+        }
+        rogue_atk_TexturesRight = new Array<TextureRegion>();
+        for(int i=1 ; i<4 ; i++){
+            rogue_atk_TexturesRight.add(textureAtlas.findRegion("rogue_atc_right ("+i+")"));
+        }
+        slash_left = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            slash_left.add(textureAtlas.findRegion("slash_left ("+i+")"));
+        }
+        slash_right = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            slash_right.add(textureAtlas.findRegion("slash_right ("+i+")"));
+        }
+        atk_mage = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            atk_mage.add(textureAtlas.findRegion("atk_mage ("+i+")"));
+        }
+        atk_moine_left = new Array<TextureRegion>();
+        for(int i=1 ; i<10 ; i++){
+            atk_moine_left.add(textureAtlas.findRegion("atk_moine_left ("+i+")"));
+        }
+        atk_moine_right = new Array<TextureRegion>();
+        for(int i=1 ; i<10 ; i++){
+            atk_moine_right.add(textureAtlas.findRegion("atk_moine_right ("+i+")"));
+        }
+        atk_rogue_left = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            atk_rogue_left.add(textureAtlas.findRegion("atk_rogue_left ("+i+")"));
+        }
+        atk_rogue_right = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            atk_rogue_right.add(textureAtlas.findRegion("atk_rogue_right ("+i+")"));
+        }
+        atk_cac_mob_left = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            atk_cac_mob_left.add(textureAtlas.findRegion("atk_cac_mob_left ("+i+")"));
+        }
+        atk_cac_mob_right = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            atk_cac_mob_right.add(textureAtlas.findRegion("atk_cac_mob_right ("+i+")"));
+        }
+        heal_left = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            heal_left.add(textureAtlas.findRegion("heale_left ("+i+")"));
+        }
+        heal_right = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            heal_right.add(textureAtlas.findRegion("heale_right ("+i+")"));
+        }
+        sort_eau = new Array<TextureRegion>();
+        for(int i=1 ; i<9 ; i++){
+            sort_eau.add(textureAtlas.findRegion("sort_eau ("+i+")"));
+        }
+        sort_feu = new Array<TextureRegion>();
+        for(int i=1 ; i<9 ; i++){
+            sort_feu.add(textureAtlas.findRegion("sort_feu ("+i+")"));
+        }
+
+
+    }
+
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -312,7 +613,7 @@ public class GameScreen extends ScreenAdapter {
         if(new  Date().getTime() > timer && monsterCreate <= nbMonster){
             int rand = MathUtils.random(7);
             switch (rand){
-                case 0:mobs.add(new Slime(slimeTexturesLeft,slimeTexturesRight,slimeTexturesUp,slimeTexturesUp,1,this));
+                case 0:mobs.add(new Slime(slime_TexturesLeft,slime_TexturesRight,slime_TexturesUp,slime_TexturesUp,1,this));
                     monsterCreate++;
                     break;
                 case 1:
@@ -339,7 +640,7 @@ public class GameScreen extends ScreenAdapter {
         return cells[num].testCell(type);
     }
 
-    public void getTargetUnit(Mob mob){
+    public boolean getTargetUnit(Mob mob){
         Unit target = null;
         for(int i=mob.getPo() ; i>0 ; i--){
             if(mob.getCurrentCase()-i>0){
@@ -379,10 +680,12 @@ public class GameScreen extends ScreenAdapter {
             }
 
             mob.setDirection(direction);
+            return true;
         }
+        return false;
     }
 
-    public void getTargetHeal(Unit unit){
+    public boolean getTargetHeal(Unit unit){
         Unit target = null;
         for(int i=unit.getPo() ; i>0 ; i--){
             if(unit.getCurrentCase()+i<chemin.length-1){
@@ -421,10 +724,12 @@ public class GameScreen extends ScreenAdapter {
             }
 
             unit.setDirection(direction);
+            return true;
         }
+        return false;
     }
 
-    public void getTargetMob(Unit unit){
+    public boolean getTargetMob(Unit unit){
         Mob target = null;
         for(int i=unit.getPo() ; i>0 ; i--){
             if(unit.getCurrentCase()+i<chemin.length-1){
@@ -462,7 +767,9 @@ public class GameScreen extends ScreenAdapter {
                 direction = 4;
             }
             unit.setDirection(direction);
+            return true;
         }
+        return false;
     }
 
     public void getTargetMobTower(Tower tower, int cell, int type){

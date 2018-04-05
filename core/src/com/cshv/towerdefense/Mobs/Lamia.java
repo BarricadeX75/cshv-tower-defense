@@ -17,19 +17,6 @@ import java.util.Date;
 public class Lamia extends Mob {
 
     private static final float FRAME_DURATION = 0.1F;
-    private float _x;
-    private float _y;
-    private float animationTimer = 0;
-    private int currentCase = 0;//enplacement dans chemin
-    private Rectangle chemin[];
-    private GameScreen parent;
-    //carat ici pour l instant on vera apres si on les bouge dans une classe
-
-    private final Animation<TextureRegion> animeRight;
-    private final Animation<TextureRegion> animeLeft;
-    private final Animation<TextureRegion> animeUp;
-    private final Animation<TextureRegion> animeDown;
-    private Animation<TextureRegion>currentAnimation;
 
     public Lamia(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
 
@@ -42,96 +29,12 @@ public class Lamia extends Mob {
         animeUp = new Animation<TextureRegion>(FRAME_DURATION,up);
         animeUp.setPlayMode(Animation.PlayMode.LOOP);
         setCarrac(lvlStage);
-        timerMalus = new Date().getTime();
         currentAnimation = animeDown;
         parent = jeu;
         chemin = parent.getChemin();
         currentCase = chemin.length-1;
         setPosition(chemin[currentCase].getX() , chemin[currentCase].getY()+ World.DEPART);
 
-    }
-
-    @Override
-    public void move() {
-        if(new Date().getTime()> timerMalus){
-            _malus = 0;
-        }
-
-        if (_x != chemin[currentCase].getX()) {
-            if (_x < chemin[currentCase].getX()) {
-                currentAnimation = animeRight;
-                _x += vitesse - _malus;
-            } else {
-                currentAnimation = animeLeft;
-                _x -= vitesse - _malus;
-            }
-        } else if(_y != chemin[currentCase].getY()){
-            if (_y < chemin[currentCase].getY()) {
-                currentAnimation = animeUp;
-                _y += vitesse - _malus;
-            } else {
-                currentAnimation = animeDown;
-                _y -= vitesse - _malus;
-            }
-        }else{
-            if(currentCase > 0){
-                for(int i = portee; i>0 ; i--){
-                    if(currentCase-i>=0){
-                        if(!parent.testCase(currentCase-i,1)) {
-                            currentCase--;
-                        }else{
-                            animationTimer = 0;
-                            parent.getTargetUnit(this);
-                        }
-                    }
-                }
-
-            }else{
-                animationTimer = 0;
-                currentAnimation = animeDown;
-            }
-        }
-
-
-    }
-
-    /*public void setDirection(){
-        if(chemin[currentCase].getX()>chemin[currentCase+1].getX()){
-            direction = 1;
-            currentAnimation = animeLeft;
-        }else if(chemin[currentCase].getX()<chemin[currentCase+1].getX()){
-            direction = 2;
-            currentAnimation = animeRight;
-        }else if(chemin[currentCase].getY()>chemin[currentCase+1].getY()){
-            direction = 3;
-            currentAnimation = animeDown;
-        }else{
-            direction = 4;
-            currentAnimation = animeUp;
-        }
-    }*/
-
-
-    @Override
-    public void update(float delta) {
-        animationTimer += delta;
-        if(vie == 0){
-            dead = true;
-        }else{
-            move();
-        }
-
-    }
-
-    public void setPosition(float x , float y){
-        _x = x;
-        _y = y;
-    }
-
-    @Override
-    public int getCurrentCase() {
-        int numCase = (int) (chemin[currentCase].x%32 + ( chemin[currentCase].y%32 * World.NB_CASE_WIDTH ));
-        return numCase;
     }
 
     @Override
@@ -142,62 +45,5 @@ public class Lamia extends Mob {
         vitesse = 1 + lvlStage/2;
         portee = 2;
     }
-
-    @Override
-    public int getDegats() {
-        return attaque;
-    }
-
-    @Override
-    public int getPo() {
-        return portee;
-    }
-
-    @Override
-    public float getX() {
-        return chemin[currentCase].getX();
-    }
-
-    @Override
-    public float getY() {
-        return chemin[currentCase].getY();
-    }
-
-    @Override
-    public void setDegats(int degats) {
-        int dmg = degats - defense;
-        if( dmg > 0 ){
-            vie -= dmg;
-        }
-    }
-
-    @Override
-    public void setDirection(int direction) {
-        switch (direction){
-            case 1: currentAnimation = animeLeft;
-                break;
-            case 2: currentAnimation = animeRight;
-                break;
-            case 3: currentAnimation = animeDown;
-                break;
-            case 4: currentAnimation = animeUp;
-                break;
-        }
-    }
-
-    @Override
-    public void addMalus(float malus, int timer) {
-        _malus = malus;
-        timerMalus = (new Date().getTime() + timer);
-    }
-
-    @Override
-    public boolean draw(SpriteBatch batch) {
-        TextureRegion slim = currentAnimation.getKeyFrame(animationTimer);
-        batch.draw( slim, _x, _y);
-
-        return dead;
-    }
-
 
 }

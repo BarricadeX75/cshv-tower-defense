@@ -79,10 +79,15 @@ public class Cell {
         return  null;
     }
 
-    public void degatZone(int degat){
-
-        for(int i=0 ; i<mobs.size ; i++){
-            mobs.get(i).setDegats(degat);
+    public void degatZone(int degat, int type){
+        if(type ==1){
+            for(int i=0 ; i<mobs.size ; i++){
+                mobs.get(i).setDegats(degat);
+            }
+        }else{
+            for(int i=0 ; i<units.size ; i++){
+                units.get(i).setDegats(degat);
+            }
         }
     }
 

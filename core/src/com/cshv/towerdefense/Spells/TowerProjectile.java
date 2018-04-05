@@ -51,12 +51,11 @@ public class TowerProjectile extends Spell{
             case 2: mob.setDegats(dmg);
                 mob.addMalus(tower.getMalus(),4000);
                 break;
-            case 3: cell[mob.getCurrentCase()].degatZone(dmg);
+            case 3: cell[mob.getCurrentCase()].degatZone(dmg,1);
                 break;
         }
     }
 
-    @Override
     public void move() {
             x -= vitesseX;
             y -= vitesseY;
