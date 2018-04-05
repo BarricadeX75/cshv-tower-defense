@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public abstract class Tower {
+
+    private static final float BAR_WIDTH = 32f;
+    private static final float BAR_HEIGHT = 4f;
+
     protected float _x;
     protected float _y;
     protected int attaque;
@@ -56,6 +60,7 @@ public abstract class Tower {
         TextureRegion tower = actTower.getKeyFrame(animationTimer);
         batch.draw(tower,_x,_y);
 
-        //
+        batch.draw(barBack, _x, _y, BAR_WIDTH, BAR_HEIGHT);
+        batch.draw(barFront, _x, _y, BAR_WIDTH, BAR_HEIGHT);
     }
 }
