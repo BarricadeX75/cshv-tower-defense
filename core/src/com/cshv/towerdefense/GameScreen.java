@@ -540,12 +540,10 @@ public class GameScreen extends ScreenAdapter {
         atk_cac_mob_left = new Array<TextureRegion>();
         for(int i=1 ; i<5 ; i++){
             atk_cac_mob_left.add(textureAtlas.findRegion("atk_cac_mob_left ("+i+")"));
-            System.out.println(atk_cac_mob_left.get(i-1));
         }
         atk_cac_mob_right = new Array<TextureRegion>();
         for(int i=1 ; i<5 ; i++){
             atk_cac_mob_right.add(textureAtlas.findRegion("atk_cac_mob_right ("+i+")"));
-            System.out.println(atk_cac_mob_right.get(i-1));
         }
         heal_left = new Array<TextureRegion>();
         for(int i=1 ; i<5 ; i++){

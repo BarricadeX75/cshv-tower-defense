@@ -70,7 +70,9 @@ public abstract class Mob {
                 for(int i = portee; i>0 ; i--){
                     if(currentCase-i>=0){
                         if(!parent.testCase(currentCase-i,1)) {
-                            currentCase--;
+                            if(i == 1) {
+                                currentCase--;
+                            }
                         }else{
                             animationTimer = 0;
                            if(parent.getTargetUnit(this)) {

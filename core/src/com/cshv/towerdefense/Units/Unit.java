@@ -58,8 +58,11 @@ public abstract class Unit {
             if(currentCase < chemin.length-1 && attaqueOk){
                 for(int i = portee; i>0 ; i--){
                     if(currentCase+i < chemin.length-1){
+                        System.out.println(!parent.testCase(currentCase+i,2));
                         if(!parent.testCase(currentCase+i,2)) {
-                            currentCase++;
+                            if(i == 1) {
+                                currentCase++;
+                            }
                         }else{
                             animationTimer = 0;
                             if(parent.getTargetMob(this)) {

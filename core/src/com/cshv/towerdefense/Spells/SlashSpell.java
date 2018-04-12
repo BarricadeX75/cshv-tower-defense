@@ -55,7 +55,6 @@ public class SlashSpell extends Spell {
     @Override
     public boolean draw(SpriteBatch batch) {
         TextureRegion spell = atcAnim.getKeyFrame(animationTimer);
-        System.out.print("");
         float x,y;
         x = spell.getRegionWidth()/3;
         y = spell.getRegionHeight();

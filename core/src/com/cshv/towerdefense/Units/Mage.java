@@ -43,7 +43,7 @@ public class Mage extends Unit {
         attaque = 10 + ( lvlStage );
         defense = 0 + ( lvlStage );
         vitesse = 1 + lvlStage/2;
-        portee = 1;
+        portee = 3;
     }
 
 }

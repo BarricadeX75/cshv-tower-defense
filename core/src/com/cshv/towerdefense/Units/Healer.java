@@ -61,7 +61,9 @@ public class Healer extends Unit {
                     if(currentCase+i <= chemin.length-1){
                         if(!parent.testCase(currentCase+i,3)) {
                             if(!parent.testCase(currentCase+i,2)) {
-                                currentCase++;
+                                if(i == 1) {
+                                    currentCase++;
+                                }
                             }
                         }else{
                             animationTimer = 0;
@@ -86,6 +88,6 @@ public class Healer extends Unit {
         attaque = 10 + ( lvlStage );
         defense = 0 + ( lvlStage );
         vitesse = 1 + lvlStage/2;
-        portee = 1;
+        portee = 3;
     }
 }
