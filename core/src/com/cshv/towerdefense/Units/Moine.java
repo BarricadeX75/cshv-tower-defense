@@ -18,7 +18,7 @@ public class Moine extends Unit {
     private static final float FRAME_DURATION = 0.1F;
 
     public Moine(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
-
+        type = 3;
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);
         animeLeft.setPlayMode(Animation.PlayMode.LOOP);
         animeRight = new Animation<TextureRegion>(FRAME_DURATION,right);

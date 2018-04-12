@@ -54,11 +54,11 @@ public class MagicSpell extends Spell {
         TextureRegion spell = magicSpell.getKeyFrame(animationTimer);
         float x,y;
         if(_type == 1) {
-            x = _mob.getX();
-            y = _mob.getY();
-        }else{
             x = _unit.getX();
             y = _unit.getY();
+        }else{
+            x = _mob.getX();
+            y = _mob.getY();
         }
         batch.draw(spell,x,y);
 

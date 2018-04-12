@@ -11,7 +11,7 @@ import com.cshv.towerdefense.Units.Unit;
  */
 
 public class HealSpell extends Spell {
-    private static final float FRAME_DURATION = 0.1F;
+    private static final float FRAME_DURATION = 0.2F;
     private Animation<TextureRegion> healSpell;
     private TextureRegion fin;
     private Unit _target;

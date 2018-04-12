@@ -26,6 +26,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cshv.towerdefense.Mobs.Mob;
 import com.cshv.towerdefense.Mobs.Slime;
 import com.cshv.towerdefense.Spells.HealSpell;
+import com.cshv.towerdefense.Spells.MagicSpell;
+import com.cshv.towerdefense.Spells.MobProjectile;
+import com.cshv.towerdefense.Spells.SlashSpell;
 import com.cshv.towerdefense.Spells.Spell;
 import com.cshv.towerdefense.Spells.TowerProjectile;
 import com.cshv.towerdefense.Towers.FastTower;
@@ -527,20 +530,22 @@ public class GameScreen extends ScreenAdapter {
             atk_moine_right.add(textureAtlas.findRegion("atk_moine_right ("+i+")"));
         }
         atk_rogue_left = new Array<TextureRegion>();
-        for(int i=1 ; i<5 ; i++){
+        for(int i=1 ; i<4 ; i++){
             atk_rogue_left.add(textureAtlas.findRegion("atk_rogue_left ("+i+")"));
         }
         atk_rogue_right = new Array<TextureRegion>();
-        for(int i=1 ; i<5 ; i++){
+        for(int i=1 ; i<4 ; i++){
             atk_rogue_right.add(textureAtlas.findRegion("atk_rogue_right ("+i+")"));
         }
         atk_cac_mob_left = new Array<TextureRegion>();
         for(int i=1 ; i<5 ; i++){
             atk_cac_mob_left.add(textureAtlas.findRegion("atk_cac_mob_left ("+i+")"));
+            System.out.println(atk_cac_mob_left.get(i-1));
         }
         atk_cac_mob_right = new Array<TextureRegion>();
         for(int i=1 ; i<5 ; i++){
             atk_cac_mob_right.add(textureAtlas.findRegion("atk_cac_mob_right ("+i+")"));
+            System.out.println(atk_cac_mob_right.get(i-1));
         }
         heal_left = new Array<TextureRegion>();
         for(int i=1 ; i<5 ; i++){
@@ -898,7 +903,14 @@ public class GameScreen extends ScreenAdapter {
                 direction = 4;
             }
 
-
+            switch(mob.getPo()){
+                case 1: spells.add(new SlashSpell( atk_cac_mob_left, atk_cac_mob_right, target, mob, direction, 1));
+                    break;
+                case 2: spells.add( new MobProjectile( projectileTexture.get(0), mob, target));
+                    break;
+                case 3: spells.add( new MagicSpell( sort_feu, target, mob, cells, 1));
+                    break;
+            }
 
             mob.setDirection(direction);
             return true;
@@ -997,6 +1009,15 @@ public class GameScreen extends ScreenAdapter {
                 direction = 4;
             }
             unit.setDirection(direction);
+            switch(unit.getType()){
+                case 1: spells.add(new SlashSpell(slash_left,slash_right,unit,target,direction,2));
+                    break;
+                case 2: spells.add(new MagicSpell(atk_mage,unit, target, cells,2));
+                    break;
+                case 3: spells.add( new SlashSpell(atk_moine_left,atk_moine_right,unit,target,direction,2));
+                    break;
+                case 4: spells.add( new SlashSpell( atk_rogue_left, atk_rogue_right,unit,target,direction,2));
+            }
             return true;
         }
         return false;

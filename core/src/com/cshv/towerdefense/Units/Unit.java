@@ -16,7 +16,7 @@ public abstract class Unit {
     protected int defense;
     protected int portee;
     protected boolean dead = false;
-    protected int direction;
+    protected int type;
     protected  Animation<TextureRegion> animeRight;
     protected  Animation<TextureRegion> animeLeft;
     protected  Animation<TextureRegion> animeUp;
@@ -83,6 +83,11 @@ public abstract class Unit {
     public float getVita() {
         return vie/vieMax;
     }
+
+    public int getType(){
+        return type;
+    }
+
     public void update(float delta) {
         animationTimer += delta;
         if(vie <= 0){
