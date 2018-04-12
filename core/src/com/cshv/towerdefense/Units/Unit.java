@@ -57,7 +57,7 @@ public abstract class Unit {
         }else{
             if(currentCase < chemin.length-1 && attaqueOk){
                 for(int i = portee; i>0 ; i--){
-                    if(currentCase-i>=0){
+                    if(currentCase+i < chemin.length-1){
                         if(!parent.testCase(currentCase+i,2)) {
                             currentCase++;
                         }else{
@@ -85,7 +85,7 @@ public abstract class Unit {
     }
     public void update(float delta) {
         animationTimer += delta;
-        if(vie == 0){
+        if(vie <= 0){
             dead = true;
         }else{
             move();

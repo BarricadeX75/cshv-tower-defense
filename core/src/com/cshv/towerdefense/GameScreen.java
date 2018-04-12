@@ -25,10 +25,16 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cshv.towerdefense.Mobs.Mob;
 import com.cshv.towerdefense.Mobs.Slime;
+import com.cshv.towerdefense.Spells.HealSpell;
 import com.cshv.towerdefense.Spells.Spell;
 import com.cshv.towerdefense.Spells.TowerProjectile;
 import com.cshv.towerdefense.Towers.FastTower;
 import com.cshv.towerdefense.Towers.Tower;
+import com.cshv.towerdefense.Units.Chevalier;
+import com.cshv.towerdefense.Units.Healer;
+import com.cshv.towerdefense.Units.Mage;
+import com.cshv.towerdefense.Units.Moine;
+import com.cshv.towerdefense.Units.Rogue;
 import com.cshv.towerdefense.Units.Unit;
 
 import java.util.Date;
@@ -157,7 +163,7 @@ public class GameScreen extends ScreenAdapter {
 
     private Array<TextureRegion> projectileTexture;
     private TextureRegion barBack, barRed, barBlue;
-
+    private GameScreen pere;
     private Cell cells[];
     private Array<Mob> mobs = new Array<Mob>();
     private Array<Unit> units = new Array<Unit>();
@@ -187,7 +193,7 @@ public class GameScreen extends ScreenAdapter {
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
         batch = new SpriteBatch();
         bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
-
+        pere = this;
         textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         initTextures();
         initSpriteMob();
@@ -255,7 +261,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                //
+                units.add(new Chevalier( chevalier_TexturesLeft, chevalier_TexturesRight, chevalier_TexturesUp, chevalier_TextureDown, lvlStage, pere));
             }
         });
         uiStage.addActor(uiButton1);
@@ -269,7 +275,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                //
+                units.add(new Mage( mage_TexturesLeft, mage_TexturesRight, mage_TexturesUp, mage_TextureDown, lvlStage, pere));
             }
         });
         uiStage.addActor(uiButton2);
@@ -283,7 +289,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                //
+                units.add( new Moine( moine_TexturesLeft, moine_TexturesRight, moine_TexturesUp, moine_TextureDown, lvlStage, pere));
             }
         });
         uiStage.addActor(uiButton3);
@@ -297,7 +303,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                //
+                units.add( new Rogue( rogue_TexturesLeft, rogue_TexturesRight, rogue_TexturesUp, rogue_TextureDown, lvlStage, pere));
             }
         });
         uiStage.addActor(uiButton4);
@@ -311,7 +317,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                //
+                units.add( new Healer(healer_TexturesLeft,healer_TexturesRight,healer_TexturesUp,healer_TextureDown,lvlStage,pere));
             }
         });
         uiStage.addActor(uiButton5);
@@ -438,19 +444,19 @@ public class GameScreen extends ScreenAdapter {
         }
         moine_TextureDown = new Array<TextureRegion>();
         for(int i=1 ; i<7 ; i++){
-            moine_TextureDown.add(textureAtlas.findRegion("moine_down ("+i+")"));
+            moine_TextureDown.add(textureAtlas.findRegion("moine_down"+i));
         }
         moine_TexturesUp = new Array<TextureRegion>();
         for(int i=1 ; i<7 ; i++){
-            moine_TexturesUp.add(textureAtlas.findRegion("moine_up ("+i+")"));
+            moine_TexturesUp.add(textureAtlas.findRegion("moine_up"+i));
         }
         moine_TexturesLeft = new Array<TextureRegion>();
         for(int i=1 ; i<7 ; i++){
-            moine_TexturesLeft.add(textureAtlas.findRegion("moine_left ("+i+")"));
+            moine_TexturesLeft.add(textureAtlas.findRegion("moine_left"+i));
         }
         moine_TexturesRight = new Array<TextureRegion>();
         for(int i=1 ; i<7 ; i++){
-            moine_TexturesRight.add(textureAtlas.findRegion("moine_right ("+i+")"));
+            moine_TexturesRight.add(textureAtlas.findRegion("moine_right"+i));
         }
         moine_atk_TextureDown = new Array<TextureRegion>();
         for(int i=1 ; i<4 ; i++){
@@ -818,7 +824,7 @@ public class GameScreen extends ScreenAdapter {
         }
         for (int i=0 ; i<units.size ; i++){
             Unit unit = units.get(i);
-            //cells[]
+            cells[unit.getCurrentCase()].addUnit(unit);
         }
     }
 
@@ -892,21 +898,26 @@ public class GameScreen extends ScreenAdapter {
                 direction = 4;
             }
 
+
+
             mob.setDirection(direction);
             return true;
         }
+
         return false;
     }
 
     public boolean getTargetHeal(Unit unit){
         Unit target = null;
         for(int i=unit.getPo() ; i>0 ; i--){
-            if(unit.getCurrentCase()+i<chemin.length-1){
-                if(cells[unit.getCurrentCase()-i].getHeal() != null){
-                    target = cells[unit.getCurrentCase()-i].getHeal();
+            if(unit.getCurrentCase()+i < chemin.length-1){
+                if(cells[unit.getCurrentCase()+i].getHeal() != null){
+                    target = cells[unit.getCurrentCase()+i].getHeal();
+
                 }
             }
         }
+
         if(target != null) {
             int direction;
             float difX = chemin[unit.getCurrentCase()].getX() - chemin[target.getCurrentCase()].getX();
@@ -934,6 +945,12 @@ public class GameScreen extends ScreenAdapter {
                 direction = 3;
             } else {
                 direction = 4;
+            }
+
+            if(direction == 3 || direction == 2){
+                spells.add( new HealSpell(heal_right,unit,target));
+            }else{
+                spells.add( new HealSpell(heal_left,unit,target));
             }
 
             unit.setDirection(direction);

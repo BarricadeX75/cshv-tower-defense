@@ -58,9 +58,11 @@ public class Healer extends Unit {
         }else{
             if(currentCase < chemin.length-1 && attaqueOk){
                 for(int i = portee; i>0 ; i--){
-                    if(currentCase-i>=0){
-                        if(!parent.testCase(currentCase+i,2)) {
-                            currentCase++;
+                    if(currentCase+i <= chemin.length-1){
+                        if(!parent.testCase(currentCase+i,3)) {
+                            if(!parent.testCase(currentCase+i,2)) {
+                                currentCase++;
+                            }
                         }else{
                             animationTimer = 0;
                             if(parent.getTargetHeal(this)) {

@@ -26,12 +26,21 @@ public class Cell {
             }else{
                 return false;
             }
-        }else{
+        }else if(type == 2){
             if(mobs.size>0){
                 return true;
             }else{
                 return false;
             }
+        }else{
+            if(units.size>0){
+                for(Unit unit : units){
+                    if(unit.getVita()<1){
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 
