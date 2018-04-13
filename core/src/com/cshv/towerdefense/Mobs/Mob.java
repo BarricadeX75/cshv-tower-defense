@@ -29,7 +29,6 @@ public abstract class Mob {
     protected boolean dead = false;
     protected boolean malusOn = false;
     protected float _malus;
-    protected int direction;
     protected boolean attaqueOk = true;
     protected Timer.Task malusOff = new Timer.Task() {
         @Override

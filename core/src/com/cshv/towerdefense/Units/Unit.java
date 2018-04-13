@@ -38,7 +38,7 @@ public abstract class Unit {
 
     public void move() {
 
-        if (_x != chemin[currentCase].getX()) {
+         if (_x != chemin[currentCase].getX()) {
             if (_x < chemin[currentCase].getX()) {
                 currentAnimation = animeRight;
                 _x += vitesse;
@@ -46,7 +46,7 @@ public abstract class Unit {
                 currentAnimation = animeLeft;
                 _x -= vitesse;
             }
-        } else if(_y != chemin[currentCase].getY()){
+        } else if(_y != chemin[currentCase].getY() ){
             if (_y < chemin[currentCase].getY()) {
                 currentAnimation = animeUp;
                 _y += vitesse;
@@ -58,7 +58,6 @@ public abstract class Unit {
             if(currentCase < chemin.length-1 && attaqueOk){
                 for(int i = portee; i>0 ; i--){
                     if(currentCase+i < chemin.length-1){
-                        System.out.println(!parent.testCase(currentCase+i,2));
                         if(!parent.testCase(currentCase+i,2)) {
                             if(i == 1) {
                                 currentCase++;
@@ -126,7 +125,7 @@ public abstract class Unit {
     }
     public boolean draw(SpriteBatch batch) {
         TextureRegion anime = currentAnimation.getKeyFrame(animationTimer);
-        batch.draw( anime, _x, _y);
+        batch.draw( anime, _x, _y-15);
 
         return dead;
     }
