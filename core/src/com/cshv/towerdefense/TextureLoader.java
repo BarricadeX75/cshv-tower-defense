@@ -40,10 +40,10 @@ public class TextureLoader {
     private Array<TextureRegion> mobOrcLeft[] = new Array[4];
     private Array<TextureRegion> mobOrcRight[] = new Array[4];
     private Array<TextureRegion> mobOrcDown[] = new Array[4];
-    private Array<TextureRegion> mobCentaureUp[] = new Array[6];
-    private Array<TextureRegion> mobCentaureLeft[] = new Array[6];
-    private Array<TextureRegion> mobCentaureRight[] = new Array[6];
-    private Array<TextureRegion> mobCentaureDown[] = new Array[6];
+    private Array<TextureRegion> mobCentaureUp[] = new Array[8];
+    private Array<TextureRegion> mobCentaureLeft[] = new Array[8];
+    private Array<TextureRegion> mobCentaureRight[] = new Array[8];
+    private Array<TextureRegion> mobCentaureDown[] = new Array[8];
     private Array<TextureRegion> mobGolemUp[] = new Array[8];
     private Array<TextureRegion> mobGolemLeft[] = new Array[8];
     private Array<TextureRegion> mobGolemRight[] = new Array[8];
@@ -857,7 +857,7 @@ public class TextureLoader {
             }
         }
 
-        for(int j=1 ; j<6 ; j++){
+        for(int j=1 ; j<9 ; j++){
             mobCentaureUp[j-1] = new Array<TextureRegion>();
             for(int i=1 ; i<4 ; i++){
                 mobCentaureUp[j-1].add(textureAtlas.findRegion("mobCentaure"+j+"_up"+i));
