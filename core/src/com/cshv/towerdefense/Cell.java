@@ -2,6 +2,7 @@ package com.cshv.towerdefense;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.Mobs.Mob;
 import com.cshv.towerdefense.Units.Unit;
 
@@ -14,6 +15,13 @@ public class Cell {
     private Array<Mob> mobs = new Array<Mob>();
     private Array<Unit> units = new Array<Unit>();
     private boolean vision = false;
+    private boolean visionTempo = false;
+    protected Timer.Task finSpellVision = new Timer.Task() {
+        @Override
+        public void run() {
+            visionTempo = vision;
+        }
+    };
 
     public Cell(int numChemin){
         _numChemin = numChemin;
@@ -44,20 +52,16 @@ public class Cell {
         }
     }
 
+    public int getNbMob(){
+        return mobs.size;
+    }
+
     public void addMob(Mob mob){
         mobs.add(mob);
     }
 
-    public void removeMob(Mob mob){
-        mobs.removeValue(mob,true);
-    }
-
     public void addUnit(Unit unit){
         units.add(unit);
-    }
-
-    public void removeUnit(Unit unit){
-        units.removeValue(unit,true);
     }
 
     public void removeAll(){
@@ -102,9 +106,15 @@ public class Cell {
 
     public void setVision(){
         vision = true;
+        visionTempo = true;
     }
 
     public boolean getVision(){
-        return vision;
+        return visionTempo;
+    }
+
+    public void spellVisionOk(){
+        visionTempo = true;
+        Timer.schedule(finSpellVision, 30f);
     }
 }

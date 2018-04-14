@@ -1,8 +1,10 @@
 package com.cshv.towerdefense.Spells;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import com.cshv.towerdefense.Cell;
 import com.cshv.towerdefense.Mobs.Mob;
 import com.cshv.towerdefense.Towers.Tower;
@@ -13,11 +15,13 @@ import com.cshv.towerdefense.Towers.Tower;
 
 public class TowerProjectile extends Spell{
 
-    private TextureRegion projectile;
+    private static final float FRAME_DURATION = 0.025F;
+    private Animation<TextureRegion> projectile;
     private Tower tower;
     private Cell cell[];
     private Mob mob;
     private int typeTower;
+    private float animationTimer = 0;
     private float x;
     private float y;
     private float xTarget;
@@ -26,8 +30,9 @@ public class TowerProjectile extends Spell{
     private float vitesseY;
     private int conter;
 
-    public TowerProjectile(TextureRegion projectile, Tower tower, Cell[] cell, Mob mob, int type){
-        this.projectile = projectile;
+    public TowerProjectile(Array<TextureRegion> projectileT, Tower tower, Cell[] cell, Mob mob, int type){
+        projectile = new Animation<TextureRegion>(FRAME_DURATION,projectileT);
+        projectile.setPlayMode(Animation.PlayMode.LOOP);
         this.tower = tower;
         this.cell = cell;
         typeTower = type;
@@ -64,12 +69,15 @@ public class TowerProjectile extends Spell{
     @Override
     public void update(float delta) {
         move();
+        animationTimer += delta;
         conter++;
     }
 
     @Override
     public boolean draw(SpriteBatch batch) {
-        batch.draw(projectile,x,y);
+        TextureRegion spell = projectile.getKeyFrame(animationTimer);
+
+        batch.draw(spell,x,y);
 
         if(conter ==10){
             setDegat();

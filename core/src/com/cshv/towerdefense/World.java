@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class World {
 
-    public static final int NB_CASE_WIDTH = 10;
+    public static final int NB_CASE_WIDTH = 11;
     public static final int NB_CASE_HEIGHT = 16;
     public static final int DEPART = 32;
 
@@ -19,7 +19,7 @@ public class World {
     public boolean[] isSolid;
     private TextureRegion[] blockImg;
     //10*16
-    final int arrayNum = 160;
+    final int arrayNum = 176;
 
     //Block Images
     private TextureRegion BLOCK_CHEMIN, BLOCK_SOL;
@@ -57,7 +57,7 @@ public class World {
 
     public void loadArrays(){
         for (int i = 0; i < arrayNum; i++){
-            if (x >= 320){
+            if (x >= 352){
                 x = 0;
                 y += 32;
             }
