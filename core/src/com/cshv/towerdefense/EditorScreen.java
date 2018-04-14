@@ -32,7 +32,6 @@ public class EditorScreen extends ScreenAdapter {
 
     private World world;
     private Rectangle[] chemin;
-    private Cell[] cells;
 
     //
 
@@ -68,11 +67,6 @@ public class EditorScreen extends ScreenAdapter {
 
         world = new World(tl.getSol(), tl.getChemin(), trajet);
         chemin = world.getChemin();
-
-        cells = new Cell[chemin.length];
-        for (int i = 0; i < chemin.length; i++){
-            cells[i] = new Cell(i);
-        }
     }
 
     @Override
