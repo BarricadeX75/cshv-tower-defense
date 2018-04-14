@@ -79,10 +79,8 @@ public class World {
         blockImg[cell] = BLOCK_CHEMIN;
     }
 
-    public void clearChemin(){
-        for(TextureRegion textureRegion : blockImg){
-            textureRegion = BLOCK_SOL;
-        }
+    public void setChemin(Array<Integer> chemin){
+        _chemin = chemin;
     }
 
     public void suppCellCheminEditor(int cell){

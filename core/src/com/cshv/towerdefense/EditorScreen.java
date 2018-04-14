@@ -60,6 +60,7 @@ public class EditorScreen extends ScreenAdapter {
         bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
         textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         tl = new TextureLoader(textureAtlas);
+
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
@@ -80,12 +81,9 @@ public class EditorScreen extends ScreenAdapter {
                 }
                 return true;
             }
-
-
-
         });
-        trajet = new Array<Integer>();
 
+        trajet = new Array<Integer>();
         world = new World(tl.getSol(), tl.getChemin(), trajet);
     }
 
@@ -109,7 +107,7 @@ public class EditorScreen extends ScreenAdapter {
         y = WORLD_HEIGHT-( ( y + 176 ) /2);
 
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
-
+        Gdx.app.log("cell", numCell+"");
         if(numCell <= 176 && numCell >= 0 ){
             for (int i = 0; i < trajet.size; i++) {
                 if (numCell == trajet.get(i)) {
@@ -140,6 +138,21 @@ public class EditorScreen extends ScreenAdapter {
                 }
             }
         }
+    }
+
+    private boolean verifChemin(){
+        if(trajet.first() != 5&& trajet.peek() != 170){
+            return false;
+        }
+        for(int i=1 ; i<trajet.size ; i++) {
+            int numCell = trajet.get(i - 1);
+            int numCellNext = trajet.get(i);
+            if (numCell + 11 != numCellNext && numCell - 11 != numCellNext && numCell + 1 != numCellNext && numCell - 1 != numCellNext) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void draw() {
