@@ -21,6 +21,8 @@ public class LoupGarou extends Mob {
     private static final float FRAME_DURATION = 0.1F;
     private boolean visible = false;
 
+
+
     public LoupGarou(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
 
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);

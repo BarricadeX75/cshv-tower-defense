@@ -16,9 +16,15 @@ public class FastTower extends Tower {
 
     private static final float FRAME_DURATION = 0.1F;
     private Rectangle chemin[];
-    private GameScreen parent;
-    private Timer.Task getTargetTask;
-    private boolean tireOK = true;
+    private int _lvlTower;
+    private Timer.Task spellBooster = new Timer.Task() {
+        @Override
+        public void run() {
+           attaque -= 10 + _lvlTower;
+            atcSpeed += 1.5f;
+        }
+    };
+
 
     private Array<Integer> caseDistOk;
     //private Array<Rectangle> caseDistOk;
@@ -27,22 +33,17 @@ public class FastTower extends Tower {
     public FastTower(Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower, float x, float y,
                      TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
-
+        type = 1;
         towerFireEnd = towerAtc.get(towerAtc.size-1);
         actTower = new Animation<TextureRegion>(FRAME_DURATION,towerAtc);
         actTower.setPlayMode(Animation.PlayMode.LOOP);
         parent = jeu;
         chemin = parent.getChemin();
         setStat(lvlTower);
+        _lvlTower = lvlTower;
         setPosition(x,y);
         initCaseDistOk();
-        getTargetTask = new Timer.Task() {
-            @Override
-            public void run() {
-                //Gdx.app.log()
-                tireOK = true;
-            }
-        };
+
 
     }
 
@@ -53,21 +54,25 @@ public class FastTower extends Tower {
         malus = 0;
     }
 
+    public void boosterOn(){
+        attaque += 10 + _lvlTower;
+        atcSpeed -= 1.5f;
+        Timer.schedule(spellBooster, 15);
+    }
+
     public void initCaseDistOk(){
         caseDistOk = new Array<Integer>();
 
         for(int i=chemin.length-1 ; i>=0 ; i--){
             int distance = (int) Math.sqrt((_x/32 - chemin[i].getX()/32)*(_x/32 - chemin[i].getX()/32)) + (int) Math.sqrt((_y/32 - chemin[i].getY()/32)*(_y/32 - chemin[i].getY()/32));
-            Gdx.app.log(" distance case", "dist  "+distance);
             if( portee >= distance){
                 caseDistOk.add(i);
-                Gdx.app.log(" init ok", "case  "+i);
             }
         }
     }
 
     @Override
-    public void getTarget() {
+    public void getTarget(int typeAtc) {
         if(tireOK){
             for (int i = 0; i < caseDistOk.size; i++) {
                 if (parent.testCase(caseDistOk.get(i), 2)) {

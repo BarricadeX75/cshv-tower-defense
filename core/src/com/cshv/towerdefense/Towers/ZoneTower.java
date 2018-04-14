@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 
 /**
@@ -15,23 +16,25 @@ public class ZoneTower extends Tower {
 
     private static final float FRAME_DURATION = 0.1F;
     private Rectangle chemin[];
-    private GameScreen parent;
 
     private Array<Integer> caseDistOk;
+    private Array<Integer> caseSpell[] = new Array[4];
+
     //private Array<Rectangle> caseDistOk;
     private TextureRegion towerFireEnd;
 
-    public ZoneTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower,
+    public ZoneTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower, float x, float y,
                       TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
-
+        type = 3;
         towerFireEnd = towerAtc.get(towerAtc.size-1);
         actTower = new Animation<TextureRegion>(FRAME_DURATION,towerAtc);
         actTower.setPlayMode(Animation.PlayMode.LOOP);
         parent = jeu;
         chemin = parent.getChemin();
         setStat(lvlTower);
-        timer = TimeUtils.millis();
+        setPosition(x,y);
+        initCaseDistOk();
     }
 
     public void setStat( int lvlTower){
@@ -42,22 +45,60 @@ public class ZoneTower extends Tower {
     }
 
     public void initCaseDistOk(){
+        for(int i=0 ; i<4 ; i++){
+            caseSpell[i] = new Array<Integer>();
+        }
         for(int i=chemin.length ; i>0 ; i--){
             int distance = (int) Math.sqrt((int)(_x/32 - chemin[i].getX()/32)*(int)(_x/32 - chemin[i].getX()/32)) + (int) Math.sqrt((int)(_y/32 - chemin[i].getY()/32)*(int)(_y/32 - chemin[i].getY()/32));
             if( portee >= distance){
                 caseDistOk.add(i);
             }
+            if (_y == chemin[i].getY() && chemin[i].getX() > _x && chemin[i].getX() <= _x + (32*4)) {
+                caseSpell[1].add(i);
+            }
+            if (_y == chemin[i].getY() && chemin[i].getX() < _x && chemin[i].getX() >= _x - (32*4)) {
+                caseSpell[0].add(i);
+            }
+            if (_x == chemin[i].getY() && chemin[i].getX() > _y && chemin[i].getX() <= _y + (32*4)) {
+                caseSpell[3].add(i);
+            }
+            if (_x == chemin[i].getY() && chemin[i].getX() > _y && chemin[i].getX() <= _y + (32*4)) {
+                caseSpell[2].add(i);
+            }
         }
     }
 
     @Override
-    public void getTarget() {
-        if(TimeUtils.millis()>timer) {
-            for (int i = 0; i < caseDistOk.size; i++) {
-                if (parent.testCase(caseDistOk.get(i), 2)) {
-                    parent.getTargetMobTower(this, caseDistOk.get(i), 4);
-                    timer = TimeUtils.millis()+atcSpeed;
+    public void getTarget(int typeAtc) {
+        if(typeAtc == 0) {
+            if (tireOK) {
+                for (int i = 0; i < caseDistOk.size; i++) {
+                    if (parent.testCase(caseDistOk.get(i), 2)) {
+                        parent.getTargetMobTower(this, caseDistOk.get(i), 4);
+                        Timer.schedule(getTargetTask, 1);
+                        tireOK = false;
+                    }
                 }
+            }
+        }else{
+            int poidsMax, poids , direction;
+            poidsMax = 0;
+            direction = 0;
+            for( int i=0 ; i<4 ; i++){
+                poids = 0;
+                for( int j=0 ; j<caseSpell[i].size ; j++){
+                    if(parent.testCase(caseSpell[i].get(j),2)){
+                        poids += parent.getPoidsCell(caseSpell[i].get(j));
+                    }
+                }
+                if(poids > poidsMax){
+                    direction = i+1;
+                }
+            }
+            if(poidsMax>0){
+                parent.activationSpellZone(this,direction,caseSpell[direction-1]);
+            }else{
+                chargementSpell = 32f;
             }
         }
     }

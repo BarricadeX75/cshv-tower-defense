@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 
 /**
@@ -15,23 +16,24 @@ public class VisionTower extends Tower {
 
     private static final float FRAME_DURATION = 0.1F;
     private Rectangle chemin[];
-    private GameScreen parent;
 
     private Array<Integer> caseDistOk;
     //private Array<Rectangle> caseDistOk;
     private TextureRegion towerFireEnd;
 
-    public VisionTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower,
+    public VisionTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower, float x, float y,
                         TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
-
+        type = 4;
         towerFireEnd = towerAtc.get(towerAtc.size-1);
         actTower = new Animation<TextureRegion>(FRAME_DURATION,towerAtc);
         actTower.setPlayMode(Animation.PlayMode.LOOP);
         parent = jeu;
         chemin = parent.getChemin();
         setStat(lvlTower);
-        timer = TimeUtils.millis();
+        setPosition(x,y);
+        initCaseDistOk();
+        parent.updateVision(caseDistOk);
     }
 
     public void setStat( int lvlTower){
@@ -51,12 +53,14 @@ public class VisionTower extends Tower {
     }
 
     @Override
-    public void getTarget() {
-        if(TimeUtils.millis()>timer) {
+    public void getTarget(int typeAtc) {
+        if(tireOK){
             for (int i = 0; i < caseDistOk.size; i++) {
                 if (parent.testCase(caseDistOk.get(i), 2)) {
                     parent.getTargetMobTower(this, caseDistOk.get(i), 3);
-                    timer = TimeUtils.millis()+atcSpeed;
+
+                    Timer.schedule(getTargetTask, 1);
+                    tireOK = false;
                 }
             }
         }
