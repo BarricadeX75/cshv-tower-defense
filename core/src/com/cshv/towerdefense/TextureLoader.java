@@ -100,8 +100,8 @@ public class TextureLoader {
     private Array<TextureRegion> unitMageAtkLeft;
     private Array<TextureRegion> unitMageAtkRight;
     private Array<TextureRegion> unitMageAtkDown;
-    private Array<TextureRegion> atkSlashLeft;
-    private Array<TextureRegion> atkSlashRight;
+    private Array<TextureRegion> atkChevalierLeft;
+    private Array<TextureRegion> atkChevalierRight;
     private Array<TextureRegion> atkMage;
     private Array<TextureRegion> atkMoineLeft;
     private Array<TextureRegion> atkMoineRight;
@@ -475,12 +475,12 @@ public class TextureLoader {
         return unitMageAtkDown;
     }
 
-    public Array<TextureRegion> getAtkSlashLeft() {
-        return atkSlashLeft;
+    public Array<TextureRegion> getAtkChevalierLeft() {
+        return atkChevalierLeft;
     }
 
-    public Array<TextureRegion> getAtkSlashRight() {
-        return atkSlashRight;
+    public Array<TextureRegion> getAtkChevalierRight() {
+        return atkChevalierRight;
     }
 
     public Array<TextureRegion> getAtkMage() {
@@ -941,13 +941,13 @@ public class TextureLoader {
     }
 
     private void initSpritesSpells() {
-        atkSlashLeft = new Array<TextureRegion>();
+        atkChevalierLeft = new Array<TextureRegion>();
         for(int i=1 ; i<5 ; i++){
-            atkSlashLeft.add(textureAtlas.findRegion("slash_left ("+i+")"));
+            atkChevalierLeft.add(textureAtlas.findRegion("slash_left ("+i+")"));
         }
-        atkSlashRight = new Array<TextureRegion>();
+        atkChevalierRight = new Array<TextureRegion>();
         for(int i=1 ; i<5 ; i++){
-            atkSlashRight.add(textureAtlas.findRegion("slash_right ("+i+")"));
+            atkChevalierRight.add(textureAtlas.findRegion("slash_right ("+i+")"));
         }
         atkMage = new Array<TextureRegion>();
         for(int i=1 ; i<5 ; i++){

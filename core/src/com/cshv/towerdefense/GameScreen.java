@@ -493,7 +493,7 @@ public class GameScreen extends ScreenAdapter {
             }
             unit.setDirection(direction);
             switch(unit.getType()){
-                case Unit.CHEVALIER: spells.add(new SlashSpell(tl.getAtkSlashLeft(), tl.getAtkSlashRight(), unit, target, direction, 2));
+                case Unit.CHEVALIER: spells.add(new SlashSpell(tl.getAtkChevalierLeft(), tl.getAtkChevalierRight(), unit, target, direction, 2));
                     break;
                 case Unit.MAGE: spells.add(new MagicSpell(tl.getAtkMage(), unit, target, cells, 2));
                     break;
