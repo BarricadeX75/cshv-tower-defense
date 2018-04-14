@@ -23,7 +23,13 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cshv.towerdefense.Mobs.Centaure;
+import com.cshv.towerdefense.Mobs.ChienSquelette;
+import com.cshv.towerdefense.Mobs.Golem;
+import com.cshv.towerdefense.Mobs.Griffon;
+import com.cshv.towerdefense.Mobs.Lamia;
 import com.cshv.towerdefense.Mobs.Mob;
+import com.cshv.towerdefense.Mobs.Orc;
 import com.cshv.towerdefense.Mobs.Slime;
 import com.cshv.towerdefense.Spells.HealSpell;
 import com.cshv.towerdefense.Spells.MagicSpell;
@@ -113,9 +119,13 @@ public class GameScreen extends ScreenAdapter {
             cells[i] = new  Cell(i);
         }
 
-        mobs.add(new Slime(tl.getMobSlimeLeft()[0], tl.getMobSlimeRight()[0], tl.getMobSlimeUp()[0], tl.getMobSlimeDown()[0], 1, this));
+        //mobs.add(new Slime(tl.getMobSlimeLeft()[0], tl.getMobSlimeRight()[0], tl.getMobSlimeUp()[0], tl.getMobSlimeDown()[0], 1, this));
+        //mobs.add(new Slime(tl.getMobCentaureLeft()[0], tl.getMobCentaureRight()[0], tl.getMobCentaureUp()[0], tl.getMobCentaureDown()[0], 1, this));
         towers.add(new FastTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
         towerList.add(26);
+        for (int i=0 ; i<7 ; i++){
+           // createMob(i);
+        }
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
         TextureRegion buttonUpTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonUp.png")));
         TextureRegion buttonDownTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonDown.png")));
@@ -321,27 +331,46 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
-    private void createMob(){
-        if(new  Date().getTime() > timer && monsterCreate <= nbMonster){
+    private void createMob(int teste){
+        //il y aura un if
+            int type;
             int rand = MathUtils.random(7);
-            switch (rand){
+            switch (teste){
                 case 0:
+                    type = MathUtils.random(8);
+                    mobs.add(new Slime(tl.getMobSlimeLeft()[type], tl.getMobSlimeRight()[type], tl.getMobSlimeUp()[type], tl.getMobSlimeDown()[type], 1, this));
                     monsterCreate++;
                     break;
                 case 1:
+                    type = MathUtils.random(4);
+                    mobs.add(new Orc(tl.getMobOrcLeft()[type], tl.getMobOrcRight()[type], tl.getMobOrcUp()[type], tl.getMobOrcDown()[type], 1, this));
+                    monsterCreate++;
                     break;
                 case 2:
+                    type = MathUtils.random(8);
+                    mobs.add(new Golem(tl.getMobGolemLeft()[type], tl.getMobGolemRight()[type], tl.getMobGolemUp()[type], tl.getMobGolemDown()[type], 1, this));
+                    monsterCreate++;
                     break;
                 case 3:
+                    type = MathUtils.random(8);
+                    mobs.add(new Centaure(tl.getMobCentaureLeft()[type], tl.getMobCentaureRight()[type], tl.getMobCentaureUp()[type], tl.getMobCentaureDown()[type], 1, this));
+                    monsterCreate++;
                     break;
                 case 4:
+                    type = MathUtils.random(8);
+                    mobs.add(new Lamia(tl.getMobLamiaLeft()[type], tl.getMobLamiaRight()[type], tl.getMobLamiaUp()[type], tl.getMobLamiaDown()[type], 1, this));
+                    monsterCreate++;
                     break;
                 case 5:
+                    mobs.add(new ChienSquelette(tl.getMobChienSqueletteLeft(), tl.getMobChienSqueletteRight(), tl.getMobChienSqueletteUp(), tl.getMobChienSqueletteDown(), 1, this));
+                    monsterCreate++;
                     break;
                 case 6:
+                    mobs.add(new Griffon(tl.getMobGriffonLeft(), tl.getMobGriffonRight(), tl.getMobGriffonUp(), tl.getMobGriffonDown(), 1, this));
+                    monsterCreate++;
                     break;
             }
-        }
+
     }
 
     public boolean getVision(int numCell){

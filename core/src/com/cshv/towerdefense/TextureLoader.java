@@ -781,7 +781,7 @@ public class TextureLoader {
             }
         }
 
-        for(int j=1 ; j<4 ; j++){
+        for(int j=1 ; j<5 ; j++){
             mobOrcUp[j-1] = new Array<TextureRegion>();
             for(int i=1 ; i<4 ; i++){
                 mobOrcUp[j-1].add(textureAtlas.findRegion("mobOrc"+j+"_up"+i));
