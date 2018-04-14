@@ -30,12 +30,11 @@ public class EditorScreen extends ScreenAdapter {
     private BitmapFont bitmapFont;
     private TextureAtlas textureAtlas;
     private TextureLoader tl;
-    private Array<Integer> trajet;
 
     private World world;
+    private Array<Integer> trajet;
 
-
-    //
+    private boolean clear = false;
 
     private final TowerDefenseGame towerDefenseGame;
 
@@ -64,7 +63,21 @@ public class EditorScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
-                insertCell(screenX,screenY);
+                if(!clear) {
+                    insertCell(screenX, screenY);
+                }else{
+                    removeCell(screenX, screenY);
+                }
+                return true;
+            }
+
+            @Override
+            public boolean touchDown(int screenX, int screenY, int pointer , int button) {
+                if(!clear) {
+                    insertCell(screenX, screenY);
+                }else{
+                    removeCell(screenX, screenY);
+                }
                 return true;
             }
 
@@ -72,9 +85,6 @@ public class EditorScreen extends ScreenAdapter {
 
         });
         trajet = new Array<Integer>();
-        /*for (int i = 5; i < 160; i += 10){
-            trajet.add(i);
-        }*/
 
         world = new World(tl.getSol(), tl.getChemin(), trajet);
     }
@@ -104,12 +114,30 @@ public class EditorScreen extends ScreenAdapter {
             for (int i = 0; i < trajet.size; i++) {
                 if (numCell == trajet.get(i)) {
                     flag = false;
+                    break;
                 }
             }
 
             if (flag) {
                 trajet.add(numCell);
                 world.cheminEditor(numCell);
+            }
+        }
+    }
+
+    private void removeCell(float x , float y){
+
+        x = (x-45)/2;
+        y = WORLD_HEIGHT-( ( y + 176 ) /2);
+
+        int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
+
+        if(numCell <= 176 && numCell >= 0 ){
+            for (int i = 0; i < trajet.size; i++) {
+                if (numCell == trajet.get(i)) {
+                    world.suppCellCheminEditor(numCell);
+                    trajet.removeIndex(i);
+                }
             }
         }
     }
