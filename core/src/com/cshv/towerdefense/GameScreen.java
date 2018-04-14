@@ -45,6 +45,8 @@ import java.util.Date;
 
 public class GameScreen extends ScreenAdapter {
 
+    private static final int UNITE_CHEVALIER = 0, UNITE_MAGE = 1, UNITE_MOINE = 2, UNITE_ROGUE = 3, UNITE_HEALER = 4;
+
     private static final float WORLD_WIDTH = TowerDefenseGame.WORLD_WIDTH;
     private static final float WORLD_HEIGHT = TowerDefenseGame.WORLD_HEIGHT;
 
@@ -166,7 +168,6 @@ public class GameScreen extends ScreenAdapter {
 
     private Array<TextureRegion> projectileTexture;
     private TextureRegion barBack, barRed, barBlue;
-    private GameScreen pere;
     private Cell cells[];
     private Array<Mob> mobs = new Array<Mob>();
     private Array<Unit> units = new Array<Unit>();
@@ -196,7 +197,6 @@ public class GameScreen extends ScreenAdapter {
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
         batch = new SpriteBatch();
         bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
-        pere = this;
         textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         initTextures();
         initSpriteMob();
@@ -264,7 +264,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                units.add(new Chevalier( chevalier_TexturesLeft, chevalier_TexturesRight, chevalier_TexturesUp, chevalier_TextureDown, lvlStage, pere));
+                ajouterUnite(UNITE_CHEVALIER);
             }
         });
         uiStage.addActor(uiButton1);
@@ -278,7 +278,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                units.add(new Mage( mage_TexturesLeft, mage_TexturesRight, mage_TexturesUp, mage_TextureDown, lvlStage, pere));
+                ajouterUnite(UNITE_MAGE);
             }
         });
         uiStage.addActor(uiButton2);
@@ -292,7 +292,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                units.add( new Moine( moine_TexturesLeft, moine_TexturesRight, moine_TexturesUp, moine_TextureDown, lvlStage, pere));
+                ajouterUnite(UNITE_MOINE);
             }
         });
         uiStage.addActor(uiButton3);
@@ -306,7 +306,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                units.add( new Rogue( rogue_TexturesLeft, rogue_TexturesRight, rogue_TexturesUp, rogue_TextureDown, lvlStage, pere));
+                ajouterUnite(UNITE_ROGUE);
             }
         });
         uiStage.addActor(uiButton4);
@@ -320,7 +320,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                units.add( new Healer(healer_TexturesLeft,healer_TexturesRight,healer_TexturesUp,healer_TextureDown,lvlStage,pere));
+                ajouterUnite(UNITE_HEALER);
             }
         });
         uiStage.addActor(uiButton5);
@@ -1035,6 +1035,31 @@ public class GameScreen extends ScreenAdapter {
                 break;
         }
 
+    }
+
+    private void ajouterUnite(int unite) {
+        switch (unite) {
+        case UNITE_CHEVALIER:
+            units.add(new Chevalier(chevalier_TexturesLeft, chevalier_TexturesRight,
+                    chevalier_TexturesUp, chevalier_TextureDown, lvlStage, this));
+            break;
+        case UNITE_MAGE:
+            units.add(new Mage(mage_TexturesLeft, mage_TexturesRight,
+                    mage_TexturesUp, mage_TextureDown, lvlStage, this));
+            break;
+        case UNITE_MOINE:
+            units.add(new Moine(moine_TexturesLeft, moine_TexturesRight,
+                    moine_TexturesUp, moine_TextureDown, lvlStage, this));
+            break;
+        case UNITE_ROGUE:
+            units.add(new Rogue(rogue_TexturesLeft, rogue_TexturesRight,
+                    rogue_TexturesUp, rogue_TextureDown, lvlStage, this));
+            break;
+        case UNITE_HEALER:
+            units.add(new Healer(healer_TexturesLeft, healer_TexturesRight,
+                    healer_TexturesUp, healer_TextureDown, lvlStage, this));
+            break;
+        }
     }
 
     public Rectangle[] getChemin(){

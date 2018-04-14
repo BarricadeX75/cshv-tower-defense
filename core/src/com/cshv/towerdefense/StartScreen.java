@@ -66,7 +66,8 @@ public class StartScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //
+                towerDefenseGame.setScreen(new EditorScreen(towerDefenseGame));
+                //dispose();
             }
         });
         stage.addActor(editorButton);
@@ -77,7 +78,8 @@ public class StartScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //
+                //towerDefenseGame.setScreen(new CharacsScreen(towerDefenseGame));
+                //dispose();
             }
         });
         stage.addActor(characsButton);
