@@ -66,7 +66,6 @@ public class World {
                 blocks[i] = new Rectangle(x, y, 32, 32);
 
             x += 32;
-            System.out.print(i +"num case");
         }
         for(int i=0 ; i<_chemin.size ; i++){
             int numCase = _chemin.get(i);
@@ -84,6 +83,10 @@ public class World {
         for(TextureRegion textureRegion : blockImg){
             textureRegion = BLOCK_SOL;
         }
+    }
+
+    public void suppCellCheminEditor(int cell){
+        blockImg[cell] = BLOCK_SOL;
     }
 
     public float getXcase(int numCase){

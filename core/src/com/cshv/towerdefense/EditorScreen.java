@@ -1,6 +1,7 @@
 package com.cshv.towerdefense;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -29,10 +30,10 @@ public class EditorScreen extends ScreenAdapter {
     private BitmapFont bitmapFont;
     private TextureAtlas textureAtlas;
     private TextureLoader tl;
+    private Array<Integer> trajet;
 
     private World world;
-    private Rectangle[] chemin;
-    private Cell[] cells;
+
 
     //
 
@@ -60,19 +61,22 @@ public class EditorScreen extends ScreenAdapter {
         bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
         textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         tl = new TextureLoader(textureAtlas);
+        Gdx.input.setInputProcessor(new InputAdapter() {
+            @Override
+            public boolean touchDragged(int screenX, int screenY, int pointer) {
+                insertCell(screenX,screenY);
+                return true;
+            }
 
-        Array<Integer> trajet = new Array<Integer>();
-        for (int i = 5; i < 160; i += 10){
+
+
+        });
+        trajet = new Array<Integer>();
+        /*for (int i = 5; i < 160; i += 10){
             trajet.add(i);
-        }
+        }*/
 
         world = new World(tl.getSol(), tl.getChemin(), trajet);
-        chemin = world.getChemin();
-
-        cells = new Cell[chemin.length];
-        for (int i = 0; i < chemin.length; i++){
-            cells[i] = new Cell(i);
-        }
     }
 
     @Override
@@ -88,6 +92,27 @@ public class EditorScreen extends ScreenAdapter {
     }
 
     //
+
+    private void insertCell(float x , float y){
+        boolean flag = true;
+        x = (x-45)/2;
+        y = WORLD_HEIGHT-( ( y + 176 ) /2);
+
+        int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
+
+        if(numCell <= 176 && numCell >= 0 ){
+            for (int i = 0; i < trajet.size; i++) {
+                if (numCell == trajet.get(i)) {
+                    flag = false;
+                }
+            }
+
+            if (flag) {
+                trajet.add(numCell);
+                world.cheminEditor(numCell);
+            }
+        }
+    }
 
     private void draw() {
         batch.setProjectionMatrix(camera.projection);
