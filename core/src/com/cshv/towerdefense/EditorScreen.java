@@ -62,14 +62,17 @@ public class EditorScreen extends ScreenAdapter {
         tl = new TextureLoader(textureAtlas);
 
         Array<Integer> trajet = new Array<Integer>();
-        for (int i = 5; i < 176; i += 11){
+        for (int i = 5; i < 160; i += 10){
             trajet.add(i);
         }
 
         world = new World(tl.getSol(), tl.getChemin(), trajet);
         chemin = world.getChemin();
 
-
+        cells = new Cell[chemin.length];
+        for (int i = 0; i < chemin.length; i++){
+            cells[i] = new Cell(i);
+        }
     }
 
     @Override
