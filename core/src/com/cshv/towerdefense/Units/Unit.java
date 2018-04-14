@@ -9,6 +9,9 @@ import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 
 public abstract class Unit {
+
+    public static final int CHEVALIER = 1, MAGE = 2, MOINE = 3, ROGUE = 4, HEALER = 5;
+
     protected int vieMax;
     protected int vie;
     protected int attaque;

@@ -1,15 +1,11 @@
 package com.cshv.towerdefense.Units;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 import com.cshv.towerdefense.World;
-
-import java.util.Date;
 
 /**
  * Created by harri on 30/03/2018.
@@ -19,7 +15,7 @@ public class Healer extends Unit {
     private static final float FRAME_DURATION = 0.1F;
 
     public Healer(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
-        type = 5;
+        type = Unit.HEALER;
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);
         animeLeft.setPlayMode(Animation.PlayMode.LOOP);
         animeRight = new Animation<TextureRegion>(FRAME_DURATION,right);
