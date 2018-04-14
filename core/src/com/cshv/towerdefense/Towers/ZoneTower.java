@@ -81,21 +81,21 @@ public class ZoneTower extends Tower {
                 }
             }
         }else{
-            int poidMax, poid , direction;
-            poidMax = 0;
+            int poidsMax, poids , direction;
+            poidsMax = 0;
             direction = 0;
             for( int i=0 ; i<4 ; i++){
-                poid = 0;
+                poids = 0;
                 for( int j=0 ; j<caseSpell[i].size ; j++){
                     if(parent.testCase(caseSpell[i].get(j),2)){
-                        poid += parent.getPoidCell(caseSpell[i].get(j));
+                        poids += parent.getPoidsCell(caseSpell[i].get(j));
                     }
                 }
-                if(poid > poidMax){
+                if(poids > poidsMax){
                     direction = i+1;
                 }
             }
-            if(poidMax>0){
+            if(poidsMax>0){
                 parent.activationSpellZone(this,direction,caseSpell[direction-1]);
             }else{
                 chargementSpell = 32f;

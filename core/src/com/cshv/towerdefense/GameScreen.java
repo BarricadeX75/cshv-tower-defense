@@ -902,7 +902,7 @@ public class GameScreen extends ScreenAdapter {
         return cells[num].testCell(type);
     }
 
-    public  int getPoidCell(int cell){
+    public  int getPoidsCell(int cell){
         return cells[cell].getNbMob();
     }
 
