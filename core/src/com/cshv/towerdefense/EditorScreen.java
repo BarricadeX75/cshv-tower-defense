@@ -90,7 +90,12 @@ public class EditorScreen extends ScreenAdapter {
     //
 
     private void draw() {
+        batch.setProjectionMatrix(camera.projection);
+        batch.setTransformMatrix(camera.view);
+        batch.begin();
+        world.draw(batch);
         //
+        batch.end();
     }
 
     //
