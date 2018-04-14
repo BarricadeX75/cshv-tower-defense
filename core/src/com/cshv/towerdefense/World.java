@@ -76,6 +76,16 @@ public class World {
 
     }
 
+    public void cheminEditor(int cell){
+        blockImg[cell] = BLOCK_CHEMIN;
+    }
+
+    public void clearChemin(){
+        for(TextureRegion textureRegion : blockImg){
+            textureRegion = BLOCK_SOL;
+        }
+    }
+
     public float getXcase(int numCase){
         return blocks[numCase].getX();
     }
