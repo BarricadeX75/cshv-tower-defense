@@ -1,7 +1,6 @@
 package com.cshv.towerdefense;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -10,7 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -24,6 +23,7 @@ public class EditorScreen extends ScreenAdapter {
     private static final float WORLD_WIDTH = TowerDefenseGame.WORLD_WIDTH;
     private static final float WORLD_HEIGHT = TowerDefenseGame.WORLD_HEIGHT;
 
+    private Stage uiStage;
     private Viewport viewport;
     private Camera camera;
     private SpriteBatch batch;
@@ -61,7 +61,8 @@ public class EditorScreen extends ScreenAdapter {
         textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         tl = new TextureLoader(textureAtlas);
 
-        Gdx.input.setInputProcessor(new InputAdapter() {
+        /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
+        uiStage = new Stage(viewport) {
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
                 if(!clear) {
@@ -81,7 +82,10 @@ public class EditorScreen extends ScreenAdapter {
                 }
                 return true;
             }
-        });
+        };
+
+        Gdx.input.setInputProcessor(uiStage);
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
         trajet = new Array<Integer>();
         world = new World(tl.getSol(), tl.getChemin(), trajet);
