@@ -83,7 +83,6 @@ public class LoupGarou extends Mob {
 
             }else{
                 animationTimer = 0;
-                currentAnimation = animeDown;
             }
         }
 

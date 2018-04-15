@@ -92,7 +92,6 @@ public class Dragon extends Mob {
                 currentCase--;
             }else{
                 animationTimer = 0;
-                currentAnimation = animeDown;
             }
         }
 

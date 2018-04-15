@@ -86,7 +86,6 @@ public class Griffon extends Mob {
                 currentCase--;
             }else{
                 animationTimer = 0;
-                currentAnimation = animeDown;
             }
         }
 

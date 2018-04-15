@@ -87,7 +87,7 @@ public abstract class Mob {
 
             }else{
                 animationTimer = 0;
-                currentAnimation = animeDown;
+
             }
         }
 

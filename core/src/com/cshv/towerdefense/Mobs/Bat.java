@@ -101,7 +101,6 @@ public class Bat extends Mob {
                 currentCase--;
             }else{
                 animationTimer = 0;
-                currentAnimation = animeDown;
             }
         }
 
