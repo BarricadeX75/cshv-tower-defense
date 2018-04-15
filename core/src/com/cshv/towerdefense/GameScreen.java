@@ -129,9 +129,6 @@ public class GameScreen extends ScreenAdapter {
         }
 
         //trajet.sort();
-        for(Integer integer : trajet){
-            System.out.println(integer);
-        }
 
         world = new World(tl.getSol(), tl.getChemin(), trajet);
         chemin = world.getChemin();
