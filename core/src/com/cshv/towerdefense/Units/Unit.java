@@ -11,6 +11,7 @@ import com.cshv.towerdefense.GameScreen;
 public abstract class Unit {
 
     public static final int CHEVALIER = 1, MAGE = 2, MOINE = 3, ROGUE = 4, HEALER = 5;
+    public static final float COUT_CHEVALIER = 6, COUT_MAGE = 10, COUT_MOINE = 8, COUT_ROGUE = 6, COUT_HEALER = 10;
 
     protected int vieMax;
     protected int vie;

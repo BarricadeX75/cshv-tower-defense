@@ -1,6 +1,5 @@
 package com.cshv.towerdefense.Towers;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -33,7 +32,7 @@ public class FastTower extends Tower {
     public FastTower(Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower, float x, float y,
                      TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
-        type = 1;
+        type = FAST_TOWER;
         towerFireEnd = towerAtc.get(towerAtc.size-1);
         actTower = new Animation<TextureRegion>(FRAME_DURATION,towerAtc);
         actTower.setPlayMode(Animation.PlayMode.LOOP);

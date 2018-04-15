@@ -1,9 +1,5 @@
 package com.cshv.towerdefense.Towers;
 
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,6 +7,8 @@ import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 
 public abstract class Tower {
+
+    public static final int FAST_TOWER = 1, SLOW_TOWER = 2, ZONE_TOWER = 3, VISION_TOWER = 4;
 
     private static final float BAR_WIDTH = 32f;
     private static final float BAR_HEIGHT = 4f;
