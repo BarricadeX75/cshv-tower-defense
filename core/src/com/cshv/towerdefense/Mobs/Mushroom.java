@@ -31,6 +31,7 @@ public class Mushroom extends Mob {
         chemin = parent.getChemin();
         currentCase = chemin.length-1;
         setPosition(chemin[currentCase].getX() , chemin[currentCase].getY()+ World.DEPART);
+        _type = type;
 
     }
 
@@ -46,25 +47,8 @@ public class Mushroom extends Mob {
     public boolean draw(SpriteBatch batch) {
         TextureRegion anime = currentAnimation.getKeyFrame(animationTimer);
         batch.draw( anime, _x-8, _y);
-        if(dead = true){
-            switch(_type){
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    break;
-                case 7:
-                    break;
-            }
+        if(dead == true){
+            parent.activationSpecialMushroom(_type,currentCase);
         }
         return dead;
     }

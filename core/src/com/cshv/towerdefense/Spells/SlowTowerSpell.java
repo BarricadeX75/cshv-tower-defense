@@ -19,7 +19,6 @@ public class SlowTowerSpell extends Spell {
     private Mob _mob;
     private Tower _tower;
     private Cell _cells[];
-    private int _type;
     private float animationTimer = 0;
 
 

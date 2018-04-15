@@ -58,8 +58,9 @@ public class FastTower extends Tower {
     }
 
     public void boosterOn(){
-        attaque += 10 + _lvlTower;
+        attaque += 15 + _lvlTower;
         atcSpeed -= 1.5f;
+        parent.manaUse(30);
         Timer.schedule(spellBooster, 10);
     }
 

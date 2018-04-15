@@ -130,6 +130,12 @@ public class Cell {
 
     public void spellVisionOk(){
         visionTempo = true;
-        Timer.schedule(finSpellVision, 30f);
+        Timer.schedule(finSpellVision, 15f);
+    }
+
+    public void allDead(){
+        for(int i=0 ; i<units.size ; i++){
+            units.get(i).setDegats(units.get(i).getVie()*2);
+        }
     }
 }

@@ -36,6 +36,7 @@ import com.cshv.towerdefense.Mobs.Mob;
 import com.cshv.towerdefense.Mobs.Mushroom;
 import com.cshv.towerdefense.Mobs.Orc;
 import com.cshv.towerdefense.Mobs.Slime;
+import com.cshv.towerdefense.Spells.ExplosionMushroomSpell;
 import com.cshv.towerdefense.Spells.HealSpell;
 import com.cshv.towerdefense.Spells.MagicSpell;
 import com.cshv.towerdefense.Spells.MobProjectile;
@@ -73,6 +74,7 @@ public class GameScreen extends ScreenAdapter {
     private int nbMonster;
     private int mobCreer = 1;
     private int numWave = 1;
+    private float gold = 0;
     protected Timer.Task setWave;
     protected Timer.Task setMob;
 
@@ -189,8 +191,10 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                player.depenserMana(1);
-                ajouterUnite(Unit.CHEVALIER);
+                if(player.getManaCombat()>=6) {
+                    player.depenserMana(6);
+                    ajouterUnite(Unit.CHEVALIER);
+                }
             }
         });
         uiStage.addActor(uiButton1);
@@ -203,8 +207,10 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                player.depenserMana(1);
-                ajouterUnite(Unit.MAGE);
+                if(player.getManaCombat()>=10) {
+                    player.depenserMana(10);
+                    ajouterUnite(Unit.MAGE);
+                }
             }
         });
         uiStage.addActor(uiButton2);
@@ -217,8 +223,10 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                player.depenserMana(1);
-                ajouterUnite(Unit.MOINE);
+                if(player.getManaCombat()>=8) {
+                    player.depenserMana(8);
+                    ajouterUnite(Unit.MOINE);
+                }
             }
         });
         uiStage.addActor(uiButton3);
@@ -231,8 +239,10 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                player.depenserMana(1);
-                ajouterUnite(Unit.ROGUE);
+                if(player.getManaCombat()>=6) {
+                    player.depenserMana(6);
+                    ajouterUnite(Unit.ROGUE);
+                }
             }
         });
         uiStage.addActor(uiButton4);
@@ -245,8 +255,10 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                player.depenserMana(1);
-                ajouterUnite(Unit.HEALER);
+                if(player.getManaCombat()>=10) {
+                    player.depenserMana(10);
+                    ajouterUnite(Unit.HEALER);
+                }
             }
         });
         uiStage.addActor(uiButton5);
@@ -359,23 +371,37 @@ public class GameScreen extends ScreenAdapter {
                     int type = tower.useSpell();
                     switch(type){
                         case 1:
-                            ((FastTower)tower).boosterOn();
+                            if(player.getManaCombat()>=30) {
+                                ((FastTower) tower).boosterOn();
+                            }
                             break;
                         case 2:
-                            tower.getTarget(1);
+                            if(player.getManaCombat()>=50) {
+                                tower.getTarget(1);
+                            }
                             break;
                         case 3:
-                            tower.getTarget(1);
+                            if(player.getManaCombat()>=60) {
+                                tower.getTarget(1);
+                            }
                             break;
                         case 4:
-                            for(Cell cell : cells){
-                                cell.spellVisionOk();
+                            if(player.getManaCombat()>=30) {
+                                manaUse(30);
+                                for (Cell cell : cells) {
+                                    cell.spellVisionOk();
+                                }
                             }
+
                             break;
                     }
                 }
             }
         }
+    }
+
+    public void manaUse(float depMana){
+        player.depenserMana(depMana);
     }
 
     private void createMob(){
@@ -419,7 +445,7 @@ public class GameScreen extends ScreenAdapter {
                 mobs.add(new Griffon(tl.getMobGriffonLeft(), tl.getMobGriffonRight(), tl.getMobGriffonUp(), tl.getMobGriffonDown(), 1, this));
                 break;
             case 9:
-                type = MathUtils.random(7);
+                type = MathUtils.random(4);
                 mobs.add(new Mushroom(tl.getMobMushroomLeft()[type], tl.getMobMushroomRight()[type], tl.getMobMushroomUp()[type], tl.getMobMushroomDown()[type], 1, this, type));
                 break;
             case 10:
@@ -600,6 +626,21 @@ public class GameScreen extends ScreenAdapter {
                 break;
         }
 
+    }
+
+    public void activationSpecialMushroom(int type, int cell){
+        switch(type){
+            case 0: spells.add( new ExplosionMushroomSpell( tl.getExploMushroom(), chemin[cell-1].getX(), chemin[cell-1].getY(), cells[cell-1]));
+                break;
+            case 1: player.bonusVie(80);
+                break;
+            case 2: gold+=20;
+                break;
+            case 3: gold += 40;
+                break;
+            case 4: player.bonusMana(50);
+                break;
+        }
     }
 
     private void ajouterUnite(int unite) {

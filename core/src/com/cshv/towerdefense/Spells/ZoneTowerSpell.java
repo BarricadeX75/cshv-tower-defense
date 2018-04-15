@@ -53,7 +53,7 @@ public class ZoneTowerSpell extends Spell {
     }
 
     private void setDegat(){
-        int domage = _tower.getAttaque()*3;
+        int domage = _tower.getAttaque()*4;
         for(Integer integer : _caseCible){
             _cells[integer].degatZone(domage,1);
         }

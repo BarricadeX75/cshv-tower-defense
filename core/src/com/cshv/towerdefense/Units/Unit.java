@@ -94,6 +94,10 @@ public abstract class Unit {
         return type;
     }
 
+    public int getVie(){
+        return vieMax;
+    }
+
     public void update(float delta) {
         animationTimer += delta;
         if(vie <= 0){

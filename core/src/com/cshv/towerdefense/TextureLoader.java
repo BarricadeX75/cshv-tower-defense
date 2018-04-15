@@ -48,10 +48,10 @@ public class TextureLoader {
     private Array<TextureRegion> mobGolemLeft[] = new Array[8];
     private Array<TextureRegion> mobGolemRight[] = new Array[8];
     private Array<TextureRegion> mobGolemDown[] = new Array[8];
-    private Array<TextureRegion> mobMushroomUp[] = new Array[8];
-    private Array<TextureRegion> mobMushroomLeft[] = new Array[8];
-    private Array<TextureRegion> mobMushroomRight[] = new Array[8];
-    private Array<TextureRegion> mobMushroomDown[] = new Array[8];
+    private Array<TextureRegion> mobMushroomUp[] = new Array[5];
+    private Array<TextureRegion> mobMushroomLeft[] = new Array[5];
+    private Array<TextureRegion> mobMushroomRight[] = new Array[5];
+    private Array<TextureRegion> mobMushroomDown[] = new Array[5];
     private Array<TextureRegion> mobBatUp[] = new Array[8];
     private Array<TextureRegion> mobBatLeft[] = new Array[8];
     private Array<TextureRegion> mobBatRight[] = new Array[8];
@@ -121,6 +121,7 @@ public class TextureLoader {
     private Array<TextureRegion> spellSlowTower;
     private Array<TextureRegion> projectileTower[] = new Array[4];
     private Array<TextureRegion> projectileMob;
+    private Array<TextureRegion> exploMushroom;
 
     private TextureRegion barBack, barRed, barBlue;
 
@@ -567,6 +568,10 @@ public class TextureLoader {
         return projectileMob;
     }
 
+    public Array<TextureRegion> getExploMushroom() {
+        return exploMushroom;
+    }
+
     public TextureRegion getBarBack() {
         return barBack;
     }
@@ -899,22 +904,22 @@ public class TextureLoader {
             }
         }
 
-        for(int j=1 ; j<9 ; j++){
-            mobMushroomUp[j-1] = new Array<TextureRegion>();
+        for(int j=4 ; j<9 ; j++){
+            mobMushroomUp[j-4] = new Array<TextureRegion>();
             for(int i=1 ; i<4 ; i++){
-                mobMushroomUp[j-1].add(textureAtlas.findRegion("mobMushroom"+j+"_up"+i));
+                mobMushroomUp[j-4].add(textureAtlas.findRegion("mobMushroom"+j+"_up"+i));
             }
-            mobMushroomLeft[j-1] = new Array<TextureRegion>();
+            mobMushroomLeft[j-4] = new Array<TextureRegion>();
             for(int i=1 ; i<4 ; i++){
-                mobMushroomLeft[j-1].add(textureAtlas.findRegion("mobMushroom"+j+"_left"+i));
+                mobMushroomLeft[j-4].add(textureAtlas.findRegion("mobMushroom"+j+"_left"+i));
             }
-            mobMushroomRight[j-1] = new Array<TextureRegion>();
+            mobMushroomRight[j-4] = new Array<TextureRegion>();
             for(int i=1 ; i<4 ; i++){
-                mobMushroomRight[j-1].add(textureAtlas.findRegion("mobMushroom"+j+"_right"+i));
+                mobMushroomRight[j-4].add(textureAtlas.findRegion("mobMushroom"+j+"_right"+i));
             }
-            mobMushroomDown[j-1] = new Array<TextureRegion>();
+            mobMushroomDown[j-4] = new Array<TextureRegion>();
             for(int i=1 ; i<4 ; i++){
-                mobMushroomDown[j-1].add(textureAtlas.findRegion("mobMushroom"+j+"_down"+i));
+                mobMushroomDown[j-4].add(textureAtlas.findRegion("mobMushroom"+j+"_down"+i));
             }
         }
 
@@ -1059,6 +1064,10 @@ public class TextureLoader {
         projectileMob = new Array<TextureRegion>();
         for(int i=1; i<7 ; i++){
             projectileMob.add(textureAtlas.findRegion("projectile_mob"+i));
+        }
+        exploMushroom = new Array<TextureRegion>();
+        for(int i=1; i<11 ; i++){
+            exploMushroom.add(textureAtlas.findRegion("atc_Boom_Mushroom ("+i+")"));
         }
     }
 }

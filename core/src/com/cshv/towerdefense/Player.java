@@ -11,8 +11,8 @@ public class Player {
 
     public Player() {
         nom = "Brioche";
-        vie = 100;
-        mana = 100;
+        vie = 300;
+        mana = 160;
 
         resetStatsCombat();
     }
@@ -56,6 +56,20 @@ public class Player {
 
             if (vieCombat < 0)
                 vieCombat = 0;
+        }
+    }
+
+    public void bonusMana(float manaBonus){
+        manaCombat += manaBonus;
+        if(manaCombat > mana){
+            manaCombat = mana;
+        }
+    }
+
+    public void bonusVie(float vieBonus){
+        vieCombat += vieBonus;
+        if(vieCombat > vie){
+            vieCombat = vie;
         }
     }
 
