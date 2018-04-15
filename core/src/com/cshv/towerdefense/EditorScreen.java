@@ -102,6 +102,7 @@ public class EditorScreen extends ScreenAdapter {
     }
 
     private void update(float delta) {
+        uiStage.act(delta);
         //
     }
 
