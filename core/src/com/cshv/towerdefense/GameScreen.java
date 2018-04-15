@@ -360,66 +360,66 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
-    private void createMob(int teste){
-        //il y aura un if
-            int type;
-            int rand = MathUtils.random(7);
-            switch (teste){
-                case 0:
-                    type = MathUtils.random(7);
-                    mobs.add(new Slime(tl.getMobSlimeLeft()[type], tl.getMobSlimeRight()[type], tl.getMobSlimeUp()[type], tl.getMobSlimeDown()[type], 1, this, type));
-                    monsterCreate++;
-                    break;
-                case 1:
-                    type = MathUtils.random(3);
-                    mobs.add(new Orc(tl.getMobOrcLeft()[type], tl.getMobOrcRight()[type], tl.getMobOrcUp()[type], tl.getMobOrcDown()[type], 1, this, type));
-                    monsterCreate++;
-                    break;
-                case 2:
-                    type = MathUtils.random(7);
-                    mobs.add(new Golem(tl.getMobGolemLeft()[type], tl.getMobGolemRight()[type], tl.getMobGolemUp()[type], tl.getMobGolemDown()[type], 1, this, type));
-                    monsterCreate++;
-                    break;
-                case 3:
-                    type = MathUtils.random(7);
-                    mobs.add(new Centaure(tl.getMobCentaureLeft()[type], tl.getMobCentaureRight()[type], tl.getMobCentaureUp()[type], tl.getMobCentaureDown()[type], 1, this, type));
-                    monsterCreate++;
-                    break;
-                case 4:
-                    type = MathUtils.random(7);
-                    mobs.add(new Lamia(tl.getMobLamiaLeft()[type], tl.getMobLamiaRight()[type], tl.getMobLamiaUp()[type], tl.getMobLamiaDown()[type], 1, this, type));
-                    monsterCreate++;
-                    break;
-                case 5:
-                    mobs.add(new ChienSquelette(tl.getMobChienSqueletteLeft(), tl.getMobChienSqueletteRight(), tl.getMobChienSqueletteUp(), tl.getMobChienSqueletteDown(), 1, this));
-                    monsterCreate++;
-                    break;
-                case 6:
-                    type = MathUtils.random(7);
-                    mobs.add(new Bat(tl.getMobBatLeft()[type], tl.getMobBatRight()[type], tl.getMobBatUp()[type], tl.getMobBatDown()[type], 1, this, type));
-                    monsterCreate++;
-                    break;
-                case 7:
-                    type = MathUtils.random(7);
-                    mobs.add(new LoupGarou(tl.getMobLoupGarouLeft()[type], tl.getMobLoupGarouRight()[type], tl.getMobLoupGarouUp()[type], tl.getMobLoupGarouDown()[type], 1, this, type));
-                    monsterCreate++;
-                    break;
-                case 8:
-                    mobs.add(new Griffon(tl.getMobGriffonLeft(), tl.getMobGriffonRight(), tl.getMobGriffonUp(), tl.getMobGriffonDown(), 1, this));
-                    monsterCreate++;
-                    break;
-                case 9:
-                    type = MathUtils.random(7);
-                    mobs.add(new Mushroom(tl.getMobMushroomLeft()[type], tl.getMobMushroomRight()[type], tl.getMobMushroomUp()[type], tl.getMobMushroomDown()[type], 1, this, type));
-                    monsterCreate++;
-                    break;
-                case 10:
-                    type = MathUtils.random(1);
-                    mobs.add(new Dragon(tl.getMobDragonLeft()[type], tl.getMobDragonRight()[type], tl.getMobDragonUp()[type], tl.getMobDragonDown()[type], 1, this, type));
-                    monsterCreate++;
-                    break;
-            }
+    private void createMob(){
 
+        int type;
+        int range = 3+ ((int)lvlStage/3);
+        int rand = MathUtils.random(range);
+        switch (rand){
+            case 0:
+                type = MathUtils.random(7);
+                mobs.add(new Slime(tl.getMobSlimeLeft()[type], tl.getMobSlimeRight()[type], tl.getMobSlimeUp()[type], tl.getMobSlimeDown()[type], 1, this, type));
+                monsterCreate++;
+                break;
+            case 1:
+                type = MathUtils.random(3);
+                mobs.add(new Orc(tl.getMobOrcLeft()[type], tl.getMobOrcRight()[type], tl.getMobOrcUp()[type], tl.getMobOrcDown()[type], 1, this, type));
+                monsterCreate++;
+                break;
+            case 2:
+                type = MathUtils.random(7);
+                mobs.add(new Golem(tl.getMobGolemLeft()[type], tl.getMobGolemRight()[type], tl.getMobGolemUp()[type], tl.getMobGolemDown()[type], 1, this, type));
+                monsterCreate++;
+                break;
+            case 3:
+                type = MathUtils.random(7);
+                mobs.add(new Centaure(tl.getMobCentaureLeft()[type], tl.getMobCentaureRight()[type], tl.getMobCentaureUp()[type], tl.getMobCentaureDown()[type], 1, this, type));
+                monsterCreate++;
+                break;
+            case 4:
+                type = MathUtils.random(7);
+                mobs.add(new Lamia(tl.getMobLamiaLeft()[type], tl.getMobLamiaRight()[type], tl.getMobLamiaUp()[type], tl.getMobLamiaDown()[type], 1, this, type));
+                monsterCreate++;
+                break;
+            case 5:
+                mobs.add(new ChienSquelette(tl.getMobChienSqueletteLeft(), tl.getMobChienSqueletteRight(), tl.getMobChienSqueletteUp(), tl.getMobChienSqueletteDown(), 1, this));
+                monsterCreate++;
+                break;
+            case 6:
+                type = MathUtils.random(7);
+                mobs.add(new Bat(tl.getMobBatLeft()[type], tl.getMobBatRight()[type], tl.getMobBatUp()[type], tl.getMobBatDown()[type], 1, this, type));
+                monsterCreate++;
+                break;
+            case 7:
+                type = MathUtils.random(7);
+                mobs.add(new LoupGarou(tl.getMobLoupGarouLeft()[type], tl.getMobLoupGarouRight()[type], tl.getMobLoupGarouUp()[type], tl.getMobLoupGarouDown()[type], 1, this, type));
+                monsterCreate++;
+                break;
+            case 8:
+                mobs.add(new Griffon(tl.getMobGriffonLeft(), tl.getMobGriffonRight(), tl.getMobGriffonUp(), tl.getMobGriffonDown(), 1, this));
+                monsterCreate++;
+                break;
+            case 9:
+                type = MathUtils.random(7);
+                mobs.add(new Mushroom(tl.getMobMushroomLeft()[type], tl.getMobMushroomRight()[type], tl.getMobMushroomUp()[type], tl.getMobMushroomDown()[type], 1, this, type));
+                monsterCreate++;
+                break;
+            case 10:
+                type = MathUtils.random(1);
+                mobs.add(new Dragon(tl.getMobDragonLeft()[type], tl.getMobDragonRight()[type], tl.getMobDragonUp()[type], tl.getMobDragonDown()[type], 1, this, type));
+                monsterCreate++;
+                break;
+        }
     }
 
     public boolean getVision(int numCell){
