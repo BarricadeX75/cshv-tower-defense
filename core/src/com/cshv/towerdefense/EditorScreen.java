@@ -100,6 +100,7 @@ public class EditorScreen extends ScreenAdapter {
     }
 
     private void update(float delta) {
+        uiStage.act(delta);
         //
     }
 
@@ -111,7 +112,7 @@ public class EditorScreen extends ScreenAdapter {
         y = WORLD_HEIGHT-( ( y + 176 ) /2);
 
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
-        if(numCell <= 176 && numCell >= 0 ){
+        if(numCell < 176 && numCell >= 0 ){
 
             for (int i = 0; i < trajet.size; i++) {
                 if (numCell == trajet.get(i)) {
@@ -134,7 +135,7 @@ public class EditorScreen extends ScreenAdapter {
 
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
 
-        if(numCell <= 176 && numCell >= 0 ){
+        if(numCell < 176 && numCell >= 0 ){
             for (int i = 0; i < trajet.size; i++) {
                 if (numCell == trajet.get(i)) {
                     world.suppCellCheminEditor(numCell);
@@ -145,7 +146,7 @@ public class EditorScreen extends ScreenAdapter {
     }
 
     private boolean verifChemin(){
-        if(trajet.first() != 5&& trajet.peek() != 170){
+        if(trajet.first() != 5 && trajet.peek() != 170){
             return false;
         }
         for(int i=1 ; i<trajet.size ; i++) {
