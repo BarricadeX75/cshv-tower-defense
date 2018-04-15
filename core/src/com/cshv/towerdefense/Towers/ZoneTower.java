@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 
@@ -26,7 +25,7 @@ public class ZoneTower extends Tower {
     public ZoneTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower, float x, float y,
                       TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
-        type = 3;
+        type = ZONE_TOWER;
         towerFireEnd = towerAtc.get(towerAtc.size-1);
         actTower = new Animation<TextureRegion>(FRAME_DURATION,towerAtc);
         actTower.setPlayMode(Animation.PlayMode.LOOP);
@@ -39,7 +38,7 @@ public class ZoneTower extends Tower {
 
     public void setStat( int lvlTower){
         attaque = 20 + (lvlTower*3);
-        portee = 3 + (int)(lvlTower/4);
+        portee = 3 + lvlTower/4;
         atcSpeed = 3 - (lvlTower /20);
         malus = 0;
         if(atcSpeed < 1.5f){

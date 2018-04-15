@@ -14,7 +14,7 @@ public class Chevalier extends Unit {
     private static final float FRAME_DURATION = 0.1F;
 
     public Chevalier(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
-        type = Unit.CHEVALIER;
+        type = CHEVALIER;
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);
         animeLeft.setPlayMode(Animation.PlayMode.LOOP);
         animeRight = new Animation<TextureRegion>(FRAME_DURATION,right);

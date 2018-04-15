@@ -15,7 +15,7 @@ public class Rogue extends Unit {
 
 
     public Rogue(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
-        type = Unit.ROGUE;
+        type = ROGUE;
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);
         animeLeft.setPlayMode(Animation.PlayMode.LOOP);
         animeRight = new Animation<TextureRegion>(FRAME_DURATION,right);

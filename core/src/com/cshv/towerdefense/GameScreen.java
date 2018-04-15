@@ -192,8 +192,8 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(_player.getManaCombat()>=6) {
-                    _player.depenserMana(Unit.INVOC_CHEVALIER);
+                if (_player.getManaCombat() >= Unit.COUT_CHEVALIER) {
+                    _player.depenserMana(Unit.COUT_CHEVALIER);
                     ajouterUnite(Unit.CHEVALIER);
                 }
             }
@@ -208,8 +208,8 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(_player.getManaCombat()>=10) {
-                    _player.depenserMana(Unit.INVOC_MAGE);
+                if (_player.getManaCombat( )>= Unit.COUT_MAGE) {
+                    _player.depenserMana(Unit.COUT_MAGE);
                     ajouterUnite(Unit.MAGE);
                 }
             }
@@ -224,8 +224,8 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(_player.getManaCombat()>=8) {
-                    _player.depenserMana(Unit.INVOC_MOINE);
+                if (_player.getManaCombat() >= Unit.COUT_MOINE) {
+                    _player.depenserMana(Unit.COUT_MOINE);
                     ajouterUnite(Unit.MOINE);
                 }
             }
@@ -240,8 +240,8 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(_player.getManaCombat()>=6) {
-                    _player.depenserMana(Unit.INVOC_ROGUE);
+                if (_player.getManaCombat() >= Unit.COUT_ROGUE) {
+                    _player.depenserMana(Unit.COUT_ROGUE);
                     ajouterUnite(Unit.ROGUE);
                 }
             }
@@ -256,8 +256,8 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(_player.getManaCombat()>=10) {
-                    _player.depenserMana(Unit.INVOC_HEALER);
+                if (_player.getManaCombat() >= Unit.COUT_HEALER) {
+                    _player.depenserMana(Unit.COUT_HEALER);
                     ajouterUnite(Unit.HEALER);
                 }
             }
@@ -388,7 +388,7 @@ public class GameScreen extends ScreenAdapter {
                             break;
                         case 4:
                             if(_player.getManaCombat()>=30) {
-                                manaUse(Tower.SPELL_VISION);
+                                manaUse(30);
                                 for (Cell cell : cells) {
                                     cell.spellVisionOk();
                                 }

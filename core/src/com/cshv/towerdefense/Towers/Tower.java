@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 
 public abstract class Tower {
+
+    public static final int FAST_TOWER = 1, SLOW_TOWER = 2, ZONE_TOWER = 3, VISION_TOWER = 4;
     public static final int SPELL_ZONE = 60, SPELL_SLOW = 50, SPELL_FAST = 30, SPELL_VISION = 30;
     private static final float BAR_WIDTH = 32f;
     private static final float BAR_HEIGHT = 4f;

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 
@@ -24,7 +23,7 @@ public class SlowTower extends Tower {
     public SlowTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower, float x, float y,
                       TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
-        type = 2;
+        type = SLOW_TOWER;
         towerFireEnd = towerAtc.get(towerAtc.size-1);
         actTower = new Animation<TextureRegion>(FRAME_DURATION,towerAtc);
         actTower.setPlayMode(Animation.PlayMode.LOOP);
