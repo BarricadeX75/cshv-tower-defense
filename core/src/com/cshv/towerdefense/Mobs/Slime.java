@@ -41,23 +41,23 @@ public class Slime extends Mob {
     @Override
     public void setCarrac(int lvlStage) {
         if(_type%3 == 1) {
-            vie = 85 + (lvlStage * 15);
-            attaque = 12 + (1 * lvlStage);
-            defense = 0 + (1 * lvlStage);
-            vitesse = 1f;
+            vie = 60+ (lvlStage * 15);
+            attaque = 5 + ( lvlStage);
+            defense = (lvlStage);
+            vitesse = 0.5f;
             portee = 3;
         }else if(_type%2==1){
-            vie = 100 + (lvlStage * 20);
-            attaque = 15 + (2 * lvlStage);
-            defense = 0 + (2 * lvlStage);
-            vitesse = 1f;
-            portee = 1;
+            vie = 100 + (lvlStage * 10);
+            attaque = 15 + (lvlStage);
+            defense = (lvlStage);
+            vitesse = 0.5f;
+            portee = 2;
         }else{
             vie = 40 + (lvlStage * 10);
-            attaque = 30 + (2 * lvlStage);
-            defense = 0 + (int)(0.5f * lvlStage);
-            vitesse = 2f;
-            portee = 1;
+            attaque = 20 + (3 * lvlStage);
+            defense = (int)(0.5f * lvlStage);
+            vitesse = 0.5f;
+            portee = 2;
         }
     }
 

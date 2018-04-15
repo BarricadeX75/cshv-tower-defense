@@ -51,10 +51,9 @@ public class TowerProjectile extends Spell{
         int dmg = tower.getAttaque();
         switch(typeTower){
             case 1: mob.setDegats(dmg);
-                Gdx.app.log("degat", "degat");
                 break;
             case 2: mob.setDegats(dmg);
-                mob.addMalus(tower.getMalus(),4000);
+                mob.addMalus(tower.getMalus());
                 break;
             case 3: cell[mob.getCurrentCase()].degatZone(dmg,1);
                 break;
@@ -79,7 +78,7 @@ public class TowerProjectile extends Spell{
 
         batch.draw(spell,x,y);
 
-        if(conter == 9 ){
+        if(conter == 10 ){
             setDegat();
             return true;
         }

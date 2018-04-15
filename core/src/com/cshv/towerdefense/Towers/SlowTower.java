@@ -36,10 +36,13 @@ public class SlowTower extends Tower {
     }
 
     public void setStat( int lvlTower){
-        attaque = 10 * lvlTower;
-        portee = 3 + (lvlTower%3);
-        atcSpeed = 3000 - (lvlTower * 100);
-        malus = 0;
+        attaque = 20 + (lvlTower*3);
+        portee = 3 + (lvlTower/5);
+        atcSpeed = 3 - (lvlTower / 20);
+        malus = 0.5f + (lvlTower/20);
+        if(atcSpeed < 1.5f){
+            atcSpeed = 1.5f;
+        }
     }
 
     public void initCaseDistOk(){
@@ -60,7 +63,7 @@ public class SlowTower extends Tower {
                 for (int i = 0; i < caseDistOk.size; i++) {
                     if (parent.testCase(caseDistOk.get(i), 2)) {
                         parent.getTargetMobTower(this, caseDistOk.get(i), 2);
-                        Timer.schedule(getTargetTask, 1);
+                        Timer.schedule(getTargetTask, atcSpeed);
                         tireOK = false;
                         break;
                     }

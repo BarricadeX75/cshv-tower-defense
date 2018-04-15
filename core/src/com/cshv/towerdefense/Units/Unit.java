@@ -77,7 +77,7 @@ public abstract class Unit {
                 }
 
             }else{
-                animationTimer = 0;
+                //animationTimer = 0;
             }
         }
     }

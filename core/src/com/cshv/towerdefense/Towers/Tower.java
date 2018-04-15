@@ -23,7 +23,7 @@ public abstract class Tower {
     protected int attaque;
     protected float chargementSpell = 0;
     protected int portee;
-    protected long atcSpeed;
+    protected float atcSpeed;
     protected float malus;
     protected long timer;
     protected float animationTimer = 0;

@@ -47,6 +47,7 @@ import com.cshv.towerdefense.Spells.ZoneTowerSpell;
 import com.cshv.towerdefense.Towers.FastTower;
 import com.cshv.towerdefense.Towers.SlowTower;
 import com.cshv.towerdefense.Towers.Tower;
+import com.cshv.towerdefense.Towers.VisionTower;
 import com.cshv.towerdefense.Towers.ZoneTower;
 import com.cshv.towerdefense.Units.Chevalier;
 import com.cshv.towerdefense.Units.Healer;
@@ -139,8 +140,8 @@ public class GameScreen extends ScreenAdapter {
         towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(43), world.getYcase(43), tl.getBarBack(), tl.getBarBlue()));
         towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(110), world.getYcase(110), tl.getBarBack(), tl.getBarBlue()));
         towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(130), world.getYcase(130), tl.getBarBack(), tl.getBarBlue()));
-        towers.add(new SlowTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
-        //towers.add(new FastTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
+        //towers.add(new SlowTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
+        towers.add(new VisionTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
         towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(31), world.getYcase(31), tl.getBarBack(), tl.getBarBlue()));
         towerList.add(26);
 
@@ -272,7 +273,6 @@ public class GameScreen extends ScreenAdapter {
         Timer.schedule(setWave,1,30+nbMonster);
         Timer.schedule(setMob,0,1);
 
-
     }
 
     @Override
@@ -333,7 +333,6 @@ public class GameScreen extends ScreenAdapter {
             units.get(i).update(delta);
         }
     }
-
 
     private void updateCells(){
         for(int i=0 ; i<cells.length ; i++){
@@ -475,17 +474,6 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
 
-
-            /*if (chemin[mob.getCurrentCase()].getX() > chemin[target.getCurrentCase()].getX()) {
-                direction = 1;
-            } else if (chemin[mob.getCurrentCase()].getX() < chemin[target.getCurrentCase()].getX()) {
-                direction = 2;
-            } else if (chemin[mob.getCurrentCase()].getY() > chemin[target.getCurrentCase()].getY()) {
-                direction = 3;
-            } else {
-                direction = 4;
-            }*/
-
             switch(mob.getPo()){
                 case 1: spells.add(new SlashSpell(tl.getAtkCacMobLeft(), tl.getAtkCacMobRight(), target, mob, direction, 1));
                     break;
@@ -537,16 +525,6 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
 
-            /*if (chemin[unit.getCurrentCase()].getX() > chemin[target.getCurrentCase()].getX()) {
-                direction = 1;
-            } else if (chemin[unit.getCurrentCase()].getX() < chemin[target.getCurrentCase()].getX()) {
-                direction = 2;
-            } else if (chemin[unit.getCurrentCase()].getY() > chemin[target.getCurrentCase()].getY()) {
-                direction = 3;
-            } else {
-                direction = 4;
-            }*/
-
             if(direction == 3 || direction == 2){
                 spells.add(new HealSpell(tl.getSpellHealRight(), unit, target));
             }else{
@@ -587,15 +565,6 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
 
-           /* if (chemin[unit.getCurrentCase()].getX() > chemin[target.getCurrentCase()].getX()) {
-                direction = 1;
-            } else if (chemin[unit.getCurrentCase()].getX() < chemin[target.getCurrentCase()].getX()) {
-                direction = 2;
-            } else if (chemin[unit.getCurrentCase()].getY() > chemin[target.getCurrentCase()].getY()) {
-                direction = 3;
-            } else {
-                direction = 4;
-            }*/
             unit.setDirection(direction);
             switch(unit.getType()){
                 case 1: spells.add(new SlashSpell(tl.getAtkChevalierLeft(), tl.getAtkChevalierRight(), unit, target, direction, 2));
@@ -666,6 +635,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
+
     private void draw() {
         batch.setProjectionMatrix(camera.projection);
         batch.setTransformMatrix(camera.view);
@@ -710,6 +680,5 @@ public class GameScreen extends ScreenAdapter {
             }
         }
     }
-
 
 }

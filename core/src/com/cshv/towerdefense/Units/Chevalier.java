@@ -36,11 +36,11 @@ public class Chevalier extends Unit {
 
 
     public void setCarrac(int lvlStage) {
-        vieMax = 100 + ( lvlStage * 10 );
+        vieMax = 100 + ( lvlStage * 25 );
         vie = vieMax;
         attaque = 10 + ( lvlStage );
-        defense = 0 + ( lvlStage );
-        vitesse = 1 + lvlStage/2;
+        defense = 15 + (3* lvlStage );
+        vitesse = 1 ;
         portee = 1;
     }
 

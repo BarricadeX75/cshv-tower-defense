@@ -36,7 +36,12 @@ public class Cell {
             }
         }else if(type == 2){
             if(mobs.size>0){
-                return true;
+                for(Mob mob: mobs){
+                    if(mob.getVision()){
+                        return true;
+                    }
+                }
+                return false;
             }else{
                 return false;
             }
@@ -62,6 +67,12 @@ public class Cell {
 
     public void addUnit(Unit unit){
         units.add(unit);
+    }
+
+    public void addMalusAll(float malus){
+        for(int i=0 ; i<mobs.size ; i++){
+            mobs.get(i).addMalus(malus);
+        }
     }
 
     public void removeAll(){

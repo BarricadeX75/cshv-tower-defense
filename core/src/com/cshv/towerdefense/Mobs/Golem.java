@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 import com.cshv.towerdefense.World;
 
@@ -38,22 +39,67 @@ public class Golem extends Mob {
     public void setCarrac(int lvlStage) {
         if(_type%3 == 1) {
             vie = 85 + (lvlStage * 15);
-            attaque = 12 + (1 * lvlStage);
+            attaque = 12 + (2 * lvlStage);
             defense = 0 + (1 * lvlStage);
-            vitesse = 1f;
-            portee = 3;
+            vitesse = 0.5f;
+            portee = 2;
         }else if(_type%2==1){
-            vie = 100 + (lvlStage * 20);
-            attaque = 15 + (2 * lvlStage);
+            vie = 100 + (lvlStage * 25);
+            attaque = 10 + (2 * lvlStage);
             defense = 0 + (2 * lvlStage);
-            vitesse = 1f;
+            vitesse = 0.5f;
             portee = 1;
         }else{
-            vie = 40 + (lvlStage * 10);
+            vie = 85 + (lvlStage * 15);
             attaque = 30 + (2 * lvlStage);
-            defense = 0 + (int)(0.5f * lvlStage);
-            vitesse = 2f;
+            defense = 0 + (lvlStage);
+            vitesse = 1f;
             portee = 1;
+        }
+    }
+
+    public void move() {
+
+
+        if (_x != chemin[currentCase].getX()) {
+            if (_x < chemin[currentCase].getX()) {
+                currentAnimation = animeRight;
+                _x += vitesse;
+            } else {
+                currentAnimation = animeLeft;
+                _x -= vitesse;
+            }
+        } else if (_y != chemin[currentCase].getY()) {
+            if (_y < chemin[currentCase].getY()) {
+                currentAnimation = animeUp;
+                _y += vitesse;
+            } else {
+                currentAnimation = animeDown;
+                _y -= vitesse;
+            }
+        } else {
+            if (currentCase > 0 && attaqueOk) {
+                for (int i = portee; i > 0; i--) {
+                    if (currentCase - i >= 0) {
+                        if (!parent.testCase(currentCase - i, 1)) {
+                            if (i == 1) {
+                                currentCase--;
+                            }
+                        } else {
+                            animationTimer = 0;
+                            if (parent.getTargetUnit(this)) {
+                                attaqueOk = false;
+                                Timer.schedule(getAttaque, 2.5F);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+            } else {
+                animationTimer = 0;
+
+            }
         }
     }
 

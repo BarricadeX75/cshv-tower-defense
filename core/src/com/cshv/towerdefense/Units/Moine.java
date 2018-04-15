@@ -34,10 +34,10 @@ public class Moine extends Unit {
 
     @Override
     public void setCarrac(int lvlStage) {
-        vieMax = 100 + ( lvlStage * 10 );
-        vie = vieMax - 50;
-        attaque = 10 + ( lvlStage );
-        defense = 0 + ( lvlStage );
+        vieMax = 100 + ( lvlStage * 15 );
+        vie = vieMax;
+        attaque = 15 + (4* lvlStage );
+        defense = (2 * lvlStage );
         vitesse = 1 + lvlStage/2;
         portee = 1;
     }

@@ -81,8 +81,6 @@ public class LoupGarou extends Mob {
                     }
                 }
 
-            }else{
-                animationTimer = 0;
             }
         }
 
@@ -105,7 +103,7 @@ public class LoupGarou extends Mob {
             portee = 1;
         }else{
             vie = 40 + (lvlStage * 10);
-            attaque = 30 + (2 * lvlStage);
+            attaque = 30 + (4 * lvlStage);
             defense = 0 + (int)(0.5f * lvlStage);
             vitesse = 2f;
             portee = 1;

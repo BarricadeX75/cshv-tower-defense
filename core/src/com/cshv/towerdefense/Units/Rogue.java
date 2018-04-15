@@ -35,11 +35,11 @@ public class Rogue extends Unit {
 
     @Override
     public void setCarrac(int lvlStage) {
-        vieMax = 100 + ( lvlStage * 10 );
+        vieMax = 80 + ( lvlStage * 10 );
         vie = vieMax;
-        attaque = 10 + ( lvlStage );
-        defense = 0 + ( lvlStage );
-        vitesse = 1 + lvlStage/2;
+        attaque = 15 + (5* lvlStage );
+        defense = (2 * lvlStage );
+        vitesse = 1 ;
         portee = 1;
     }
 }

@@ -84,8 +84,6 @@ public class Griffon extends Mob {
                     }
                 }
                 currentCase--;
-            }else{
-                animationTimer = 0;
             }
         }
 

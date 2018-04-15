@@ -80,8 +80,6 @@ public class ChienSquelette extends Mob {
                     }
                 }
 
-            }else{
-                animationTimer = 0;
             }
         }
 
@@ -91,8 +89,8 @@ public class ChienSquelette extends Mob {
     @Override
     public void setCarrac(int lvlStage) {
         vie = 50 + ( lvlStage * 10 );
-        attaque = 25 + ( lvlStage );
-        defense = 0 + ( lvlStage );
+        attaque = 25 + (2* lvlStage );
+        defense = 0 + ((int) (lvlStage/2) );
         vitesse = 2 ;
         portee = 1;
     }

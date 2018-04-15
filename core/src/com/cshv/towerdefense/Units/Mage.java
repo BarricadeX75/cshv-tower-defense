@@ -34,11 +34,11 @@ public class Mage extends Unit {
 
     @Override
     public void setCarrac(int lvlStage) {
-        vieMax = 100 + ( lvlStage * 10 );
+        vieMax = 70 + ( lvlStage * 10 );
         vie = vieMax;
-        attaque = 10 + ( lvlStage );
+        attaque = 15 + (2* lvlStage );
         defense = 0 + ( lvlStage );
-        vitesse = 1 + lvlStage/2;
+        vitesse = 1 ;
         portee = 3;
     }
 

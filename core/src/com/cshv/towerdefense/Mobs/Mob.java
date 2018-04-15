@@ -85,9 +85,6 @@ public abstract class Mob {
                     }
                 }
 
-            }else{
-                animationTimer = 0;
-
             }
         }
 
@@ -142,8 +139,11 @@ public abstract class Mob {
                 break;
         }
     }
-    public void addMalus(float malus, int timer) {
+    public void addMalus(float malus) {
         _malus = malus;
+        if(malus > vitesse){
+            _malus = vitesse;
+        }
         Timer.schedule(malusOff,5);
     }
     public boolean draw(SpriteBatch batch) {

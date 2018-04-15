@@ -35,6 +35,7 @@ public class SlowTowerSpell extends Spell {
     private void setDegat(){
         Cell cell = _cells[_mob.getCurrentCase()];
         cell.degatZone(_tower.getAttaque()*4,1);
+        cell.addMalusAll(_tower.getMalus());
     }
 
 

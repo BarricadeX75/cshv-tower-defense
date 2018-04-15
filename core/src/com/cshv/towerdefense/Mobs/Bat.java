@@ -39,14 +39,14 @@ public class Bat extends Mob {
     @Override
     public void setCarrac(int lvlStage) {
         if(_type%3 == 1) {
-            vie = 50 + (lvlStage * 10);
-            attaque = 25 + (2 * lvlStage);
-            defense = 0 + (1 * lvlStage);
+            vie = 50 + (lvlStage * 5);
+            attaque = 20 + (4 * lvlStage);
+            defense = 0 + (int)(0.5 * lvlStage);
             vitesse = 1f;
             portee = 1;
         }else if(_type%2==1){
             vie = 60 + (lvlStage * 10);
-            attaque = 15 + (2 * lvlStage);
+            attaque = 15 + (3 * lvlStage);
             defense = 0 + (int)(0.5 * lvlStage);
             vitesse = 0.5f;
             portee = 2;
@@ -99,8 +99,6 @@ public class Bat extends Mob {
                     }
                 }
                 currentCase--;
-            }else{
-                animationTimer = 0;
             }
         }
 

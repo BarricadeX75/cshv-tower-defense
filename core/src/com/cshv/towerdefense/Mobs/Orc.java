@@ -39,11 +39,25 @@ public class Orc extends Mob {
 
     @Override
     public void setCarrac(int lvlStage) {
-        vie = 100 + ( lvlStage * 30 );
-        attaque = 15 + ( 2*lvlStage );
-        defense = 0 + ( 2*lvlStage );
-        vitesse = 1 ;
-        portee = 1;
+        if(_type == 4) {
+            vie = 100 + (lvlStage * 30);
+            attaque = 20 + (2 * lvlStage);
+            defense = 4 + (2 * lvlStage);
+            vitesse = 0.5f;
+            portee = 2;
+        }else if(_type == 3) {
+            vie = 100 + (lvlStage * 15);
+            attaque = 15 + (2 * lvlStage);
+            defense = 4 + (2 * lvlStage);
+            vitesse = 0.5f;
+            portee = 3;
+        }else {
+            vie = 100 + (lvlStage * 30);
+            attaque = 15 + (2 * lvlStage);
+            defense = 10 + (2 * lvlStage);
+            vitesse = 0.5f;
+            portee = 1;
+        }
     }
 
     public boolean draw(SpriteBatch batch) {

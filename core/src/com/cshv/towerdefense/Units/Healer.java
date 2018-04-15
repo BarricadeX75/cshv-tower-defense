@@ -73,19 +73,17 @@ public class Healer extends Unit {
                     }
                 }
 
-            }else{
-                animationTimer = 0;
             }
         }
     }
 
     @Override
     public void setCarrac(int lvlStage) {
-        vieMax = 100 + ( lvlStage * 10 );
+        vieMax = 60 + ( lvlStage * 10 );
         vie = vieMax;
-        attaque = 10 + ( lvlStage );
-        defense = 0 + ( lvlStage );
-        vitesse = 1 + lvlStage/2;
+        attaque = 10 + (4* lvlStage );
+        defense = (int)(0.5f * lvlStage );
+        vitesse = 1 ;
         portee = 3;
     }
 

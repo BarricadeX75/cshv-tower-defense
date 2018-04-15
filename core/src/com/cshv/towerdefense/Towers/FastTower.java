@@ -48,16 +48,19 @@ public class FastTower extends Tower {
     }
 
     public void setStat( int lvlTower){
-        attaque = 10 * lvlTower;
-        portee = 3 + (lvlTower%3);
-        atcSpeed = 3000 - (lvlTower * 100);
+        attaque = 23 + (lvlTower*4);
+        portee = 3 + (lvlTower/5);
+        atcSpeed = 3 - (lvlTower/15);
         malus = 0;
+        if(atcSpeed < 1.5f){
+            atcSpeed = 1.5f;
+        }
     }
 
     public void boosterOn(){
         attaque += 10 + _lvlTower;
         atcSpeed -= 1.5f;
-        Timer.schedule(spellBooster, 15);
+        Timer.schedule(spellBooster, 10);
     }
 
     public void initCaseDistOk(){
@@ -78,7 +81,11 @@ public class FastTower extends Tower {
                 if (parent.testCase(caseDistOk.get(i), 2)) {
                     tireOK = false;
                     parent.getTargetMobTower(this, caseDistOk.get(i), 1);
-                    Timer.schedule(getTargetTask, 2);
+                    if(atcSpeed <= 0){
+                        Timer.schedule(getTargetTask, 0.1f);
+                        break;
+                    }
+                    Timer.schedule(getTargetTask, atcSpeed);
                     break;
                 }
             }
