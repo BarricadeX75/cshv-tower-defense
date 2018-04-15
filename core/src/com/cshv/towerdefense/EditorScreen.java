@@ -113,6 +113,7 @@ public class EditorScreen extends ScreenAdapter {
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
         Gdx.app.log("cell", numCell+"");
         if(numCell <= 176 && numCell >= 0 ){
+
             for (int i = 0; i < trajet.size; i++) {
                 if (numCell == trajet.get(i)) {
                     flag = false;

@@ -333,21 +333,17 @@ public class GameScreen extends ScreenAdapter {
             float y = WORLD_HEIGHT-((Gdx.input.getY())/2);
 
             for(Tower tower : towers){
-                //System.out.println(x +"   "+y+ "  //  "+tower.getX()+"   "+tower.getY() );
                 if (x >= tower.getX() && x <= tower.getX()+32 && y >= tower.getY() && y <= tower.getY()+32) {
                     int type = tower.useSpell();
-                    System.out.println("ici ok");
                     switch(type){
                         case 1:
                             ((FastTower)tower).boosterOn();
                             break;
                         case 2:
                             tower.getTarget(1);
-                            System.out.println("ici ok1 slow");
                             break;
                         case 3:
                             tower.getTarget(1);
-                            System.out.println("ici ok1 zone");
                             break;
                         case 4:
                             for(Cell cell : cells){

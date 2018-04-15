@@ -83,7 +83,6 @@ public class ZoneTower extends Tower {
                 }
             }
         }else{
-            System.out.println("ici ok2 zone");
             int poidsMax, poids , direction;
             poidsMax = 0;
             direction = 0;
@@ -92,7 +91,6 @@ public class ZoneTower extends Tower {
                 for( int j=0 ; j<caseSpell[i].size ; j++){
                     if(parent.testCase(caseSpell[i].get(j),2)){
                         poids += parent.getPoidsCell(caseSpell[i].get(j));
-                        System.out.println("ici ok3 zone"+ poids);
 
                     }
                 }
@@ -103,7 +101,6 @@ public class ZoneTower extends Tower {
             }
             if(poidsMax>0){
                 parent.activationSpellZone(this,direction,caseSpell[direction-1]);
-                System.out.println("lancer");
             }else{
                 chargementSpell = 32f;
             }

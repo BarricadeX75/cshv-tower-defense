@@ -69,9 +69,7 @@ public class SlowTower extends Tower {
         }else{
             for (int i = 0; i < caseDistOk.size; i++) {
                 if (parent.testCase(caseDistOk.get(i), 2)) {
-                    System.out.println("ici ok2 slow");
                     parent.getTargetMobTower(this, caseDistOk.get(i), 5);
-                    System.out.println("lancer 2");
                     break;
                 }else if (typeAtc == 1) {
                     chargementSpell = 32f;
