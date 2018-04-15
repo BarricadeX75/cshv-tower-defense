@@ -77,7 +77,7 @@ public abstract class Tower {
 
     public void update(float delta) {
         animationTimer += delta;
-        chargementSpell += 1f;//0.02f;
+        chargementSpell += 0.03f;
         if(chargementSpell > 32f){
             chargementSpell = 32f;
         }

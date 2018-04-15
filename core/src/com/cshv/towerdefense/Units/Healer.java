@@ -82,7 +82,7 @@ public class Healer extends Unit {
         vieMax = 60 + ( lvlStage * 10 );
         vie = vieMax;
         attaque = 10 + (4* lvlStage );
-        defense = (int)(0.5f * lvlStage );
+        defense = (int)(0.25f * lvlStage );
         vitesse = 1 ;
         portee = 3;
     }

@@ -37,8 +37,8 @@ public class Rogue extends Unit {
     public void setCarrac(int lvlStage) {
         vieMax = 80 + ( lvlStage * 10 );
         vie = vieMax;
-        attaque = 15 + (5* lvlStage );
-        defense = (2 * lvlStage );
+        attaque = 15 + (4* lvlStage );
+        defense = (int)(0.5 * lvlStage );
         vitesse = 1 ;
         portee = 1;
     }
