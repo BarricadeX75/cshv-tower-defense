@@ -164,7 +164,7 @@ public class GameScreen extends ScreenAdapter {
         Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
         float nameScale = 0.5f;
         float textScale = 0.4f;
-        float columnShift = 15;
+        float columnShift = 30;
         float column1 = 64;
         float column2 = 128;
         float column3 = 192;
