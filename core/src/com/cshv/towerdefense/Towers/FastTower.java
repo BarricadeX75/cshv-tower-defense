@@ -76,9 +76,10 @@ public class FastTower extends Tower {
         if(tireOK){
             for (int i = 0; i < caseDistOk.size; i++) {
                 if (parent.testCase(caseDistOk.get(i), 2)) {
-                    parent.getTargetMobTower(this, caseDistOk.get(i), 1);
-                    Timer.schedule(getTargetTask, 1);
                     tireOK = false;
+                    parent.getTargetMobTower(this, caseDistOk.get(i), 1);
+                    Timer.schedule(getTargetTask, 2);
+                    break;
                 }
             }
         }

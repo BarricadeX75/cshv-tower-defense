@@ -1,6 +1,7 @@
 package com.cshv.towerdefense.Mobs;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.cshv.towerdefense.GameScreen;
@@ -14,7 +15,7 @@ public class Golem extends Mob {
 
     private static final float FRAME_DURATION = 0.1F;
 
-    public Golem(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
+    public Golem(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu, int type){
 
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);
         animeLeft.setPlayMode(Animation.PlayMode.LOOP);
@@ -38,8 +39,15 @@ public class Golem extends Mob {
         vie = 100 + ( lvlStage * 30 );
         attaque = 15 + ( 2*lvlStage );
         defense = 0 + ( 2*lvlStage );
-        vitesse = 1 + lvlStage/2;
+        vitesse = 1 ;
         portee = 1;
+    }
+
+    public boolean draw(SpriteBatch batch) {
+        TextureRegion anime = currentAnimation.getKeyFrame(animationTimer);
+        batch.draw( anime, _x-8, _y);
+
+        return dead;
     }
 
 }

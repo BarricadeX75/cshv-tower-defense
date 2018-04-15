@@ -3,23 +3,19 @@ package com.cshv.towerdefense.Mobs;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.cshv.towerdefense.GameScreen;
 import com.cshv.towerdefense.World;
 
-import java.util.Date;
-
-
 /**
- * Created by harri on 16/03/2018.
+ * Created by harri on 14/04/2018.
  */
 
-public class Slime extends Mob {
+public class Mushroom extends Mob {
 
     private static final float FRAME_DURATION = 0.1F;
 
-    public Slime(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu, int type){
+    public Mushroom(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu, int type){
 
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);
         animeLeft.setPlayMode(Animation.PlayMode.LOOP);
@@ -40,11 +36,18 @@ public class Slime extends Mob {
 
     @Override
     public void setCarrac(int lvlStage) {
-        vie = 100 + ( lvlStage * 10 );
-        attaque = 10 + ( lvlStage );
-        defense = 0 + ( lvlStage );
+        vie = 100 + ( lvlStage * 30 );
+        attaque = 15 + ( 2*lvlStage );
+        defense = 0 + ( 2*lvlStage );
         vitesse = 1 ;
         portee = 1;
+    }
+
+    public boolean draw(SpriteBatch batch) {
+        TextureRegion anime = currentAnimation.getKeyFrame(animationTimer);
+        batch.draw( anime, _x-8, _y);
+
+        return dead;
     }
 
 }

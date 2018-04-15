@@ -23,7 +23,7 @@ public class LoupGarou extends Mob {
 
 
 
-    public LoupGarou(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
+    public LoupGarou(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu, int type){
 
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);
         animeLeft.setPlayMode(Animation.PlayMode.LOOP);
@@ -76,6 +76,7 @@ public class LoupGarou extends Mob {
                             if(parent.getTargetUnit(this)) {
                                 attaqueOk = false;
                                 Timer.schedule(getAttaque, 2.5F);
+                                break;
                             }
                         }
                     }
@@ -95,7 +96,7 @@ public class LoupGarou extends Mob {
         vie = 100 + ( lvlStage * 10 );
         attaque = 10 + ( lvlStage );
         defense = 0 + ( lvlStage );
-        vitesse = 1 + lvlStage/2;
+        vitesse = 1 ;
         portee = 1;
     }
 
@@ -106,11 +107,11 @@ public class LoupGarou extends Mob {
         if (!visible) {
             Color c = batch.getColor();
             batch.setColor(c.r, c.g, c.b, 0.5f);
-            batch.draw(texture, _x, _y);
+            batch.draw(texture, _x-8, _y);
             batch.setColor(c.r, c.g, c.b, c.a);
         }
         else {
-            batch.draw(texture, _x, _y);
+            batch.draw(texture, _x-8, _y);
         }
 
         return dead;

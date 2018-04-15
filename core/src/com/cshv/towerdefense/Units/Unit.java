@@ -70,6 +70,7 @@ public abstract class Unit {
                             if(parent.getTargetMob(this)) {
                                 attaqueOk = false;
                                 Timer.schedule(getAttaque, 2.5F);
+                                break;
                             }
                         }
                     }

@@ -79,7 +79,7 @@ public class TowerProjectile extends Spell{
 
         batch.draw(spell,x,y);
 
-        if(conter ==10){
+        if(conter == 9 ){
             setDegat();
             return true;
         }

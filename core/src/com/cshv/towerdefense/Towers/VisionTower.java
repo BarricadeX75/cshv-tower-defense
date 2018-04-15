@@ -44,7 +44,9 @@ public class VisionTower extends Tower {
     }
 
     public void initCaseDistOk(){
-        for(int i=chemin.length ; i>0 ; i--){
+        caseDistOk = new Array<Integer>();
+
+        for(int i=chemin.length-1 ; i>0 ; i--){
             int distance = (int) Math.sqrt((int)(_x/32 - chemin[i].getX()/32)*(int)(_x/32 - chemin[i].getX()/32)) + (int) Math.sqrt((int)(_y/32 - chemin[i].getY()/32)*(int)(_y/32 - chemin[i].getY()/32));
             if( portee >= distance){
                 caseDistOk.add(i);
@@ -61,6 +63,7 @@ public class VisionTower extends Tower {
 
                     Timer.schedule(getTargetTask, 1);
                     tireOK = false;
+                    break;
                 }
             }
         }

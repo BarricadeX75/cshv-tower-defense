@@ -13,7 +13,7 @@ import com.cshv.towerdefense.Towers.Tower;
  */
 
 public class ZoneTowerSpell extends Spell {
-    private static final float FRAME_DURATION = 0.1F;
+    private static final float FRAME_DURATION = 0.025F;
     private Animation<TextureRegion> spellTower;
     private TextureRegion fin;
     private int _direction;
@@ -72,9 +72,16 @@ public class ZoneTowerSpell extends Spell {
         x = _tower.getX();
         y = _tower.getY();
         if(_direction == 1){
-            x -= spell.getRegionWidth();
+            x -= spell.getRegionWidth()-20;
         }else if( _direction == 3){
-            y -= spell.getRegionHeight();
+            y -= spell.getRegionHeight()-20;
+            //x-= 20;
+        }
+        if(_direction == 1 || _direction == 2){
+            y-=20;
+        }
+        if(_direction == 3 || _direction == 4){
+            x -=30;
         }
 
 

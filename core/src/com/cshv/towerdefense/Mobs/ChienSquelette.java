@@ -74,6 +74,7 @@ public class ChienSquelette extends Mob {
                             if(parent.getTargetUnit(this)) {
                                 attaqueOk = false;
                                 Timer.schedule(getAttaque, 2.5F);
+                                break;
                             }
                         }
                     }
@@ -92,7 +93,7 @@ public class ChienSquelette extends Mob {
         vie = 100 + ( lvlStage * 10 );
         attaque = 15 + ( lvlStage );
         defense = 0 + ( lvlStage );
-        vitesse = 2 + lvlStage/2;
+        vitesse = 2 ;
         portee = 1;
     }
 
@@ -103,11 +104,11 @@ public class ChienSquelette extends Mob {
         if (!visible) {
             Color c = batch.getColor();
             batch.setColor(c.r, c.g, c.b, 0.5f);
-            batch.draw(texture, _x, _y);
+            batch.draw(texture, _x-8, _y);
             batch.setColor(c.r, c.g, c.b, c.a);
         }
         else {
-            batch.draw(texture, _x, _y);
+            batch.draw(texture, _x-8, _y);
         }
 
         return dead;

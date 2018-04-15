@@ -23,7 +23,7 @@ public abstract class Mob {
     protected Animation<TextureRegion>currentAnimation;
     protected int vie;
     protected int attaque;
-    protected int vitesse;
+    protected float vitesse;
     protected int defense;
     protected int portee;
     protected boolean dead = false;
@@ -77,6 +77,7 @@ public abstract class Mob {
                            if(parent.getTargetUnit(this)) {
                                attaqueOk = false;
                                Timer.schedule(getAttaque, 2.5F);
+                               break;
                            }
                         }
                     }

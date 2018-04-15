@@ -45,10 +45,11 @@ public class ZoneTower extends Tower {
     }
 
     public void initCaseDistOk(){
+        caseDistOk = new Array<Integer>();
         for(int i=0 ; i<4 ; i++){
             caseSpell[i] = new Array<Integer>();
         }
-        for(int i=chemin.length ; i>0 ; i--){
+        for(int i=chemin.length-1 ; i>0 ; i--){
             int distance = (int) Math.sqrt((int)(_x/32 - chemin[i].getX()/32)*(int)(_x/32 - chemin[i].getX()/32)) + (int) Math.sqrt((int)(_y/32 - chemin[i].getY()/32)*(int)(_y/32 - chemin[i].getY()/32));
             if( portee >= distance){
                 caseDistOk.add(i);
@@ -59,10 +60,10 @@ public class ZoneTower extends Tower {
             if (_y == chemin[i].getY() && chemin[i].getX() < _x && chemin[i].getX() >= _x - (32*4)) {
                 caseSpell[0].add(i);
             }
-            if (_x == chemin[i].getY() && chemin[i].getX() > _y && chemin[i].getX() <= _y + (32*4)) {
+            if (_x == chemin[i].getX() && chemin[i].getY() > _y && chemin[i].getY() <= _y + (32*4)) {
                 caseSpell[3].add(i);
             }
-            if (_x == chemin[i].getY() && chemin[i].getX() > _y && chemin[i].getX() <= _y + (32*4)) {
+            if (_x == chemin[i].getX() && chemin[i].getY() < _y && chemin[i].getY() >= _y - (32*4)) {
                 caseSpell[2].add(i);
             }
         }
@@ -77,10 +78,12 @@ public class ZoneTower extends Tower {
                         parent.getTargetMobTower(this, caseDistOk.get(i), 4);
                         Timer.schedule(getTargetTask, 1);
                         tireOK = false;
+                        break;
                     }
                 }
             }
         }else{
+            System.out.println("ici ok2 zone");
             int poidsMax, poids , direction;
             poidsMax = 0;
             direction = 0;
@@ -89,14 +92,18 @@ public class ZoneTower extends Tower {
                 for( int j=0 ; j<caseSpell[i].size ; j++){
                     if(parent.testCase(caseSpell[i].get(j),2)){
                         poids += parent.getPoidsCell(caseSpell[i].get(j));
+                        System.out.println("ici ok3 zone"+ poids);
+
                     }
                 }
                 if(poids > poidsMax){
+                    poidsMax = poids;
                     direction = i+1;
                 }
             }
             if(poidsMax>0){
                 parent.activationSpellZone(this,direction,caseSpell[direction-1]);
+                System.out.println("lancer");
             }else{
                 chargementSpell = 32f;
             }
