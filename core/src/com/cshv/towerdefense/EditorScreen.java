@@ -88,7 +88,9 @@ public class EditorScreen extends ScreenAdapter {
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         trajet = new Array<Integer>();
+        trajet.add(5);
         world = new World(tl.getSol(), tl.getChemin(), trajet);
+        world.cheminEditor(170);
     }
 
     @Override
@@ -111,19 +113,20 @@ public class EditorScreen extends ScreenAdapter {
         y = WORLD_HEIGHT-( ( y + 176 ) /2);
 
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
-        Gdx.app.log("cell", numCell+"");
-        if(numCell <= 176 && numCell >= 0 ){
 
-            for (int i = 0; i < trajet.size; i++) {
-                if (numCell == trajet.get(i)) {
-                    flag = false;
-                    break;
+        if(numCell <= 165 && numCell >= 11 ){
+            if (trajet.peek() + 11 == numCell || trajet.peek() - 11 == numCell || trajet.peek() + 1 == numCell || trajet.peek() - 1 == numCell) {
+                for (int i = 0; i < trajet.size; i++) {
+                    if (numCell == trajet.get(i)) {
+                        flag = false;
+                        break;
+                    }
                 }
-            }
 
-            if (flag) {
-                trajet.add(numCell);
-                world.cheminEditor(numCell);
+                if (flag) {
+                    trajet.add(numCell);
+                    world.cheminEditor(numCell);
+                }
             }
         }
     }
@@ -135,7 +138,7 @@ public class EditorScreen extends ScreenAdapter {
 
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
 
-        if(numCell <= 176 && numCell >= 0 ){
+        if(numCell <= 165 && numCell >= 11 ){
             for (int i = 0; i < trajet.size; i++) {
                 if (numCell == trajet.get(i)) {
                     world.suppCellCheminEditor(numCell);
