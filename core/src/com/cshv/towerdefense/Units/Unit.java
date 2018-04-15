@@ -10,6 +10,7 @@ import com.cshv.towerdefense.GameScreen;
 
 public abstract class Unit {
 
+    public static final int INVOC_CHEVALIER = 6, INVOC_MAGE = 10, INVOC_MOINE = 8, INVOC_ROGUE = 6, INVOC_HEALER = 10;
     public static final int CHEVALIER = 1, MAGE = 2, MOINE = 3, ROGUE = 4, HEALER = 5;
 
     protected int vieMax;

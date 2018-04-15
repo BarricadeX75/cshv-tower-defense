@@ -104,7 +104,7 @@ public class ZoneTower extends Tower {
             }
             if(poidsMax>0){
                 parent.activationSpellZone(this,direction,caseSpell[direction-1]);
-                parent.manaUse(60);
+                parent.manaUse(Tower.SPELL_ZONE);
             }else{
                 chargementSpell = 32f;
             }
