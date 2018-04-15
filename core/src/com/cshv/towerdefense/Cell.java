@@ -71,7 +71,11 @@ public class Cell {
 
     public Mob getMob(){
         if(mobs.size>0){
-            return mobs.first();
+            for(Mob mob: mobs){
+                if(mob.getVision()){
+                    return mob;
+                }
+            }
         }
         return null;
     }

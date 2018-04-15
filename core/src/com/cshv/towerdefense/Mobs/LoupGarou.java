@@ -19,8 +19,6 @@ import java.util.Date;
 public class LoupGarou extends Mob {
 
     private static final float FRAME_DURATION = 0.1F;
-    private boolean visible = false;
-
 
 
     public LoupGarou(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu, int type){
@@ -35,6 +33,7 @@ public class LoupGarou extends Mob {
         animeUp.setPlayMode(Animation.PlayMode.LOOP);
         setCarrac(lvlStage);
         currentAnimation = animeDown;
+        visible = false;
         parent = jeu;
         chemin = parent.getChemin();
         currentCase = chemin.length-1;

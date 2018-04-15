@@ -16,6 +16,7 @@ public abstract class Mob {
     protected int currentCase = 0;
     protected Rectangle chemin[];
     protected GameScreen parent;
+    protected boolean visible = true;
     protected Animation<TextureRegion> animeRight;
     protected Animation<TextureRegion> animeLeft;
     protected Animation<TextureRegion> animeUp;
@@ -102,6 +103,9 @@ public abstract class Mob {
     public void setPosition(float x , float y){
         _x = x;
         _y = y;
+    }
+    public boolean getVision(){
+        return visible;
     }
     public int getCurrentCase() {
         return currentCase;
