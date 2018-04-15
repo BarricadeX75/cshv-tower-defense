@@ -63,7 +63,7 @@ public class ZoneTower extends Tower {
             if (_x == chemin[i].getX() && chemin[i].getY() > _y && chemin[i].getY() <= _y + (32*4)) {
                 caseSpell[3].add(i);
             }
-            if (_x == chemin[i].getX() && chemin[i].getY() < _y && chemin[i].getY() >= _y + (32*4)) {
+            if (_x == chemin[i].getX() && chemin[i].getY() < _y && chemin[i].getY() >= _y - (32*4)) {
                 caseSpell[2].add(i);
             }
         }

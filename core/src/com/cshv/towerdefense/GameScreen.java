@@ -142,7 +142,7 @@ public class GameScreen extends ScreenAdapter {
         for(int i=0 ; i<chemin.length ; i++){
             cells[i] = new  Cell(i);
         }
-        towers.add(new VisionTower(tl.getTowerSpeed(), this, 1, world.getXcase(43), world.getYcase(43), tl.getBarBack(), tl.getBarBlue()));
+        towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(43), world.getYcase(43), tl.getBarBack(), tl.getBarBlue()));
         towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(110), world.getYcase(110), tl.getBarBack(), tl.getBarBlue()));
         towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(130), world.getYcase(130), tl.getBarBack(), tl.getBarBlue()));
         towers.add(new SlowTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
@@ -195,8 +195,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                //ajouterUnite(UNITE_CHEVALIER);
-                createMob(2);
+                ajouterUnite(UNITE_CHEVALIER);
             }
         });
         uiStage.addActor(uiButton1);
@@ -210,8 +209,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                //ajouterUnite(UNITE_MAGE);
-                createMob(7);
+                ajouterUnite(UNITE_MAGE);
             }
         });
         uiStage.addActor(uiButton2);
