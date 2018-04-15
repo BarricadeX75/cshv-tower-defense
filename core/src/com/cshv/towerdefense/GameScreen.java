@@ -46,6 +46,7 @@ import com.cshv.towerdefense.Spells.Spell;
 import com.cshv.towerdefense.Spells.TowerProjectile;
 import com.cshv.towerdefense.Spells.ZoneTowerSpell;
 import com.cshv.towerdefense.Towers.FastTower;
+import com.cshv.towerdefense.Towers.SlowTower;
 import com.cshv.towerdefense.Towers.Tower;
 import com.cshv.towerdefense.Towers.VisionTower;
 import com.cshv.towerdefense.Towers.ZoneTower;
@@ -85,12 +86,13 @@ public class GameScreen extends ScreenAdapter {
     private Array<Spell> spells = new Array<Spell>();
     private Array<Tower> towers = new Array<Tower>();
 
-    private Player player = new Player();
+    private Player _player;
     private Stage uiStage;
 
 
-    public GameScreen(TowerDefenseGame towerDefenseGame) {
+    public GameScreen(TowerDefenseGame towerDefenseGame, Player player) {
         this.towerDefenseGame = towerDefenseGame;
+        _player = player;
     }
 
     @Override
@@ -109,7 +111,7 @@ public class GameScreen extends ScreenAdapter {
         batch = new SpriteBatch();
         bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
         TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
-
+        lvlStage = _player.getLvlStage();
         tl = new TextureLoader(textureAtlas);
 
         //static chemin
@@ -173,12 +175,12 @@ public class GameScreen extends ScreenAdapter {
         uiStage = new Stage(viewport);
         Gdx.input.setInputProcessor(uiStage);
 
-        Label nameLabel = new Label(player.getNom(), labelStyle);
+        Label nameLabel = new Label(_player.getNom(), labelStyle);
         nameLabel.setFontScale(nameScale);
         nameLabel.setPosition(TowerDefenseGame.WORLD_WIDTH / 2 + ((nameLabel.getWidth() / 2) * nameScale), row1, Align.center);
         uiStage.addActor(nameLabel);
 
-        PlayerBar playerBar = new PlayerBar(player, 0, TowerDefenseGame.WORLD_WIDTH, row2, bitmapFont, textScale,
+        PlayerBar playerBar = new PlayerBar(_player, 0, TowerDefenseGame.WORLD_WIDTH, row2, bitmapFont, textScale,
                 tl.getBarBack(), tl.getBarRed(), tl.getBarBlue());
         uiStage.addActor(playerBar);
 
@@ -190,8 +192,8 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (player.getManaCombat() >= Unit.COUT_CHEVALIER) {
-                    player.depenserMana(Unit.COUT_CHEVALIER);
+                if(_player.getManaCombat()>=6) {
+                    _player.depenserMana(6);
                     ajouterUnite(Unit.CHEVALIER);
                 }
             }
@@ -206,8 +208,8 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (player.getManaCombat() >= Unit.COUT_MAGE) {
-                    player.depenserMana(Unit.COUT_MAGE);
+                if(_player.getManaCombat()>=10) {
+                    _player.depenserMana(10);
                     ajouterUnite(Unit.MAGE);
                 }
             }
@@ -222,8 +224,8 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (player.getManaCombat() >= Unit.COUT_MOINE) {
-                    player.depenserMana(Unit.COUT_MOINE);
+                if(_player.getManaCombat()>=8) {
+                    _player.depenserMana(8);
                     ajouterUnite(Unit.MOINE);
                 }
             }
@@ -238,8 +240,8 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (player.getManaCombat() >= Unit.COUT_ROGUE) {
-                    player.depenserMana(Unit.COUT_ROGUE);
+                if(_player.getManaCombat()>=6) {
+                    _player.depenserMana(6);
                     ajouterUnite(Unit.ROGUE);
                 }
             }
@@ -254,8 +256,8 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (player.getManaCombat() >= Unit.COUT_HEALER) {
-                    player.depenserMana(Unit.COUT_HEALER);
+                if(_player.getManaCombat()>=10) {
+                    _player.depenserMana(10);
                     ajouterUnite(Unit.HEALER);
                 }
             }
@@ -370,22 +372,22 @@ public class GameScreen extends ScreenAdapter {
                     int type = tower.useSpell();
                     switch(type){
                         case 1:
-                            if(player.getManaCombat()>=30) {
+                            if(_player.getManaCombat()>=30) {
                                 ((FastTower) tower).boosterOn();
                             }
                             break;
                         case 2:
-                            if(player.getManaCombat()>=50) {
+                            if(_player.getManaCombat()>=50) {
                                 tower.getTarget(1);
                             }
                             break;
                         case 3:
-                            if(player.getManaCombat()>=60) {
+                            if(_player.getManaCombat()>=60) {
                                 tower.getTarget(1);
                             }
                             break;
                         case 4:
-                            if(player.getManaCombat()>=30) {
+                            if(_player.getManaCombat()>=30) {
                                 manaUse(30);
                                 for (Cell cell : cells) {
                                     cell.spellVisionOk();
@@ -400,7 +402,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void manaUse(float depMana){
-        player.depenserMana(depMana);
+        _player.depenserMana(depMana);
     }
 
     private void createMob(){
@@ -411,45 +413,45 @@ public class GameScreen extends ScreenAdapter {
         switch (rand){
             case 0:
                 type = MathUtils.random(7);
-                mobs.add(new Slime(tl.getMobSlimeLeft()[type], tl.getMobSlimeRight()[type], tl.getMobSlimeUp()[type], tl.getMobSlimeDown()[type], 1, this, type));
+                mobs.add(new Slime(tl.getMobSlimeLeft()[type], tl.getMobSlimeRight()[type], tl.getMobSlimeUp()[type], tl.getMobSlimeDown()[type], lvlStage, this, type));
                 break;
             case 1:
                 type = MathUtils.random(3);
-                mobs.add(new Orc(tl.getMobOrcLeft()[type], tl.getMobOrcRight()[type], tl.getMobOrcUp()[type], tl.getMobOrcDown()[type], 1, this, type));
+                mobs.add(new Orc(tl.getMobOrcLeft()[type], tl.getMobOrcRight()[type], tl.getMobOrcUp()[type], tl.getMobOrcDown()[type], lvlStage, this, type));
                 break;
             case 2:
                 type = MathUtils.random(7);
-                mobs.add(new Golem(tl.getMobGolemLeft()[type], tl.getMobGolemRight()[type], tl.getMobGolemUp()[type], tl.getMobGolemDown()[type], 1, this, type));
+                mobs.add(new Golem(tl.getMobGolemLeft()[type], tl.getMobGolemRight()[type], tl.getMobGolemUp()[type], tl.getMobGolemDown()[type], lvlStage, this, type));
                 break;
             case 3:
                 type = MathUtils.random(7);
-                mobs.add(new Centaure(tl.getMobCentaureLeft()[type], tl.getMobCentaureRight()[type], tl.getMobCentaureUp()[type], tl.getMobCentaureDown()[type], 1, this, type));
+                mobs.add(new Centaure(tl.getMobCentaureLeft()[type], tl.getMobCentaureRight()[type], tl.getMobCentaureUp()[type], tl.getMobCentaureDown()[type], lvlStage, this, type));
                 break;
             case 4:
                 type = MathUtils.random(7);
-                mobs.add(new Lamia(tl.getMobLamiaLeft()[type], tl.getMobLamiaRight()[type], tl.getMobLamiaUp()[type], tl.getMobLamiaDown()[type], 1, this, type));
+                mobs.add(new Lamia(tl.getMobLamiaLeft()[type], tl.getMobLamiaRight()[type], tl.getMobLamiaUp()[type], tl.getMobLamiaDown()[type], lvlStage, this, type));
                 break;
             case 5:
-                mobs.add(new ChienSquelette(tl.getMobChienSqueletteLeft(), tl.getMobChienSqueletteRight(), tl.getMobChienSqueletteUp(), tl.getMobChienSqueletteDown(), 1, this));
+                mobs.add(new ChienSquelette(tl.getMobChienSqueletteLeft(), tl.getMobChienSqueletteRight(), tl.getMobChienSqueletteUp(), tl.getMobChienSqueletteDown(), lvlStage, this));
                 break;
             case 6:
                 type = MathUtils.random(7);
-                mobs.add(new Bat(tl.getMobBatLeft()[type], tl.getMobBatRight()[type], tl.getMobBatUp()[type], tl.getMobBatDown()[type], 1, this, type));
+                mobs.add(new Bat(tl.getMobBatLeft()[type], tl.getMobBatRight()[type], tl.getMobBatUp()[type], tl.getMobBatDown()[type], lvlStage, this, type));
                 break;
             case 7:
                 type = MathUtils.random(7);
-                mobs.add(new LoupGarou(tl.getMobLoupGarouLeft()[type], tl.getMobLoupGarouRight()[type], tl.getMobLoupGarouUp()[type], tl.getMobLoupGarouDown()[type], 1, this, type));
+                mobs.add(new LoupGarou(tl.getMobLoupGarouLeft()[type], tl.getMobLoupGarouRight()[type], tl.getMobLoupGarouUp()[type], tl.getMobLoupGarouDown()[type], lvlStage, this, type));
                 break;
             case 8:
-                mobs.add(new Griffon(tl.getMobGriffonLeft(), tl.getMobGriffonRight(), tl.getMobGriffonUp(), tl.getMobGriffonDown(), 1, this));
+                mobs.add(new Griffon(tl.getMobGriffonLeft(), tl.getMobGriffonRight(), tl.getMobGriffonUp(), tl.getMobGriffonDown(), lvlStage, this));
                 break;
             case 9:
                 type = MathUtils.random(4);
-                mobs.add(new Mushroom(tl.getMobMushroomLeft()[type], tl.getMobMushroomRight()[type], tl.getMobMushroomUp()[type], tl.getMobMushroomDown()[type], 1, this, type));
+                mobs.add(new Mushroom(tl.getMobMushroomLeft()[type], tl.getMobMushroomRight()[type], tl.getMobMushroomUp()[type], tl.getMobMushroomDown()[type], lvlStage, this, type));
                 break;
             case 10:
                 type = MathUtils.random(1);
-                mobs.add(new Dragon(tl.getMobDragonLeft()[type], tl.getMobDragonRight()[type], tl.getMobDragonUp()[type], tl.getMobDragonDown()[type], 1, this, type));
+                mobs.add(new Dragon(tl.getMobDragonLeft()[type], tl.getMobDragonRight()[type], tl.getMobDragonUp()[type], tl.getMobDragonDown()[type], lvlStage, this, type));
 
                 break;
         }
@@ -631,13 +633,13 @@ public class GameScreen extends ScreenAdapter {
         switch(type){
             case 0: spells.add( new ExplosionMushroomSpell( tl.getExploMushroom(), chemin[cell-1].getX(), chemin[cell-1].getY(), cells[cell-1]));
                 break;
-            case 1: player.bonusVie(80);
+            case 1: _player.bonusVie(80);
                 break;
             case 2: gold+=20;
                 break;
             case 3: gold += 40;
                 break;
-            case 4: player.bonusMana(50);
+            case 4: _player.bonusMana(50);
                 break;
         }
     }
@@ -646,23 +648,23 @@ public class GameScreen extends ScreenAdapter {
         switch (unite) {
         case Unit.CHEVALIER:
             units.add(new Chevalier(tl.getUnitChevalierLeft(), tl.getUnitChevalierRight(),
-                    tl.getUnitChevalierUp(), tl.getUnitChevalierDown(), lvlStage, this));
+                    tl.getUnitChevalierUp(), tl.getUnitChevalierDown(), _player.getLvlChevalier(), this));
             break;
         case Unit.MAGE:
             units.add(new Mage(tl.getUnitMageLeft(), tl.getUnitMageRight(),
-                    tl.getUnitMageUp(), tl.getUnitMageDown(), lvlStage, this));
+                    tl.getUnitMageUp(), tl.getUnitMageDown(), _player.getLvlMage(), this));
             break;
         case Unit.MOINE:
             units.add(new Moine(tl.getUnitMoineLeft(), tl.getUnitMoineRight(),
-                    tl.getUnitMoineUp(), tl.getUnitMoineDown(), lvlStage, this));
+                    tl.getUnitMoineUp(), tl.getUnitMoineDown(), _player.getLvlMoine(), this));
             break;
         case Unit.ROGUE:
             units.add(new Rogue(tl.getUnitRogueLeft(), tl.getUnitRogueRight(),
-                    tl.getUnitRogueUp(), tl.getUnitRogueDown(), lvlStage, this));
+                    tl.getUnitRogueUp(), tl.getUnitRogueDown(), _player.getLvlRogue(), this));
             break;
         case Unit.HEALER:
             units.add(new Healer(tl.getUnitHealerLeft(), tl.getUnitHealerRight(),
-                    tl.getUnitHealerUp(), tl.getUnitHealerDown(), lvlStage, this));
+                    tl.getUnitHealerUp(), tl.getUnitHealerDown(), _player.getLvlHealer(), this));
             break;
         }
     }
