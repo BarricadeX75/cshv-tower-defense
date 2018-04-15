@@ -46,7 +46,6 @@ import com.cshv.towerdefense.Spells.Spell;
 import com.cshv.towerdefense.Spells.TowerProjectile;
 import com.cshv.towerdefense.Spells.ZoneTowerSpell;
 import com.cshv.towerdefense.Towers.FastTower;
-import com.cshv.towerdefense.Towers.SlowTower;
 import com.cshv.towerdefense.Towers.Tower;
 import com.cshv.towerdefense.Towers.VisionTower;
 import com.cshv.towerdefense.Towers.ZoneTower;
@@ -208,7 +207,7 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (_player.getManaCombat( )>= Unit.COUT_MAGE) {
+                if (_player.getManaCombat() >= Unit.COUT_MAGE) {
                     _player.depenserMana(Unit.COUT_MAGE);
                     ajouterUnite(Unit.MAGE);
                 }
