@@ -1,6 +1,7 @@
 package com.cshv.towerdefense.Units;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
@@ -86,5 +87,12 @@ public class Healer extends Unit {
         defense = 0 + ( lvlStage );
         vitesse = 1 + lvlStage/2;
         portee = 3;
+    }
+
+    public boolean draw(SpriteBatch batch) {
+        TextureRegion anime = currentAnimation.getKeyFrame(animationTimer);
+        batch.draw( anime, _x-30, _y);
+
+        return dead;
     }
 }
