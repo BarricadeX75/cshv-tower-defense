@@ -54,7 +54,8 @@ public class StartScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                towerDefenseGame.setScreen(new GameScreen(towerDefenseGame));
+
+                towerDefenseGame.setScreen(new GameScreen(towerDefenseGame, new Player()));
                 dispose();
             }
         });
