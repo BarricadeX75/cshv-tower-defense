@@ -47,7 +47,6 @@ import com.cshv.towerdefense.Spells.ZoneTowerSpell;
 import com.cshv.towerdefense.Towers.FastTower;
 import com.cshv.towerdefense.Towers.SlowTower;
 import com.cshv.towerdefense.Towers.Tower;
-import com.cshv.towerdefense.Towers.VisionTower;
 import com.cshv.towerdefense.Towers.ZoneTower;
 import com.cshv.towerdefense.Units.Chevalier;
 import com.cshv.towerdefense.Units.Healer;
@@ -55,10 +54,6 @@ import com.cshv.towerdefense.Units.Mage;
 import com.cshv.towerdefense.Units.Moine;
 import com.cshv.towerdefense.Units.Rogue;
 import com.cshv.towerdefense.Units.Unit;
-
-import java.util.Date;
-
-import static java.lang.Thread.sleep;
 
 
 public class GameScreen extends ScreenAdapter {
@@ -134,9 +129,6 @@ public class GameScreen extends ScreenAdapter {
         }
 
         //trajet.sort();
-        for(Integer integer : trajet){
-            System.out.println(integer);
-        }
 
         world = new World(tl.getSol(), tl.getChemin(), trajet);
         chemin = world.getChemin();
@@ -260,7 +252,7 @@ public class GameScreen extends ScreenAdapter {
         ////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        nbMonster = 5 + (int)(lvlStage /4);
+        nbMonster = 5 + lvlStage /4;
         setMob = new Timer.Task() {
             @Override
             public void run() {
@@ -390,7 +382,7 @@ public class GameScreen extends ScreenAdapter {
     private void createMob(){
 
         int type;
-        int range = 3+ ((int)lvlStage/3);
+        int range = 3+ (lvlStage /3);
         int rand = MathUtils.random(range);
         switch (rand){
             case 0:
@@ -498,7 +490,7 @@ public class GameScreen extends ScreenAdapter {
                 case 1: spells.add(new SlashSpell(tl.getAtkCacMobLeft(), tl.getAtkCacMobRight(), target, mob, direction, 1));
                     break;
                 case 2: int rand = MathUtils.random(5);
-                    spells.add(new MobProjectile(tl.getProjectilemob().get(rand), mob, target));
+                    spells.add(new MobProjectile(tl.getProjectileMob().get(rand), mob, target));
                     break;
                 case 3: if(MathUtils.randomBoolean(0.5f)) {
                         spells.add(new MagicSpell(tl.getSpellFire(), target, mob, cells, 1));

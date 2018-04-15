@@ -114,13 +114,13 @@ public class TextureLoader {
     private Array<TextureRegion> atkCacMobLeft;
     private Array<TextureRegion> atkCacMobRight;
     private Array<TextureRegion> projectile;
-    private Array<TextureRegion> towerZone_atc_Up;
-    private Array<TextureRegion> towerZone_atc_Left;
-    private Array<TextureRegion> towerZone_atc_Right;
-    private Array<TextureRegion> towerZone_atc_Down;
+    private Array<TextureRegion> towerZoneAtkUp;
+    private Array<TextureRegion> towerZoneAtkLeft;
+    private Array<TextureRegion> towerZoneAtkRight;
+    private Array<TextureRegion> towerZoneAtkDown;
     private Array<TextureRegion> spellSlowTower;
     private Array<TextureRegion> projectileTower[] = new Array[4];
-    private Array<TextureRegion> projectilemob;
+    private Array<TextureRegion> projectileMob;
 
     private TextureRegion barBack, barRed, barBlue;
 
@@ -544,27 +544,27 @@ public class TextureLoader {
     }
 
     public Array<TextureRegion> getSpellZoneTowerUp() {
-        return towerZone_atc_Up;
+        return towerZoneAtkUp;
     }
 
     public Array<TextureRegion> getSpellZoneTowerLeft() {
-        return towerZone_atc_Left;
+        return towerZoneAtkLeft;
     }
 
     public Array<TextureRegion> getSpellZoneTowerRight() {
-        return towerZone_atc_Right;
+        return towerZoneAtkRight;
     }
 
     public Array<TextureRegion> getSpellZoneTowerDown() {
-        return towerZone_atc_Down;
+        return towerZoneAtkDown;
     }
 
     public Array<TextureRegion> getSpellSlowTower() {
         return spellSlowTower;
     }
 
-    public Array<TextureRegion> getProjectilemob() {
-        return projectilemob;
+    public Array<TextureRegion> getProjectileMob() {
+        return projectileMob;
     }
 
     public TextureRegion getBarBack() {
@@ -973,21 +973,21 @@ public class TextureLoader {
     }
 
     private void initSpritesTowers() {
-        towerZone_atc_Down = new Array<TextureRegion>();
+        towerZoneAtkDown = new Array<TextureRegion>();
         for(int i=0 ; i<23 ; i++){
-            towerZone_atc_Down.add(textureAtlas.findRegion("sort_Tower1_down ("+i+")"));
+            towerZoneAtkDown.add(textureAtlas.findRegion("sort_Tower1_down ("+i+")"));
         }
-        towerZone_atc_Up = new Array<TextureRegion>();
+        towerZoneAtkUp = new Array<TextureRegion>();
         for(int i=0 ; i<23 ; i++){
-            towerZone_atc_Up.add(textureAtlas.findRegion("sort_Tower1_up ("+i+")"));
+            towerZoneAtkUp.add(textureAtlas.findRegion("sort_Tower1_up ("+i+")"));
         }
-        towerZone_atc_Left = new Array<TextureRegion>();
+        towerZoneAtkLeft = new Array<TextureRegion>();
         for(int i=0 ; i<23 ; i++){
-            towerZone_atc_Left.add(textureAtlas.findRegion("sort_Tower1_left ("+i+")"));
+            towerZoneAtkLeft.add(textureAtlas.findRegion("sort_Tower1_left ("+i+")"));
         }
-        towerZone_atc_Right = new Array<TextureRegion>();
+        towerZoneAtkRight = new Array<TextureRegion>();
         for(int i=0 ; i<23 ; i++){
-            towerZone_atc_Right.add(textureAtlas.findRegion("sort_Tower1_right ("+i+")"));
+            towerZoneAtkRight.add(textureAtlas.findRegion("sort_Tower1_right ("+i+")"));
         }
 
         for(int j=1 ; j<5 ; j++){
@@ -1056,9 +1056,9 @@ public class TextureLoader {
         for(int i=1 ; i<8 ; i++){
             spellFire.add(textureAtlas.findRegion("sort_feu ("+i+")"));
         }
-        projectilemob = new Array<TextureRegion>();
+        projectileMob = new Array<TextureRegion>();
         for(int i=1; i<7 ; i++){
-            projectilemob.add(textureAtlas.findRegion("projectile_mob"+i));
+            projectileMob.add(textureAtlas.findRegion("projectile_mob"+i));
         }
     }
 }
