@@ -120,7 +120,7 @@ public class TextureLoader {
     private Array<TextureRegion> towerZone_atc_Down;
     private Array<TextureRegion> spellSlowTower;
     private Array<TextureRegion> projectileTower[] = new Array[4];
-    private Array<TextureRegion> projectilemob[] = new Array[4];
+    private Array<TextureRegion> projectilemob;
 
     private TextureRegion barBack, barRed, barBlue;
 
@@ -561,6 +561,10 @@ public class TextureLoader {
 
     public Array<TextureRegion> getSpellSlowTower() {
         return spellSlowTower;
+    }
+
+    public Array<TextureRegion> getProjectilemob() {
+        return projectilemob;
     }
 
     public TextureRegion getBarBack() {
@@ -1049,8 +1053,12 @@ public class TextureLoader {
             spellWater.add(textureAtlas.findRegion("sort_eau ("+i+")"));
         }
         spellFire = new Array<TextureRegion>();
-        for(int i=1 ; i<9 ; i++){
+        for(int i=1 ; i<8 ; i++){
             spellFire.add(textureAtlas.findRegion("sort_feu ("+i+")"));
+        }
+        projectilemob = new Array<TextureRegion>();
+        for(int i=1; i<7 ; i++){
+            projectilemob.add(textureAtlas.findRegion("projectile_mob"+i));
         }
     }
 }

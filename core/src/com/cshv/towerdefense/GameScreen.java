@@ -80,6 +80,7 @@ public class GameScreen extends ScreenAdapter {
     protected Timer.Task setWave;
     protected Timer.Task setMob;
 
+
     private Cell cells[];
     private Array<Integer> towerList = new Array<Integer>();
     private Array<Mob> mobs = new Array<Mob>();
@@ -278,6 +279,8 @@ public class GameScreen extends ScreenAdapter {
 
         Timer.schedule(setWave,1,30+nbMonster);
         Timer.schedule(setMob,0,1);
+
+
     }
 
     @Override
@@ -494,9 +497,14 @@ public class GameScreen extends ScreenAdapter {
             switch(mob.getPo()){
                 case 1: spells.add(new SlashSpell(tl.getAtkCacMobLeft(), tl.getAtkCacMobRight(), target, mob, direction, 1));
                     break;
-                case 2: spells.add(new MobProjectile(tl.getProjectile().first(), mob, target));
+                case 2: int rand = MathUtils.random(5);
+                    spells.add(new MobProjectile(tl.getProjectilemob().get(rand), mob, target));
                     break;
-                case 3: spells.add(new MagicSpell(tl.getSpellFire(), target, mob, cells, 1));
+                case 3: if(MathUtils.randomBoolean(0.5f)) {
+                        spells.add(new MagicSpell(tl.getSpellFire(), target, mob, cells, 1));
+                    }else{
+                        spells.add(new MagicSpell(tl.getSpellWater(), target, mob, cells, 1));
+                    }
                     break;
             }
 

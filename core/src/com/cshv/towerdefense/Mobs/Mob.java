@@ -16,6 +16,7 @@ public abstract class Mob {
     protected int currentCase = 0;
     protected Rectangle chemin[];
     protected GameScreen parent;
+    protected int _type;
     protected boolean visible = true;
     protected Animation<TextureRegion> animeRight;
     protected Animation<TextureRegion> animeLeft;

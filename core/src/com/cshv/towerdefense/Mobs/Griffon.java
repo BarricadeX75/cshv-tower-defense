@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 import com.cshv.towerdefense.World;
 
@@ -40,10 +41,56 @@ public class Griffon extends Mob {
     @Override
     public void setCarrac(int lvlStage) {
         vie = 130 + ( lvlStage * 10 );
-        attaque = 10 + ( lvlStage );
-        defense = 5 + ( lvlStage );
+        attaque = 15 + (2* lvlStage );
+        defense = 15 + (2* lvlStage );
         vitesse = 1 ;
         portee = 1;
+    }
+
+    @Override
+    public void move() {
+        if(!malusOn){
+            _malus = 0;
+        }
+
+        if (_x != chemin[currentCase].getX()) {
+            if (_x < chemin[currentCase].getX()) {
+                currentAnimation = animeRight;
+                _x += vitesse - _malus;
+            } else {
+                currentAnimation = animeLeft;
+                _x -= vitesse - _malus;
+            }
+        } else if(_y != chemin[currentCase].getY()){
+            if (_y < chemin[currentCase].getY()) {
+                currentAnimation = animeUp;
+                _y += vitesse - _malus;
+            } else {
+                currentAnimation = animeDown;
+                _y -= vitesse - _malus;
+            }
+        }else{
+            if(currentCase > 0 && attaqueOk){
+                for(int i = portee; i>0 ; i--){
+                    if(currentCase-i>=0){
+                        if(parent.testCase(currentCase-i,1)) {
+                            if(parent.getTargetUnit(this)) {
+                                attaqueOk = false;
+                                Timer.schedule(getAttaque, 2.5F);
+                                break;
+                            }
+                        }
+
+                    }
+                }
+                currentCase--;
+            }else{
+                animationTimer = 0;
+                currentAnimation = animeDown;
+            }
+        }
+
+
     }
 
     public boolean draw(SpriteBatch batch) {
