@@ -13,7 +13,7 @@ import com.cshv.towerdefense.Towers.Tower;
  */
 
 public class ZoneTowerSpell extends Spell {
-    private static final float FRAME_DURATION = 0.1F;
+    private static final float FRAME_DURATION = 0.025F;
     private Animation<TextureRegion> spellTower;
     private TextureRegion fin;
     private int _direction;

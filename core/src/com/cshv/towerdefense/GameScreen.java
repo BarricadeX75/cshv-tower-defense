@@ -23,12 +23,16 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cshv.towerdefense.Mobs.Bat;
 import com.cshv.towerdefense.Mobs.Centaure;
 import com.cshv.towerdefense.Mobs.ChienSquelette;
+import com.cshv.towerdefense.Mobs.Dragon;
 import com.cshv.towerdefense.Mobs.Golem;
 import com.cshv.towerdefense.Mobs.Griffon;
 import com.cshv.towerdefense.Mobs.Lamia;
+import com.cshv.towerdefense.Mobs.LoupGarou;
 import com.cshv.towerdefense.Mobs.Mob;
+import com.cshv.towerdefense.Mobs.Mushroom;
 import com.cshv.towerdefense.Mobs.Orc;
 import com.cshv.towerdefense.Mobs.Slime;
 import com.cshv.towerdefense.Spells.HealSpell;
@@ -40,7 +44,10 @@ import com.cshv.towerdefense.Spells.Spell;
 import com.cshv.towerdefense.Spells.TowerProjectile;
 import com.cshv.towerdefense.Spells.ZoneTowerSpell;
 import com.cshv.towerdefense.Towers.FastTower;
+import com.cshv.towerdefense.Towers.SlowTower;
 import com.cshv.towerdefense.Towers.Tower;
+import com.cshv.towerdefense.Towers.VisionTower;
+import com.cshv.towerdefense.Towers.ZoneTower;
 import com.cshv.towerdefense.Units.Chevalier;
 import com.cshv.towerdefense.Units.Healer;
 import com.cshv.towerdefense.Units.Mage;
@@ -108,8 +115,25 @@ public class GameScreen extends ScreenAdapter {
 
         //static chemin
         Array<Integer> trajet = new Array<Integer>();
-        for(int i=5 ; i<176 ; i+=11 ){
+        for(int i=0 ; i<33 ; i+=11 ){
             trajet.add(i);
+        }
+        for(int i = 33 ; i<43 ; i++){
+            trajet.add(i);
+        }
+        for(int i = 42 ; i<120 ; i+=11){
+            trajet.add(i);
+        }
+        for(int i = 118 ; i>110 ; i--){
+            trajet.add(i);
+        }
+        for(int i = 122 ; i<176 ; i+= 11){
+            trajet.add(i);
+        }
+
+        //trajet.sort();
+        for(Integer integer : trajet){
+            System.out.println(integer);
         }
 
         world = new World(tl.getSol(), tl.getChemin(), trajet);
@@ -118,14 +142,16 @@ public class GameScreen extends ScreenAdapter {
         for(int i=0 ; i<chemin.length ; i++){
             cells[i] = new  Cell(i);
         }
-
-        //mobs.add(new Slime(tl.getMobSlimeLeft()[0], tl.getMobSlimeRight()[0], tl.getMobSlimeUp()[0], tl.getMobSlimeDown()[0], 1, this));
-        //mobs.add(new Slime(tl.getMobCentaureLeft()[0], tl.getMobCentaureRight()[0], tl.getMobCentaureUp()[0], tl.getMobCentaureDown()[0], 1, this));
-        towers.add(new FastTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
+        towers.add(new VisionTower(tl.getTowerSpeed(), this, 1, world.getXcase(43), world.getYcase(43), tl.getBarBack(), tl.getBarBlue()));
+        towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(110), world.getYcase(110), tl.getBarBack(), tl.getBarBlue()));
+        towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(130), world.getYcase(130), tl.getBarBack(), tl.getBarBlue()));
+        towers.add(new SlowTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
+        //towers.add(new FastTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
+        towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(31), world.getYcase(31), tl.getBarBack(), tl.getBarBlue()));
         towerList.add(26);
-        for (int i=0 ; i<7 ; i++){
-           // createMob(i);
-        }
+
+        //createMob(10);
+
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
         TextureRegion buttonUpTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonUp.png")));
         TextureRegion buttonDownTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonDown.png")));
@@ -169,7 +195,8 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                ajouterUnite(UNITE_CHEVALIER);
+                //ajouterUnite(UNITE_CHEVALIER);
+                createMob(2);
             }
         });
         uiStage.addActor(uiButton1);
@@ -183,7 +210,8 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                ajouterUnite(UNITE_MAGE);
+                //ajouterUnite(UNITE_MAGE);
+                createMob(7);
             }
         });
         uiStage.addActor(uiButton2);
@@ -303,22 +331,25 @@ public class GameScreen extends ScreenAdapter {
 
     private void acitivationSpell(){
         if(Gdx.input.justTouched()){
-            float x = (Gdx.input.getX() - 68)/2;
-            float y = WORLD_HEIGHT-(Gdx.input.getY()/2);
+            float x = (Gdx.input.getX() - 45)/2;
+            float y = WORLD_HEIGHT-((Gdx.input.getY())/2);
 
-            for(int i=0; i<towerList.size  ; i++){
-                //System.out.println(x +"   "+y+ "  //  "+towers.get(i).getX()+"   "+towers.get(i).getY() );
-                if (x >= towers.get(i).getX() && x <= towers.get(i).getX()+32 && y >= towers.get(i).getY() && y <= towers.get(i).getY()+32) {
-                    int type = towers.get(i).useSpell();
+            for(Tower tower : towers){
+                //System.out.println(x +"   "+y+ "  //  "+tower.getX()+"   "+tower.getY() );
+                if (x >= tower.getX() && x <= tower.getX()+32 && y >= tower.getY() && y <= tower.getY()+32) {
+                    int type = tower.useSpell();
+                    System.out.println("ici ok");
                     switch(type){
                         case 1:
-                            ((FastTower)towers.get(i)).boosterOn();
+                            ((FastTower)tower).boosterOn();
                             break;
                         case 2:
-                            towers.get(i).getTarget(1);
+                            tower.getTarget(1);
+                            System.out.println("ici ok1 slow");
                             break;
                         case 3:
-                            towers.get(i).getTarget(1);
+                            tower.getTarget(1);
+                            System.out.println("ici ok1 zone");
                             break;
                         case 4:
                             for(Cell cell : cells){
@@ -337,28 +368,28 @@ public class GameScreen extends ScreenAdapter {
             int rand = MathUtils.random(7);
             switch (teste){
                 case 0:
-                    type = MathUtils.random(8);
-                    mobs.add(new Slime(tl.getMobSlimeLeft()[type], tl.getMobSlimeRight()[type], tl.getMobSlimeUp()[type], tl.getMobSlimeDown()[type], 1, this));
+                    type = MathUtils.random(7);
+                    mobs.add(new Slime(tl.getMobSlimeLeft()[type], tl.getMobSlimeRight()[type], tl.getMobSlimeUp()[type], tl.getMobSlimeDown()[type], 1, this, type));
                     monsterCreate++;
                     break;
                 case 1:
-                    type = MathUtils.random(4);
-                    mobs.add(new Orc(tl.getMobOrcLeft()[type], tl.getMobOrcRight()[type], tl.getMobOrcUp()[type], tl.getMobOrcDown()[type], 1, this));
+                    type = MathUtils.random(3);
+                    mobs.add(new Orc(tl.getMobOrcLeft()[type], tl.getMobOrcRight()[type], tl.getMobOrcUp()[type], tl.getMobOrcDown()[type], 1, this, type));
                     monsterCreate++;
                     break;
                 case 2:
-                    type = MathUtils.random(8);
-                    mobs.add(new Golem(tl.getMobGolemLeft()[type], tl.getMobGolemRight()[type], tl.getMobGolemUp()[type], tl.getMobGolemDown()[type], 1, this));
+                    type = MathUtils.random(7);
+                    mobs.add(new Golem(tl.getMobGolemLeft()[type], tl.getMobGolemRight()[type], tl.getMobGolemUp()[type], tl.getMobGolemDown()[type], 1, this, type));
                     monsterCreate++;
                     break;
                 case 3:
-                    type = MathUtils.random(8);
-                    mobs.add(new Centaure(tl.getMobCentaureLeft()[type], tl.getMobCentaureRight()[type], tl.getMobCentaureUp()[type], tl.getMobCentaureDown()[type], 1, this));
+                    type = MathUtils.random(7);
+                    mobs.add(new Centaure(tl.getMobCentaureLeft()[type], tl.getMobCentaureRight()[type], tl.getMobCentaureUp()[type], tl.getMobCentaureDown()[type], 1, this, type));
                     monsterCreate++;
                     break;
                 case 4:
-                    type = MathUtils.random(8);
-                    mobs.add(new Lamia(tl.getMobLamiaLeft()[type], tl.getMobLamiaRight()[type], tl.getMobLamiaUp()[type], tl.getMobLamiaDown()[type], 1, this));
+                    type = MathUtils.random(7);
+                    mobs.add(new Lamia(tl.getMobLamiaLeft()[type], tl.getMobLamiaRight()[type], tl.getMobLamiaUp()[type], tl.getMobLamiaDown()[type], 1, this, type));
                     monsterCreate++;
                     break;
                 case 5:
@@ -366,7 +397,27 @@ public class GameScreen extends ScreenAdapter {
                     monsterCreate++;
                     break;
                 case 6:
+                    type = MathUtils.random(7);
+                    mobs.add(new Bat(tl.getMobBatLeft()[type], tl.getMobBatRight()[type], tl.getMobBatUp()[type], tl.getMobBatDown()[type], 1, this, type));
+                    monsterCreate++;
+                    break;
+                case 7:
+                    type = MathUtils.random(7);
+                    mobs.add(new LoupGarou(tl.getMobLoupGarouLeft()[type], tl.getMobLoupGarouRight()[type], tl.getMobLoupGarouUp()[type], tl.getMobLoupGarouDown()[type], 1, this, type));
+                    monsterCreate++;
+                    break;
+                case 8:
                     mobs.add(new Griffon(tl.getMobGriffonLeft(), tl.getMobGriffonRight(), tl.getMobGriffonUp(), tl.getMobGriffonDown(), 1, this));
+                    monsterCreate++;
+                    break;
+                case 9:
+                    type = MathUtils.random(7);
+                    mobs.add(new Mushroom(tl.getMobMushroomLeft()[type], tl.getMobMushroomRight()[type], tl.getMobMushroomUp()[type], tl.getMobMushroomDown()[type], 1, this, type));
+                    monsterCreate++;
+                    break;
+                case 10:
+                    type = MathUtils.random(1);
+                    mobs.add(new Dragon(tl.getMobDragonLeft()[type], tl.getMobDragonRight()[type], tl.getMobDragonUp()[type], tl.getMobDragonDown()[type], 1, this, type));
                     monsterCreate++;
                     break;
             }

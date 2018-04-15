@@ -42,8 +42,15 @@ public class Griffon extends Mob {
         vie = 130 + ( lvlStage * 10 );
         attaque = 10 + ( lvlStage );
         defense = 5 + ( lvlStage );
-        vitesse = 1 + lvlStage/2;
+        vitesse = 1 ;
         portee = 1;
+    }
+
+    public boolean draw(SpriteBatch batch) {
+        TextureRegion anime = currentAnimation.getKeyFrame(animationTimer);
+        batch.draw( anime, _x-36, _y);
+
+        return dead;
     }
 
 }

@@ -18,7 +18,7 @@ public class Lamia extends Mob {
 
     private static final float FRAME_DURATION = 0.1F;
 
-    public Lamia(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu){
+    public Lamia(Array<TextureRegion> left, Array<TextureRegion> right, Array<TextureRegion> up, Array<TextureRegion> down, int lvlStage, GameScreen jeu, int type){
 
         animeLeft = new Animation<TextureRegion>(FRAME_DURATION,left);
         animeLeft.setPlayMode(Animation.PlayMode.LOOP);
@@ -42,8 +42,15 @@ public class Lamia extends Mob {
         vie = 150 + ( lvlStage * 15 );
         attaque = 20 + ( 2*lvlStage );
         defense = 0 + ( lvlStage );
-        vitesse = 1 + lvlStage/2;
+        vitesse = 1 ;
         portee = 2;
+    }
+
+    public boolean draw(SpriteBatch batch) {
+        TextureRegion anime = currentAnimation.getKeyFrame(animationTimer);
+        batch.draw( anime, _x-8, _y);
+
+        return dead;
     }
 
 }

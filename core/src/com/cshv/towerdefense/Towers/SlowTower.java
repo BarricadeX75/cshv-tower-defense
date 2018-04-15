@@ -43,7 +43,9 @@ public class SlowTower extends Tower {
     }
 
     public void initCaseDistOk(){
-        for(int i=chemin.length ; i>0 ; i--){
+        caseDistOk = new Array<Integer>();
+
+        for(int i=chemin.length-1 ; i>0 ; i--){
             int distance = (int) Math.sqrt((int)(_x/32 - chemin[i].getX()/32)*(int)(_x/32 - chemin[i].getX()/32)) + (int) Math.sqrt((int)(_y/32 - chemin[i].getY()/32)*(int)(_y/32 - chemin[i].getY()/32));
             if( portee >= distance){
                 caseDistOk.add(i);
@@ -53,17 +55,25 @@ public class SlowTower extends Tower {
 
     @Override
     public void getTarget(int typeAtc) {
-        if(tireOK){
-            for (int i = 0; i < caseDistOk.size; i++) {
-                if (parent.testCase(caseDistOk.get(i), 2)) {
-                    if(typeAtc == 0) {
+        if (typeAtc == 0) {
+            if (tireOK) {
+                for (int i = 0; i < caseDistOk.size; i++) {
+                    if (parent.testCase(caseDistOk.get(i), 2)) {
                         parent.getTargetMobTower(this, caseDistOk.get(i), 2);
                         Timer.schedule(getTargetTask, 1);
                         tireOK = false;
-                    }else if(typeAtc == 1){
-                        parent.getTargetMobTower(this, caseDistOk.get(i), 5);
+                        break;
                     }
-                }else if(typeAtc == 1){
+                }
+            }
+        }else{
+            for (int i = 0; i < caseDistOk.size; i++) {
+                if (parent.testCase(caseDistOk.get(i), 2)) {
+                    System.out.println("ici ok2 slow");
+                    parent.getTargetMobTower(this, caseDistOk.get(i), 5);
+                    System.out.println("lancer 2");
+                    break;
+                }else if (typeAtc == 1) {
                     chargementSpell = 32f;
                 }
             }

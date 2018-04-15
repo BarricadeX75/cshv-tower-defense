@@ -66,6 +66,7 @@ public class Healer extends Unit {
                             if(parent.getTargetHeal(this)) {
                                 attaqueOk = false;
                                 Timer.schedule(getAttaque, 2.5F);
+                                break;
                             }
                         }
                     }
