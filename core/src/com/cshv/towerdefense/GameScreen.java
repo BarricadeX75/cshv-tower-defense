@@ -388,7 +388,7 @@ public class GameScreen extends ScreenAdapter {
                             break;
                         case 4:
                             if(_player.getManaCombat()>=30) {
-                                manaUse(30);
+                                manaUse(Tower.SPELL_VISION);
                                 for (Cell cell : cells) {
                                     cell.spellVisionOk();
                                 }
