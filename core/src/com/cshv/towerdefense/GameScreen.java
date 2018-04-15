@@ -46,7 +46,6 @@ import com.cshv.towerdefense.Spells.ZoneTowerSpell;
 import com.cshv.towerdefense.Towers.FastTower;
 import com.cshv.towerdefense.Towers.SlowTower;
 import com.cshv.towerdefense.Towers.Tower;
-import com.cshv.towerdefense.Towers.VisionTower;
 import com.cshv.towerdefense.Towers.ZoneTower;
 import com.cshv.towerdefense.Units.Chevalier;
 import com.cshv.towerdefense.Units.Healer;
@@ -59,8 +58,6 @@ import java.util.Date;
 
 
 public class GameScreen extends ScreenAdapter {
-
-    private static final int UNITE_CHEVALIER = 0, UNITE_MAGE = 1, UNITE_MOINE = 2, UNITE_ROGUE = 3, UNITE_HEALER = 4;
 
     private static final float WORLD_WIDTH = TowerDefenseGame.WORLD_WIDTH;
     private static final float WORLD_HEIGHT = TowerDefenseGame.WORLD_HEIGHT;
@@ -195,7 +192,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                ajouterUnite(UNITE_CHEVALIER);
+                ajouterUnite(Unit.CHEVALIER);
             }
         });
         uiStage.addActor(uiButton1);
@@ -209,7 +206,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                ajouterUnite(UNITE_MAGE);
+                ajouterUnite(Unit.MAGE);
             }
         });
         uiStage.addActor(uiButton2);
@@ -223,7 +220,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                ajouterUnite(UNITE_MOINE);
+                ajouterUnite(Unit.MOINE);
             }
         });
         uiStage.addActor(uiButton3);
@@ -237,7 +234,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                ajouterUnite(UNITE_ROGUE);
+                ajouterUnite(Unit.ROGUE);
             }
         });
         uiStage.addActor(uiButton4);
@@ -251,7 +248,7 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 player.depenserMana(1);
-                ajouterUnite(UNITE_HEALER);
+                ajouterUnite(Unit.HEALER);
             }
         });
         uiStage.addActor(uiButton5);
@@ -359,7 +356,7 @@ public class GameScreen extends ScreenAdapter {
     private void createMob(){
 
         int type;
-        int range = 3+ ((int)lvlStage/3);
+        int range = 3+ (lvlStage /3);
         int rand = MathUtils.random(range);
         switch (rand){
             case 0:
@@ -617,26 +614,26 @@ public class GameScreen extends ScreenAdapter {
 
     private void ajouterUnite(int unite) {
         switch (unite) {
-        case UNITE_CHEVALIER:
-            units.add(new Chevalier(tl.getUnitChevalierLeft(), tl.getUnitChevalierRight(),
-                    tl.getUnitChevalierUp(), tl.getUnitChevalierDown(), lvlStage, this));
-            break;
-        case UNITE_MAGE:
-            units.add(new Mage(tl.getUnitMageLeft(), tl.getUnitMageRight(),
-                    tl.getUnitMageUp(), tl.getUnitMageDown(), lvlStage, this));
-            break;
-        case UNITE_MOINE:
-            units.add(new Moine(tl.getUnitMoineLeft(), tl.getUnitMoineRight(),
-                    tl.getUnitMoineUp(), tl.getUnitMoineDown(), lvlStage, this));
-            break;
-        case UNITE_ROGUE:
-            units.add(new Rogue(tl.getUnitRogueLeft(), tl.getUnitRogueRight(),
-                    tl.getUnitRogueUp(), tl.getUnitRogueDown(), lvlStage, this));
-            break;
-        case UNITE_HEALER:
-            units.add(new Healer(tl.getUnitHealerLeft(), tl.getUnitHealerRight(),
-                    tl.getUnitHealerUp(), tl.getUnitHealerDown(), lvlStage, this));
-            break;
+        case Unit.CHEVALIER:
+        units.add(new Chevalier(tl.getUnitChevalierLeft(), tl.getUnitChevalierRight(),
+                tl.getUnitChevalierUp(), tl.getUnitChevalierDown(), lvlStage, this));
+        break;
+        case Unit.MAGE:
+        units.add(new Mage(tl.getUnitMageLeft(), tl.getUnitMageRight(),
+                tl.getUnitMageUp(), tl.getUnitMageDown(), lvlStage, this));
+        break;
+        case Unit.MOINE:
+        units.add(new Moine(tl.getUnitMoineLeft(), tl.getUnitMoineRight(),
+                tl.getUnitMoineUp(), tl.getUnitMoineDown(), lvlStage, this));
+        break;
+        case Unit.ROGUE:
+        units.add(new Rogue(tl.getUnitRogueLeft(), tl.getUnitRogueRight(),
+                tl.getUnitRogueUp(), tl.getUnitRogueDown(), lvlStage, this));
+        break;
+        case Unit.HEALER:
+        units.add(new Healer(tl.getUnitHealerLeft(), tl.getUnitHealerRight(),
+                tl.getUnitHealerUp(), tl.getUnitHealerDown(), lvlStage, this));
+        break;
         }
     }
 
