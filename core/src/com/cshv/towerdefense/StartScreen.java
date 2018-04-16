@@ -23,6 +23,8 @@ public class StartScreen extends ScreenAdapter {
 
     private Stage stage;
 
+    private Player _player = new Player();
+
     private final TowerDefenseGame towerDefenseGame;
 
 
@@ -54,7 +56,7 @@ public class StartScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                towerDefenseGame.setScreen(new GameScreen(towerDefenseGame, new Player()));
+                towerDefenseGame.setScreen(new GameScreen(towerDefenseGame, _player));
                 dispose();
             }
         });
@@ -66,7 +68,7 @@ public class StartScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                towerDefenseGame.setScreen(new EditorScreen(towerDefenseGame));
+                towerDefenseGame.setScreen(new EditorScreen(towerDefenseGame, _player));
                 dispose();
             }
         });
@@ -78,7 +80,7 @@ public class StartScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //towerDefenseGame.setScreen(new CharacsScreen(towerDefenseGame));
+                //towerDefenseGame.setScreen(new CharacsScreen(towerDefenseGame, _player));
                 //dispose();
             }
         });

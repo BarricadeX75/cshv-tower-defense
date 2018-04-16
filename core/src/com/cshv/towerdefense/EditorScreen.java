@@ -6,10 +6,18 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -31,6 +39,7 @@ public class EditorScreen extends ScreenAdapter {
     private TextureAtlas textureAtlas;
     private TextureLoader tl;
 
+    private Player _player = new Player();
     private World world;
     private Array<Integer> trajet;
 
@@ -39,8 +48,9 @@ public class EditorScreen extends ScreenAdapter {
     private final TowerDefenseGame towerDefenseGame;
 
 
-    public EditorScreen(TowerDefenseGame towerDefenseGame) {
+    public EditorScreen(TowerDefenseGame towerDefenseGame, Player player) {
         this.towerDefenseGame = towerDefenseGame;
+        _player = player;
     }
 
     @Override
@@ -65,26 +75,110 @@ public class EditorScreen extends ScreenAdapter {
         uiStage = new Stage(viewport) {
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
-                if(!clear) {
+                if (!clear) {
                     insertCell(screenX, screenY);
-                }else{
+                }
+                else {
                     removeCell(screenX, screenY);
                 }
-                return true;
+
+                return super.touchDragged(screenX, screenY, pointer);
             }
 
             @Override
-            public boolean touchDown(int screenX, int screenY, int pointer , int button) {
-                if(!clear) {
+            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                if (!clear) {
                     insertCell(screenX, screenY);
-                }else{
+                }
+                else {
                     removeCell(screenX, screenY);
                 }
-                return true;
+
+                return super.touchDown(screenX, screenY, pointer, button);
             }
         };
 
         Gdx.input.setInputProcessor(uiStage);
+
+        TextureRegion buttonUpTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonUp.png")));
+        TextureRegion buttonDownTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonDown.png")));
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(
+                new TextureRegionDrawable(buttonUpTexture),
+                new TextureRegionDrawable(buttonDownTexture),
+                new TextureRegionDrawable(buttonDownTexture),
+                bitmapFont
+        );
+        float textScale = 0.4f;
+        float padding = 15f;
+
+        Table table = new Table();
+        table.setTransform(true);
+        table.setScale(textScale);
+        table.setPosition(WORLD_WIDTH / 2, 44);
+
+        TextButton uiButton1 = new TextButton("Chemin", textButtonStyle);
+        uiButton1.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //
+            }
+        });
+        table.add(uiButton1).pad(padding).colspan(2).align(Align.right);
+
+        TextButton uiButton2 = new TextButton("Effacer chemin", textButtonStyle);
+        uiButton2.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //
+            }
+        });
+        table.add(uiButton2).pad(padding).colspan(2).align(Align.left);
+
+        table.row();
+
+        TextButton uiButton3 = new TextButton("Fast Tower", textButtonStyle);
+        uiButton3.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //
+            }
+        });
+        table.add(uiButton3).pad(padding);
+
+        TextButton uiButton4 = new TextButton("Slow Tower", textButtonStyle);
+        uiButton4.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //
+            }
+        });
+        table.add(uiButton4).pad(padding);
+
+        TextButton uiButton5 = new TextButton("Zone Tower", textButtonStyle);
+        uiButton5.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //
+            }
+        });
+        table.add(uiButton5).pad(padding);
+
+        TextButton uiButton6 = new TextButton("Vision Tower", textButtonStyle);
+        uiButton6.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //
+            }
+        });
+        table.add(uiButton6).pad(padding);
+
+        uiStage.addActor(table);
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         trajet = new Array<Integer>();
@@ -171,6 +265,8 @@ public class EditorScreen extends ScreenAdapter {
         world.draw(batch);
         //
         batch.end();
+
+        uiStage.draw();
     }
 
     //

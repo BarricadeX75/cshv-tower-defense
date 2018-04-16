@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -161,32 +162,26 @@ public class GameScreen extends ScreenAdapter {
         Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
         float nameScale = 0.5f;
         float textScale = 0.4f;
-        float columnShift = 30;
-        float column1 = 64;
-        float column2 = 128;
-        float column3 = 192;
-        float column4 = 256;
-        float column5 = 320;
-        float row1 = 70;
-        float row2 = 50;
-        float row3 = 30;
+        float padding = 15f;
 
         uiStage = new Stage(viewport);
         Gdx.input.setInputProcessor(uiStage);
 
         Label nameLabel = new Label(_player.getNom(), labelStyle);
         nameLabel.setFontScale(nameScale);
-        nameLabel.setPosition(TowerDefenseGame.WORLD_WIDTH / 2 + ((nameLabel.getWidth() / 2) * nameScale), row1, Align.center);
+        nameLabel.setPosition(WORLD_WIDTH / 2 + ((nameLabel.getWidth() / 2) * nameScale), 70, Align.center);
         uiStage.addActor(nameLabel);
 
-        PlayerBar playerBar = new PlayerBar(_player, 0, TowerDefenseGame.WORLD_WIDTH, row2, bitmapFont, textScale,
+        PlayerBar playerBar = new PlayerBar(_player, 0, WORLD_WIDTH, 50, bitmapFont, textScale,
                 tl.getBarBack(), tl.getBarRed(), tl.getBarBlue());
         uiStage.addActor(playerBar);
 
+        Table table = new Table();
+        table.setTransform(true);
+        table.setScale(textScale);
+        table.setPosition(WORLD_WIDTH / 2, 20);
+
         TextButton uiButton1 = new TextButton("Chevalier", textButtonStyle);
-        uiButton1.setTransform(true);
-        uiButton1.setScale(textScale);
-        uiButton1.setPosition(column1 + columnShift, row3, Align.center);
         uiButton1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -197,12 +192,9 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         });
-        uiStage.addActor(uiButton1);
+        table.add(uiButton1).pad(padding);
 
         TextButton uiButton2 = new TextButton("Mage", textButtonStyle);
-        uiButton2.setTransform(true);
-        uiButton2.setScale(textScale);
-        uiButton2.setPosition(column2 + columnShift, row3, Align.center);
         uiButton2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -213,12 +205,9 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         });
-        uiStage.addActor(uiButton2);
+        table.add(uiButton2).pad(padding);
 
         TextButton uiButton3 = new TextButton("Moine", textButtonStyle);
-        uiButton3.setTransform(true);
-        uiButton3.setScale(textScale);
-        uiButton3.setPosition(column3 + columnShift, row3, Align.center);
         uiButton3.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -229,12 +218,9 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         });
-        uiStage.addActor(uiButton3);
+        table.add(uiButton3).pad(padding);
 
         TextButton uiButton4 = new TextButton("Rogue", textButtonStyle);
-        uiButton4.setTransform(true);
-        uiButton4.setScale(textScale);
-        uiButton4.setPosition(column4 + columnShift, row3, Align.center);
         uiButton4.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -245,12 +231,9 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         });
-        uiStage.addActor(uiButton4);
+        table.add(uiButton4).pad(padding);
 
         TextButton uiButton5 = new TextButton("Healer", textButtonStyle);
-        uiButton5.setTransform(true);
-        uiButton5.setScale(textScale);
-        uiButton5.setPosition(column5 + columnShift, row3, Align.center);
         uiButton5.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -261,7 +244,9 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         });
-        uiStage.addActor(uiButton5);
+        table.add(uiButton5).pad(padding);
+
+        uiStage.addActor(table);
         ////////////////////////////////////////////////////////////////////////////////////////////
 
 
