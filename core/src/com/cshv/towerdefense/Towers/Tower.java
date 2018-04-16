@@ -25,8 +25,7 @@ public abstract class Tower {
     protected float atcSpeed;
     protected float malus;
     protected long timer;
-    protected float animationTimer = 0;
-    protected Animation<TextureRegion> actTower;
+    protected TextureRegion _tower;
     protected Timer.Task getTargetTask = new Timer.Task() {
         @Override
         public void run() {
@@ -75,7 +74,6 @@ public abstract class Tower {
     }
 
     public void update(float delta) {
-        animationTimer += delta;
         chargementSpell += 0.03f;
         if(chargementSpell > 32f){
             chargementSpell = 32f;
@@ -84,8 +82,8 @@ public abstract class Tower {
     }
 
     public void draw(SpriteBatch batch) {
-        TextureRegion tower = actTower.getKeyFrame(animationTimer);
-        batch.draw(tower,_x,_y);
+
+        batch.draw(_tower,_x+1,_y);
 
         batch.draw(barBack, _x, _y, BAR_WIDTH, BAR_HEIGHT);
         batch.draw(barFront, _x, _y, chargementSpell, BAR_HEIGHT);

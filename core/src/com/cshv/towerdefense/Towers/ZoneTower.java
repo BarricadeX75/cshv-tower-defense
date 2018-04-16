@@ -22,13 +22,11 @@ public class ZoneTower extends Tower {
     //private Array<Rectangle> caseDistOk;
     private TextureRegion towerFireEnd;
 
-    public ZoneTower( Array<TextureRegion> towerAtc, GameScreen jeu, int lvlTower, float x, float y,
+    public ZoneTower( Array<TextureRegion> tower, GameScreen jeu, int lvlTower, float x, float y,
                       TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
         type = ZONE_TOWER;
-        towerFireEnd = towerAtc.get(towerAtc.size-1);
-        actTower = new Animation<TextureRegion>(FRAME_DURATION,towerAtc);
-        actTower.setPlayMode(Animation.PlayMode.LOOP);
+        _tower = tower.get(lvlTower/10);
         parent = jeu;
         chemin = parent.getChemin();
         setStat(lvlTower);

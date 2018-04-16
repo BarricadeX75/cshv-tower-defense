@@ -120,6 +120,11 @@ public class TextureLoader {
     private Array<TextureRegion> projectileTower[] = new Array[4];
     private Array<TextureRegion> projectileMob;
     private Array<TextureRegion> exploMushroom;
+    private Array<TextureRegion> spriteTowerFast;
+    private Array<TextureRegion> spriteTowerSlow;
+    private Array<TextureRegion> spriteTowerVision;
+    private Array<TextureRegion> spriteTowerZone;
+
 
     private TextureRegion buttonUp, buttonDown;
     private TextureRegion barBack, barRed, barBlue;
@@ -780,6 +785,22 @@ public class TextureLoader {
         }
     }
 
+    public Array<TextureRegion> getSpriteTowerFast() {
+        return spriteTowerFast;
+    }
+
+    public Array<TextureRegion> getSpriteTowerSlow() {
+        return spriteTowerSlow;
+    }
+
+    public Array<TextureRegion> getSpriteTowerVision() {
+        return spriteTowerVision;
+    }
+
+    public Array<TextureRegion> getSpriteTowerZone() {
+        return spriteTowerZone;
+    }
+
     private void initSpritesMobs() {
         for(int j=1 ; j<9 ; j++){
             mobSlimeUp[j-1] = new Array<TextureRegion>();
@@ -939,6 +960,7 @@ public class TextureLoader {
                 mobDragonUp[j-1].add(textureAtlas.findRegion("mobDragon"+j+"_up"+i));
             }
             mobDragonLeft[j-1] = new Array<TextureRegion>();
+
             for(int i=1 ; i<4 ; i++){
                 mobDragonLeft[j-1].add(textureAtlas.findRegion("mobDragon"+j+"_left"+i));
             }
@@ -1015,6 +1037,26 @@ public class TextureLoader {
         spellSlowTower = new Array<TextureRegion>();
         for( int i=1 ; i<6 ; i++){
             spellSlowTower.add(textureAtlas.findRegion("sort_Tower2_ ("+i+")"));
+        }
+
+        spriteTowerFast = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            spriteTowerFast.add(textureAtlas.findRegion("fastTower ("+i+")"));
+        }
+
+        spriteTowerSlow = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            spriteTowerSlow.add(textureAtlas.findRegion("slowTower ("+i+")"));
+        }
+
+        spriteTowerZone = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            spriteTowerZone.add(textureAtlas.findRegion("towerZone ("+i+")"));
+        }
+
+        spriteTowerVision = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            spriteTowerVision.add(textureAtlas.findRegion("visionTower ("+i+")"));
         }
     }
 

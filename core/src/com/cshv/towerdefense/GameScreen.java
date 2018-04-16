@@ -46,6 +46,7 @@ import com.cshv.towerdefense.Spells.Spell;
 import com.cshv.towerdefense.Spells.TowerProjectile;
 import com.cshv.towerdefense.Spells.ZoneTowerSpell;
 import com.cshv.towerdefense.Towers.FastTower;
+import com.cshv.towerdefense.Towers.SlowTower;
 import com.cshv.towerdefense.Towers.Tower;
 import com.cshv.towerdefense.Towers.VisionTower;
 import com.cshv.towerdefense.Towers.ZoneTower;
@@ -139,13 +140,16 @@ public class GameScreen extends ScreenAdapter {
         for(int i=0 ; i<chemin.length ; i++){
             cells[i] = new  Cell(i);
         }
-        towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(43), world.getYcase(43), tl.getBarBack(), tl.getBarBlue()));
+       /* towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(43), world.getYcase(43), tl.getBarBack(), tl.getBarBlue()));
         towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(110), world.getYcase(110), tl.getBarBack(), tl.getBarBlue()));
         towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(130), world.getYcase(130), tl.getBarBack(), tl.getBarBlue()));
-        //towers.add(new SlowTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
+        towers.add(new SlowTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
         towers.add(new VisionTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
-        towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(31), world.getYcase(31), tl.getBarBack(), tl.getBarBlue()));
-        towerList.add(26);
+        towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(31), world.getYcase(31), tl.getBarBack(), tl.getBarBlue()));*/
+        createTower(Tower.ZONE_TOWER,43);
+        createTower(Tower.ZONE_TOWER,110);
+        createTower(Tower.ZONE_TOWER,130);
+        createTower(Tower.SLOW_TOWER,26);
 
         //createMob(10);
 
@@ -386,6 +390,26 @@ public class GameScreen extends ScreenAdapter {
 
     public void manaUse(float depMana){
         _player.depenserMana(depMana);
+    }
+
+    private void createTower(int typeTower, int pos){
+
+        int type = typeTower;
+        int cell = pos;
+        switch (type){
+            case Tower.FAST_TOWER:
+                towers.add(new FastTower(tl.getSpriteTowerFast(), this, _player.getLvlFastTower(),world.getXcase(cell),world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
+                break;
+            case Tower.SLOW_TOWER:
+                towers.add(new SlowTower(tl.getSpriteTowerSlow(), this, _player.getLvlSlowTower(),world.getXcase(cell),world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
+                break;
+            case Tower.VISION_TOWER:
+                towers.add(new FastTower(tl.getSpriteTowerVision(), this, _player.getLvlVisionTower(),world.getXcase(cell),world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
+                break;
+            case Tower.ZONE_TOWER:
+                towers.add(new FastTower(tl.getSpriteTowerZone(), this, _player.getLvlZoneTower(),world.getXcase(cell),world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
+                break;
+        }
     }
 
     private void createMob(){
