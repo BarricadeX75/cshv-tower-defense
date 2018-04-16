@@ -22,7 +22,6 @@ public class StartScreen extends ScreenAdapter {
     private static final float WORLD_HEIGHT = TowerDefenseGame.WORLD_HEIGHT;
 
     private Stage stage;
-
     private Player _player = new Player();
 
     private final TowerDefenseGame towerDefenseGame;
@@ -81,8 +80,8 @@ public class StartScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //towerDefenseGame.setScreen(new CharacsScreen(towerDefenseGame, _player));
-                //dispose();
+                towerDefenseGame.setScreen(new CharacsScreen(towerDefenseGame, _player));
+                dispose();
             }
         });
         stage.addActor(characsButton);
