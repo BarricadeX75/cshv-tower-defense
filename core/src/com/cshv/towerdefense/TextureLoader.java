@@ -1,7 +1,5 @@
 package com.cshv.towerdefense;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
@@ -123,6 +121,7 @@ public class TextureLoader {
     private Array<TextureRegion> projectileMob;
     private Array<TextureRegion> exploMushroom;
 
+    private TextureRegion buttonUp, buttonDown;
     private TextureRegion barBack, barRed, barBlue;
 
 
@@ -572,6 +571,14 @@ public class TextureLoader {
         return exploMushroom;
     }
 
+    public TextureRegion getButtonUp() {
+        return buttonUp;
+    }
+
+    public TextureRegion getButtonDown() {
+        return buttonDown;
+    }
+
     public TextureRegion getBarBack() {
         return barBack;
     }
@@ -602,9 +609,12 @@ public class TextureLoader {
             projectile.add(textureAtlas.findRegion("projectile"+i));
         }
 
-        barBack = new TextureRegion(new Texture(Gdx.files.internal("barBack.png")));
-        barRed = new TextureRegion(new Texture(Gdx.files.internal("barRed.png")));
-        barBlue = new TextureRegion(new Texture(Gdx.files.internal("barBlue.png")));
+        buttonUp = textureAtlas.findRegion("buttonUp");
+        buttonDown = textureAtlas.findRegion("buttonDown");
+
+        barBack = textureAtlas.findRegion("barBack");
+        barRed = textureAtlas.findRegion("barRed");
+        barBlue = textureAtlas.findRegion("barBlue");
     }
 
     private void initSpritesUnits() {

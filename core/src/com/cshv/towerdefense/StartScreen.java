@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -38,11 +38,12 @@ public class StartScreen extends ScreenAdapter {
         stage = new Stage(new FitViewport(WORLD_WIDTH, WORLD_HEIGHT));
         Gdx.input.setInputProcessor(stage);
 
-        //TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("");
+        TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
+        TextureLoader tl = new TextureLoader(textureAtlas);
         BitmapFont bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
 
-        TextureRegion buttonUpTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonUp.png")));
-        TextureRegion buttonDownTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonDown.png")));
+        TextureRegion buttonUpTexture = tl.getButtonUp();
+        TextureRegion buttonDownTexture = tl.getButtonDown();
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(
                 new TextureRegionDrawable(buttonUpTexture),
                 new TextureRegionDrawable(buttonDownTexture),

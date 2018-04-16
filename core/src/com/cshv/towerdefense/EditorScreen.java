@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -28,6 +27,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class EditorScreen extends ScreenAdapter {
 
+    private static final int STATE_CHEMIN = 1, STATE_EFFACER_CHEMIN = 2,
+            STATE_FAST_TOWER = 3, STATE_SLOW_TOWER = 4, STATE_ZONE_TOWER = 5, STATE_VISION_TOWER = 6;
+
     private static final float WORLD_WIDTH = TowerDefenseGame.WORLD_WIDTH;
     private static final float WORLD_HEIGHT = TowerDefenseGame.WORLD_HEIGHT;
 
@@ -39,11 +41,12 @@ public class EditorScreen extends ScreenAdapter {
     private TextureAtlas textureAtlas;
     private TextureLoader tl;
 
+    private Array<TextButton> uiButtons;
+    private int editorState;
+
     private Player _player = new Player();
     private World world;
     private Array<Integer> trajet;
-
-    private boolean clear = false;
 
     private final TowerDefenseGame towerDefenseGame;
 
@@ -75,11 +78,13 @@ public class EditorScreen extends ScreenAdapter {
         uiStage = new Stage(viewport) {
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
-                if (!clear) {
+                switch (editorState) {
+                case STATE_CHEMIN:
                     insertCell(screenX, screenY);
-                }
-                else {
+                    break;
+                case STATE_EFFACER_CHEMIN:
                     removeCell(screenX, screenY);
+                    break;
                 }
 
                 return super.touchDragged(screenX, screenY, pointer);
@@ -87,11 +92,25 @@ public class EditorScreen extends ScreenAdapter {
 
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                if (!clear) {
+                switch (editorState) {
+                case STATE_CHEMIN:
                     insertCell(screenX, screenY);
-                }
-                else {
+                    break;
+                case STATE_EFFACER_CHEMIN:
                     removeCell(screenX, screenY);
+                    break;
+                case STATE_FAST_TOWER:
+                    //
+                    break;
+                case STATE_SLOW_TOWER:
+                    //
+                    break;
+                case STATE_ZONE_TOWER:
+                    //
+                    break;
+                case STATE_VISION_TOWER:
+                    //
+                    break;
                 }
 
                 return super.touchDown(screenX, screenY, pointer, button);
@@ -100,8 +119,8 @@ public class EditorScreen extends ScreenAdapter {
 
         Gdx.input.setInputProcessor(uiStage);
 
-        TextureRegion buttonUpTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonUp.png")));
-        TextureRegion buttonDownTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonDown.png")));
+        TextureRegion buttonUpTexture = tl.getButtonUp();
+        TextureRegion buttonDownTexture = tl.getButtonDown();
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(
                 new TextureRegionDrawable(buttonUpTexture),
                 new TextureRegionDrawable(buttonDownTexture),
@@ -116,70 +135,87 @@ public class EditorScreen extends ScreenAdapter {
         table.setScale(textScale);
         table.setPosition(WORLD_WIDTH / 2, 44);
 
-        TextButton uiButton1 = new TextButton("Chemin", textButtonStyle);
+        uiButtons = new Array<TextButton>(6);
+
+        final TextButton uiButton1 = new TextButton("Chemin", textButtonStyle);
         uiButton1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //
+                selectButton(uiButton1, uiButtons);
+                editorState = STATE_CHEMIN;
             }
         });
         table.add(uiButton1).pad(padding).colspan(2).align(Align.right);
+        uiButtons.add(uiButton1);
 
-        TextButton uiButton2 = new TextButton("Effacer chemin", textButtonStyle);
+        final TextButton uiButton2 = new TextButton("Effacer chemin", textButtonStyle);
         uiButton2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //
+                selectButton(uiButton2, uiButtons);
+                editorState = STATE_EFFACER_CHEMIN;
             }
         });
         table.add(uiButton2).pad(padding).colspan(2).align(Align.left);
+        uiButtons.add(uiButton2);
 
         table.row();
 
-        TextButton uiButton3 = new TextButton("Fast Tower", textButtonStyle);
+        final TextButton uiButton3 = new TextButton("Fast Tower", textButtonStyle);
         uiButton3.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //
+                selectButton(uiButton3, uiButtons);
+                editorState = STATE_FAST_TOWER;
             }
         });
         table.add(uiButton3).pad(padding);
+        uiButtons.add(uiButton3);
 
-        TextButton uiButton4 = new TextButton("Slow Tower", textButtonStyle);
+        final TextButton uiButton4 = new TextButton("Slow Tower", textButtonStyle);
         uiButton4.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //
+                selectButton(uiButton4, uiButtons);
+                editorState = STATE_SLOW_TOWER;
             }
         });
         table.add(uiButton4).pad(padding);
+        uiButtons.add(uiButton4);
 
-        TextButton uiButton5 = new TextButton("Zone Tower", textButtonStyle);
+        final TextButton uiButton5 = new TextButton("Zone Tower", textButtonStyle);
         uiButton5.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //
+                selectButton(uiButton5, uiButtons);
+                editorState = STATE_ZONE_TOWER;
             }
         });
         table.add(uiButton5).pad(padding);
+        uiButtons.add(uiButton5);
 
-        TextButton uiButton6 = new TextButton("Vision Tower", textButtonStyle);
+        final TextButton uiButton6 = new TextButton("Vision Tower", textButtonStyle);
         uiButton6.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //
+                selectButton(uiButton6, uiButtons);
+                editorState = STATE_VISION_TOWER;
             }
         });
         table.add(uiButton6).pad(padding);
+        uiButtons.add(uiButton6);
 
         uiStage.addActor(table);
         ////////////////////////////////////////////////////////////////////////////////////////////
+
+        editorState = STATE_CHEMIN;
+        uiButton1.setChecked(true);
 
         trajet = new Array<Integer>();
         trajet.add(5);
@@ -201,6 +237,13 @@ public class EditorScreen extends ScreenAdapter {
     }
 
     //
+
+    private void selectButton(TextButton button, Array<TextButton> buttons) {
+        for (TextButton b : buttons) {
+            if (b != button)
+                b.setChecked(false);
+        }
+    }
 
     private void insertCell(float x , float y){
         boolean flag = true;

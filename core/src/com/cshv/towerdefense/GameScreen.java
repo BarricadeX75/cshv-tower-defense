@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -151,8 +150,8 @@ public class GameScreen extends ScreenAdapter {
         //createMob(10);
 
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
-        TextureRegion buttonUpTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonUp.png")));
-        TextureRegion buttonDownTexture = new TextureRegion(new Texture(Gdx.files.internal("buttonDown.png")));
+        TextureRegion buttonUpTexture = tl.getButtonUp();
+        TextureRegion buttonDownTexture = tl.getButtonDown();
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(
                 new TextureRegionDrawable(buttonUpTexture),
                 new TextureRegionDrawable(buttonDownTexture),
