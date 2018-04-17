@@ -24,7 +24,11 @@ public class SlowTower extends Tower {
                       TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
         type = SLOW_TOWER;
-        _tower = tower.get(lvlTower/10);
+        int numSprite = lvlTower/10;
+        if(numSprite>3){
+            numSprite = 3;
+        }
+        _tower = tower.get(numSprite);
         parent = jeu;
         chemin = parent.getChemin();
         setStat(lvlTower);
@@ -33,7 +37,7 @@ public class SlowTower extends Tower {
     }
 
     public void setStat( int lvlTower){
-        attaque = 20 + (lvlTower*3);
+        attaque = 15 + (lvlTower*3);
         portee = 3 + (lvlTower/5);
         atcSpeed = 3 - (lvlTower / 20);
         malus = 0.5f + (lvlTower/20);

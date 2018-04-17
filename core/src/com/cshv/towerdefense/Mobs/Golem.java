@@ -39,20 +39,20 @@ public class Golem extends Mob {
     public void setCarrac(int lvlStage) {
         if(_type%3 == 1) {
             vie = 85 + (lvlStage * 15);
-            attaque = 12 + (2 * lvlStage);
-            defense = 0 + (1 * lvlStage);
+            attaque = 12 + (3 * lvlStage);
+            defense = 8 + (1 * lvlStage);
             vitesse = 0.5f;
             portee = 2;
         }else if(_type%2==1){
             vie = 100 + (lvlStage * 25);
             attaque = 10 + (2 * lvlStage);
-            defense = 0 + (2 * lvlStage);
+            defense = 6 + (2 * lvlStage);
             vitesse = 0.5f;
             portee = 1;
         }else{
             vie = 85 + (lvlStage * 15);
             attaque = 30 + (2 * lvlStage);
-            defense = 0 + (lvlStage);
+            defense = 2 + (lvlStage);
             vitesse = 1f;
             portee = 1;
         }
@@ -96,8 +96,7 @@ public class Golem extends Mob {
                     }
                 }
 
-            } else {
-                animationTimer = 0;
+            }else {
 
             }
         }

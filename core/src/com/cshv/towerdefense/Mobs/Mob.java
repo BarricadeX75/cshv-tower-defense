@@ -75,7 +75,6 @@ public abstract class Mob {
                                 currentCase--;
                             }
                         }else{
-                            animationTimer = 0;
                            if(parent.getTargetUnit(this)) {
                                attaqueOk = false;
                                Timer.schedule(getAttaque, 2.5F);

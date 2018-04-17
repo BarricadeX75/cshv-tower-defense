@@ -33,7 +33,11 @@ public class FastTower extends Tower {
                      TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
         type = FAST_TOWER;
-        _tower = tower.get(lvlTower/10);
+        int numSprite = lvlTower/10;
+        if(numSprite>3){
+            numSprite = 3;
+        }
+        _tower = tower.get(numSprite);
         parent = jeu;
         chemin = parent.getChemin();
         setStat(lvlTower);
@@ -45,7 +49,7 @@ public class FastTower extends Tower {
     }
 
     public void setStat( int lvlTower){
-        attaque = 23 + (lvlTower*4);
+        attaque = 20 + (lvlTower*4);
         portee = 3 + (lvlTower/5);
         atcSpeed = 3 - (lvlTower/15);
         malus = 0;

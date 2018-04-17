@@ -124,6 +124,7 @@ public class TextureLoader {
     private Array<TextureRegion> spriteTowerSlow;
     private Array<TextureRegion> spriteTowerVision;
     private Array<TextureRegion> spriteTowerZone;
+    private Array<TextureRegion> spriteFontaine;
 
 
     private TextureRegion buttonUp, buttonDown;
@@ -801,6 +802,10 @@ public class TextureLoader {
         return spriteTowerZone;
     }
 
+    public Array<TextureRegion> getSpriteFontaine() {
+        return spriteFontaine;
+    }
+
     private void initSpritesMobs() {
         for(int j=1 ; j<9 ; j++){
             mobSlimeUp[j-1] = new Array<TextureRegion>();
@@ -1057,6 +1062,11 @@ public class TextureLoader {
         spriteTowerVision = new Array<TextureRegion>();
         for(int i=1 ; i<5 ; i++){
             spriteTowerVision.add(textureAtlas.findRegion("visionTower ("+i+")"));
+        }
+
+        spriteFontaine = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            spriteFontaine.add(textureAtlas.findRegion("fontaine ("+i+")"));
         }
     }
 

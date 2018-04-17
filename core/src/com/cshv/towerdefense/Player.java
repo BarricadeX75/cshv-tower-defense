@@ -9,8 +9,12 @@ public class Player {
     private String nom;
     private float vie, vieCombat, mana, manaCombat;
     private int lvlStage, gold, lvlFastTower, lvlZoneTower, lvlVisionTower, lvlSlowTower;
-    private int lvlChevalier, lvlHealer, lvlMage, lvlRogue, lvlMoine;
+    private int lvlChevalier, lvlHealer, lvlMage, lvlRogue, lvlMoine, lvlFontaine;
 
+
+    /*public Player(){
+
+    }*/
 
     public Player() {
         nom = "Brioche";
@@ -25,11 +29,20 @@ public class Player {
         gold = 0;
         lvlZoneTower = 1;
         lvlVisionTower = 1;
+        lvlFontaine =1;
 
         lvlSlowTower = 1;
         lvlFastTower = 1;
 
         resetStatsCombat();
+    }
+
+    public void setLvlFontaine(int lvl){
+        lvlFontaine = lvl;
+    }
+
+    public int getLvlFontaine(){
+        return lvlFontaine;
     }
 
     public void setLvlStage(int lvlStage) {

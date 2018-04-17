@@ -51,6 +51,7 @@ import com.cshv.towerdefense.Towers.Tower;
 import com.cshv.towerdefense.Towers.VisionTower;
 import com.cshv.towerdefense.Towers.ZoneTower;
 import com.cshv.towerdefense.Units.Chevalier;
+import com.cshv.towerdefense.Units.Fontaine;
 import com.cshv.towerdefense.Units.Healer;
 import com.cshv.towerdefense.Units.Mage;
 import com.cshv.towerdefense.Units.Moine;
@@ -132,20 +133,14 @@ public class GameScreen extends ScreenAdapter {
             trajet.add(i);
         }
 
-        //trajet.sort();
-
         world = new World(tl.getSol(), tl.getChemin(), trajet);
         chemin = world.getChemin();
         cells = new Cell[chemin.length];
         for(int i=0 ; i<chemin.length ; i++){
             cells[i] = new  Cell(i);
         }
-       /* towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(43), world.getYcase(43), tl.getBarBack(), tl.getBarBlue()));
-        towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(110), world.getYcase(110), tl.getBarBack(), tl.getBarBlue()));
-        towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(130), world.getYcase(130), tl.getBarBack(), tl.getBarBlue()));
-        towers.add(new SlowTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
-        towers.add(new VisionTower(tl.getTowerSpeed(), this, 1, world.getXcase(26), world.getYcase(26), tl.getBarBack(), tl.getBarBlue()));
-        towers.add(new ZoneTower(tl.getTowerSpeed(), this, 1, world.getXcase(31), world.getYcase(31), tl.getBarBack(), tl.getBarBlue()));*/
+        units.add(new Fontaine(tl.getSpriteFontaine(), this, _player.getLvlFontaine(), _player));
+
         createTower(Tower.ZONE_TOWER,43);
         createTower(Tower.ZONE_TOWER,110);
         createTower(Tower.ZONE_TOWER,130);
@@ -483,7 +478,7 @@ public class GameScreen extends ScreenAdapter {
     public boolean getTargetUnit(Mob mob){
         Unit target = null;
         for(int i=mob.getPo() ; i>0 ; i--){
-            if(mob.getCurrentCase()-i>0){
+            if(mob.getCurrentCase()-i>=0){
                 if(cells[mob.getCurrentCase()-i].getUnit() != null){
                     target = cells[mob.getCurrentCase()-i].getUnit();
                 }
@@ -531,8 +526,8 @@ public class GameScreen extends ScreenAdapter {
 
     public boolean getTargetHeal(Unit unit){
         Unit target = null;
-        for(int i=unit.getPo() ; i>0 ; i--){
-            if(unit.getCurrentCase()+i < chemin.length-1){
+        for(int i=unit.getPo() ; i>=0 ; i--){
+            if(unit.getCurrentCase()+i <= chemin.length-1){
                 if(cells[unit.getCurrentCase()+i].getHeal() != null){
                     target = cells[unit.getCurrentCase()+i].getHeal();
 
@@ -574,7 +569,7 @@ public class GameScreen extends ScreenAdapter {
     public boolean getTargetMob(Unit unit){
         Mob target = null;
         for(int i=unit.getPo() ; i>0 ; i--){
-            if(unit.getCurrentCase()+i<chemin.length-1){
+            if(unit.getCurrentCase()+i <= chemin.length-1){
                 if(cells[unit.getCurrentCase()+i].getMob() != null){
                     target = cells[unit.getCurrentCase()+i].getMob();
                 }

@@ -26,7 +26,11 @@ public class ZoneTower extends Tower {
                       TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
         type = ZONE_TOWER;
-        _tower = tower.get(lvlTower/10);
+        int numSprite = lvlTower/10;
+        if(numSprite>3){
+            numSprite = 3;
+        }
+        _tower = tower.get(numSprite);
         parent = jeu;
         chemin = parent.getChemin();
         setStat(lvlTower);

@@ -47,8 +47,8 @@ public class Lamia extends Mob {
             portee = 3;
         }else if(_type%2==1){
             vie = 85 + (lvlStage * 15);
-            attaque = 15 + (2 * lvlStage);
-            defense = 0 + (2 * lvlStage);
+            attaque = 15 + (3 * lvlStage);
+            defense = 4 + (2 * lvlStage);
             vitesse = 1f;
             portee = 2;
         }else{

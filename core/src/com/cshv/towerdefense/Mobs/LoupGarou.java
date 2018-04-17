@@ -91,7 +91,7 @@ public class LoupGarou extends Mob {
     public void setCarrac(int lvlStage) {
         if(_type%3 == 1) {
             vie = 85 + (lvlStage * 15);
-            attaque = 12 + (1 * lvlStage);
+            attaque = 12 + (2 * lvlStage);
             defense = 0 + (1 * lvlStage);
             vitesse = 1f;
             portee = 3;
@@ -103,7 +103,7 @@ public class LoupGarou extends Mob {
             portee = 1;
         }else{
             vie = 40 + (lvlStage * 10);
-            attaque = 30 + (4 * lvlStage);
+            attaque = 30 + (5 * lvlStage);
             defense = 0 + (int)(0.5f * lvlStage);
             vitesse = 2f;
             portee = 1;

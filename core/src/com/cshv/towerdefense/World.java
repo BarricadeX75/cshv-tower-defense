@@ -38,7 +38,6 @@ public class World {
 
 
 
-
     }
 
 
@@ -106,7 +105,11 @@ public class World {
     public void draw(SpriteBatch batch){
         for (int i=0; i<arrayNum; i++){
             batch.draw(blockImg[i],blocks[i].x, blocks[i].y);
+            /*if(blockImgChemin[i] != null){
+                batch.draw(blockImgChemin[i],blocks[i].x, blocks[i].y);
+            }*/
         }
+
 
     }
 }
