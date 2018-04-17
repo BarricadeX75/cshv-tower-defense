@@ -111,6 +111,7 @@ public class GameScreen extends ScreenAdapter {
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
         batch = new SpriteBatch();
         bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
+        bitmapFont.setColor(Color.BLACK);
         TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         lvlStage = _player.getLvlStage();
         tl = new TextureLoader(textureAtlas);
@@ -123,6 +124,7 @@ public class GameScreen extends ScreenAdapter {
         }
         units.add(new Fontaine(tl.getSpriteFontaine(), this, _player.getLvlFontaine(), _player));
         createTower();
+        //TextureRegion boutonTest = textureAtlas.findRegion("button_carrer");
 
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
         TextureRegion buttonUpTexture = tl.getButtonUp();

@@ -125,6 +125,8 @@ public class TextureLoader {
     private Array<TextureRegion> spriteTowerVision;
     private Array<TextureRegion> spriteTowerZone;
     private Array<TextureRegion> spriteFontaine;
+    private Array<TextureRegion> flecheTexture;
+    private Array<TextureRegion> controleTexture;
 
 
     private TextureRegion buttonUp, buttonDown;
@@ -806,6 +808,14 @@ public class TextureLoader {
         return spriteFontaine;
     }
 
+    public Array<TextureRegion> getFlecheTexture() {
+        return flecheTexture;
+    }
+
+    public Array<TextureRegion> getControleTexture() {
+        return controleTexture;
+    }
+
     private void initSpritesMobs() {
         for(int j=1 ; j<9 ; j++){
             mobSlimeUp[j-1] = new Array<TextureRegion>();
@@ -1130,6 +1140,14 @@ public class TextureLoader {
         exploMushroom = new Array<TextureRegion>();
         for(int i=1; i<11 ; i++){
             exploMushroom.add(textureAtlas.findRegion("atc_Boom_Mushroom ("+i+")"));
+        }
+        flecheTexture = new Array<TextureRegion>();
+        for(int i=1; i<3 ; i++){
+            flecheTexture.add(textureAtlas.findRegion("fleche ("+i+")"));
+        }
+        controleTexture = new Array<TextureRegion>();
+        for(int i=1; i<3 ; i++){
+            controleTexture.add(textureAtlas.findRegion("valid ("+i+")"));
         }
     }
 }
