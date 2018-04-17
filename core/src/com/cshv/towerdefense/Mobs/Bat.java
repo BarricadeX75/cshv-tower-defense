@@ -1,5 +1,6 @@
 package com.cshv.towerdefense.Mobs;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -98,7 +99,9 @@ public class Bat extends Mob {
 
                     }
                 }
-                currentCase--;
+                if(currentCase >1) {
+                    currentCase--;
+                }
             }
         }
 
@@ -106,8 +109,16 @@ public class Bat extends Mob {
     }
 
     public boolean draw(SpriteBatch batch) {
-        TextureRegion anime = currentAnimation.getKeyFrame(animationTimer);
-        batch.draw( anime, _x-8, _y);
+        TextureRegion texture = currentAnimation.getKeyFrame(animationTimer);
+        if (!visible) {
+            Color c = batch.getColor();
+            batch.setColor(c.r, c.g, c.b, 0.5f);
+            batch.draw(texture, _x-8, _y);
+            batch.setColor(c.r, c.g, c.b, c.a);
+        }
+        else {
+            batch.draw(texture, _x-8, _y);
+        }
 
         return dead;
     }

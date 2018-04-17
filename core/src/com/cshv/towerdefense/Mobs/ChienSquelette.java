@@ -68,7 +68,15 @@ public class ChienSquelette extends Mob {
                 for(int i = portee; i>0 ; i--){
                     if(currentCase-i>=0){
                         if(!parent.testCase(currentCase-i,1) || !visible) {
-                            currentCase--;
+                            if(currentCase >1) {
+                                currentCase--;
+                            }else{
+                                if(parent.getTargetUnit(this)) {
+                                    attaqueOk = false;
+                                    Timer.schedule(getAttaque, 2.5F);
+                                    break;
+                                }
+                            }
                         }else{
                             animationTimer = 0;
                             if(parent.getTargetUnit(this)) {

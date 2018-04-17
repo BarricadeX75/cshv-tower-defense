@@ -89,7 +89,9 @@ public class Dragon extends Mob {
 
                     }
                 }
-                currentCase--;
+                if(currentCase >1) {
+                    currentCase--;
+                }
             }
         }
 

@@ -83,7 +83,9 @@ public class Griffon extends Mob {
 
                     }
                 }
-                currentCase--;
+                if(currentCase >1) {
+                    currentCase--;
+                }
             }
         }
 
