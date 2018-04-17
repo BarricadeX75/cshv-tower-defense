@@ -1,19 +1,29 @@
 package com.cshv.towerdefense;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.net.HttpParametersUtils;
+import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class StartScreen extends ScreenAdapter {
@@ -22,6 +32,7 @@ public class StartScreen extends ScreenAdapter {
     private static final float WORLD_HEIGHT = TowerDefenseGame.WORLD_HEIGHT;
 
     private Stage stage;
+    private Array<PlayerJson>  playerJsons;
     private Player _player = new Player();
 
     private final TowerDefenseGame towerDefenseGame;
@@ -110,5 +121,48 @@ public class StartScreen extends ScreenAdapter {
     private void clearScreen() {
         Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
+
+    public void requestBdGetPlayer(String login, String mdp){
+        Map<String, String> parameters = new HashMap<String, String>();
+        parameters.put("pseudo", login);
+        parameters.put("mdp", mdp);
+        HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
+        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url("http://10.16.0.31/harriSpaceWarrior/setData.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
+        Gdx.net.sendHttpRequest (httpRequest, new Net.HttpResponseListener() {
+
+            @Override
+            public void handleHttpResponse(Net.HttpResponse httpResponse) {
+
+                final int statusCode = httpResponse.getStatus().getStatusCode();
+                // We are not in main thread right now so we need to post to main thread for ui updates
+
+                if (statusCode != 200) {
+                    Gdx.app.log("NetAPITest", "An error ocurred since statusCode is not OK");
+
+                    return;
+                }
+                String JSONTxt = httpResponse.getResultAsString();
+                playerJsons = new Array<PlayerJson>();
+                Json json = new Json();
+                ArrayList<JsonValue> list = json.fromJson(ArrayList.class, JSONTxt);
+                for (JsonValue v : list) {
+                    playerJsons.add(json.readValue(PlayerJson.class,v));
+                }
+
+
+            }
+
+            @Override
+            public void failed(Throwable t) {
+                System.out.println("fail");
+                t.printStackTrace();
+            }
+
+            @Override
+            public void cancelled() {
+                Gdx.app.log("NetAPITest", "HTTP request cancelled");
+            }
+        });
     }
 }

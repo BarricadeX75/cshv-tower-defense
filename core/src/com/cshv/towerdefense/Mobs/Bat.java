@@ -47,7 +47,7 @@ public class Bat extends Mob {
             portee = 1;
         }else if(_type%2==1){
             vie = 60 + (lvlStage * 10);
-            attaque = 15 + (3 * lvlStage);
+            attaque = 20 + (5 * lvlStage);
             defense = 0 + (int)(0.5 * lvlStage);
             vitesse = 0.5f;
             portee = 2;
