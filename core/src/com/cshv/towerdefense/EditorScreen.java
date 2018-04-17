@@ -368,6 +368,7 @@ public class EditorScreen extends ScreenAdapter {
             _player.setChemin(trajet);
             _player.setTowers(towers);
             towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
+            dispose();
         }
         return true;
     }

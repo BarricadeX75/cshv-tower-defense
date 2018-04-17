@@ -75,7 +75,7 @@ public class GameScreen extends ScreenAdapter {
     private int nbMonster;
     private int mobCreer = 1;
     private int numWave = 1;
-    private float gold = 0;
+    private int gold = 0;
     protected Timer.Task setWave;
     protected Timer.Task setMob;
 
@@ -257,6 +257,7 @@ public class GameScreen extends ScreenAdapter {
 
     private void update(float delta) {
         controlerTask();
+        checkGame();
         updateCells();
         updateMobs(delta);
         updateTowers(delta);
@@ -272,6 +273,22 @@ public class GameScreen extends ScreenAdapter {
         }
         if(numWave == 5){
             setWave.cancel();
+        }
+    }
+
+    public void checkGame(){
+        if(_player.getVieCombat() == 0){
+            _player.addGold(gold);
+            _player.resetStatsCombat();
+            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
+            dispose();
+        }else if(numWave == 5 && mobs.size ==0){
+            int goldWin = (int) (200 * Math.pow(1.2,lvlStage-1));
+            goldWin = (int) (goldWin / (_player.getVieCombat()/_player.getVie()));
+            gold += goldWin;
+            _player.addGold(goldWin);
+            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
+            dispose();
         }
     }
 
