@@ -1,5 +1,9 @@
 package com.cshv.towerdefense;
 
+import com.badlogic.gdx.utils.Array;
+
+import java.util.HashMap;
+
 /**
  * Created by Barricade on 30/03/2018.
  */
@@ -10,6 +14,8 @@ public class Player {
     private float vie, vieCombat, mana, manaCombat;
     private int lvlStage, gold, lvlFastTower, lvlZoneTower, lvlVisionTower, lvlSlowTower;
     private int lvlChevalier, lvlHealer, lvlMage, lvlRogue, lvlMoine, lvlFontaine;
+    private Array<Integer> chemin;
+    private HashMap< Integer, Integer> towers;
 
 
     /*public Player(){
@@ -35,6 +41,22 @@ public class Player {
         lvlFastTower = 1;
 
         resetStatsCombat();
+    }
+
+    public Array<Integer> getChemin() {
+        return chemin;
+    }
+
+    public void setChemin(Array<Integer> chemin) {
+        this.chemin = chemin;
+    }
+
+    public HashMap<Integer, Integer> getTowers() {
+        return towers;
+    }
+
+    public void setTowers(HashMap<Integer, Integer> towers) {
+        this.towers = towers;
     }
 
     public void setLvlFontaine(int lvl){

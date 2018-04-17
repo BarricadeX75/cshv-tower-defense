@@ -18,11 +18,12 @@ public class World {
     public Rectangle[] blocks;
     public boolean[] isSolid;
     private TextureRegion[] blockImg;
+    private TextureRegion[] blockImgTower;
     //10*16
     private final int arrayNum = 176;
 
     //Block Images
-    private TextureRegion BLOCK_CHEMIN, BLOCK_SOL;
+    private TextureRegion BLOCK_CHEMIN, BLOCK_SOL, BLOCK_TOWER_ZONE, BLOCK_TOWER_FAST, BLOCK_TOWER_SLOW, BLOCK_TOWER_VISION;
     private TextureRegion[] solMult = new TextureRegion[8];
     private TextureRegion[] cheminMult = new TextureRegion[8];
     private Array<Integer> _chemin;
@@ -34,10 +35,11 @@ public class World {
 
 
 
-    private void init() {
-
-
-
+    private void initTabTower() {
+        blockImgTower = new TextureRegion[176];
+        for(int i=0 ; i<176 ; i++){
+            blockImgTower[i] = null;
+        }
     }
 
 
@@ -50,6 +52,24 @@ public class World {
         blocks = new Rectangle[arrayNum];
         blockImg = new TextureRegion[arrayNum];
         isSolid = new boolean[arrayNum];
+        loadArrays();
+
+    }
+
+    public World( Array<TextureRegion> sols, Array<TextureRegion> chemins, Array<Integer> chemin, TextureRegion towerFast, TextureRegion towerSlow, TextureRegion towerZone, TextureRegion towerVision){
+        _chemin = chemin;
+        y=88;
+        //init();
+        BLOCK_SOL = sols.get(0);
+        BLOCK_CHEMIN = chemins.get(0);
+        blocks = new Rectangle[arrayNum];
+        blockImg = new TextureRegion[arrayNum];
+        isSolid = new boolean[arrayNum];
+        BLOCK_TOWER_FAST = towerFast;
+        BLOCK_TOWER_SLOW = towerSlow;
+        BLOCK_TOWER_ZONE = towerZone;
+        BLOCK_TOWER_VISION = towerVision;
+        initTabTower();
         loadArrays();
 
     }
@@ -86,6 +106,24 @@ public class World {
         blockImg[cell] = BLOCK_SOL;
     }
 
+    public void towerEditor(int cell, int type){
+        switch (type){
+            case 1:blockImgTower[cell] = BLOCK_TOWER_FAST;
+                break;
+            case 2:blockImgTower[cell] = BLOCK_TOWER_SLOW;
+                break;
+            case 3:blockImgTower[cell] = BLOCK_TOWER_ZONE;
+                break;
+            case 4:blockImgTower[cell] = BLOCK_TOWER_VISION;
+                break;
+        }
+    }
+
+    public void removeTower(int cell){
+
+        blockImgTower[cell] = null;
+    }
+
     public float getXcase(int numCase){
         return blocks[numCase].getX();
     }
@@ -109,8 +147,15 @@ public class World {
                 batch.draw(blockImgChemin[i],blocks[i].x, blocks[i].y);
             }*/
         }
+    }
 
-
+    public void drawEditor(SpriteBatch batch){
+        for (int i=arrayNum-1 ; i>=0; i--){
+            batch.draw(blockImg[i],blocks[i].x, blocks[i].y);
+            if(blockImgTower[i] != null){
+                batch.draw(blockImgTower[i],blocks[i].x+1, blocks[i].y);
+            }
+        }
     }
 }
 

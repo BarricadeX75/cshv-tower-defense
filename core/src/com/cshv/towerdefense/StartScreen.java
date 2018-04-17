@@ -41,6 +41,10 @@ public class StartScreen extends ScreenAdapter {
     public StartScreen(TowerDefenseGame towerDefenseGame) {
         this.towerDefenseGame = towerDefenseGame;
     }
+    public StartScreen(TowerDefenseGame towerDefenseGame, Player player) {
+        this.towerDefenseGame = towerDefenseGame;
+        _player = player;
+    }
 
     @Override
     public void show() {

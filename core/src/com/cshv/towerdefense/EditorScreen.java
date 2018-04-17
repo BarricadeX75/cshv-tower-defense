@@ -21,6 +21,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.HashMap;
+
 /**
  * Created by Barricade on 13/04/2018.
  */
@@ -44,9 +46,10 @@ public class EditorScreen extends ScreenAdapter {
     private Array<TextButton> uiButtons;
     private int editorState;
 
-    private Player _player = new Player();
+    private Player _player;
     private World world;
     private Array<Integer> trajet;
+    private HashMap< Integer, Integer> towers;
 
     private final TowerDefenseGame towerDefenseGame;
 
@@ -73,6 +76,7 @@ public class EditorScreen extends ScreenAdapter {
         bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
         textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         tl = new TextureLoader(textureAtlas);
+        towers = new HashMap<Integer, Integer>();
 
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
         uiStage = new Stage(viewport) {
@@ -100,16 +104,16 @@ public class EditorScreen extends ScreenAdapter {
                     removeCell(screenX, screenY);
                     break;
                 case STATE_FAST_TOWER:
-                    //
+                    insertTower(screenX,screenY,1);
                     break;
                 case STATE_SLOW_TOWER:
-                    //
+                    insertTower(screenX,screenY,2);
                     break;
                 case STATE_ZONE_TOWER:
-                    //
+                    insertTower(screenX,screenY,3);
                     break;
                 case STATE_VISION_TOWER:
-                    //
+                    insertTower(screenX,screenY,4);
                     break;
                 }
 
@@ -137,6 +141,17 @@ public class EditorScreen extends ScreenAdapter {
 
         uiButtons = new Array<TextButton>(6);
 
+        final TextButton validButton  = new TextButton("Validation", textButtonStyle);
+        validButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                verifChemin();
+            }
+        });
+        table.add(validButton).pad(padding).colspan(1).align(Align.left);
+        uiButtons.add(validButton);
+
         final TextButton uiButton1 = new TextButton("Chemin", textButtonStyle);
         uiButton1.addListener(new ClickListener() {
             @Override
@@ -149,7 +164,7 @@ public class EditorScreen extends ScreenAdapter {
         table.add(uiButton1).pad(padding).colspan(2).align(Align.right);
         uiButtons.add(uiButton1);
 
-        final TextButton uiButton2 = new TextButton("Effacer chemin", textButtonStyle);
+        final TextButton uiButton2 = new TextButton("Gomme", textButtonStyle);
         uiButton2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -219,7 +234,8 @@ public class EditorScreen extends ScreenAdapter {
 
         trajet = new Array<Integer>();
         trajet.add(5);
-        world = new World(tl.getSol(), tl.getChemin(), trajet);
+
+        world = new World(tl.getSol(), tl.getChemin(), trajet, tl.getSpriteTowerFast().get(0), tl.getSpriteTowerSlow().get(0), tl.getSpriteTowerZone().get(0), tl.getSpriteTowerVision().get(0));
         world.cheminEditor(170);
     }
 
@@ -269,13 +285,44 @@ public class EditorScreen extends ScreenAdapter {
         }
     }
 
+    private void insertTower(float x, float y, int type){
+        boolean flag = true;
+        x = (x-45)/2;
+        y = WORLD_HEIGHT-( ( y + 176 ) /2);
+
+        int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
+
+        if(numCell <= 175 && numCell >= 0 ){
+
+                for (int i = 0; i < trajet.size; i++) {
+                    if (numCell == trajet.get(i)) {
+                        flag = false;
+                        break;
+                    }
+                }
+                for(Integer pos : towers.keySet()){
+                    if(numCell == pos){
+                        flag = false;
+                        break;
+                    }
+                }
+
+
+                if (flag) {
+                    towers.put(numCell,type);
+                    world.towerEditor(numCell, type);
+                }
+
+        }
+    }
+
     private void removeCell(float x , float y){
 
         x = (x-45)/2;
         y = WORLD_HEIGHT-( ( y + 176 ) /2);
 
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
-
+        removeTower(numCell);
         if(numCell <= 165 && numCell >= 11 ){
             for (int i = 0; i < trajet.size; i++) {
                 if (numCell == trajet.get(i)) {
@@ -286,17 +333,21 @@ public class EditorScreen extends ScreenAdapter {
         }
     }
 
+    private void removeTower(int numCell){
+        if(numCell <= 175 && numCell >= 0 ) {
+            towers.remove(numCell);
+            world.removeTower(numCell);
+        }
+    }
+
     private boolean verifChemin(){
-        if(trajet.first() != 5&& trajet.peek() != 170){
+        if(trajet.first() != 5&& trajet.peek() != 159){
             return false;
         }
-        for(int i=1 ; i<trajet.size ; i++) {
-            int numCell = trajet.get(i - 1);
-            int numCellNext = trajet.get(i);
-            if (numCell + 11 != numCellNext && numCell - 11 != numCellNext && numCell + 1 != numCellNext && numCell - 1 != numCellNext) {
-                return false;
-            }
-        }
+        trajet.add(170);
+        _player.setChemin(trajet);
+        _player.setTowers(towers);
+        towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
 
         return true;
     }
@@ -305,7 +356,7 @@ public class EditorScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.projection);
         batch.setTransformMatrix(camera.view);
         batch.begin();
-        world.draw(batch);
+        world.drawEditor(batch);
         //
         batch.end();
 
