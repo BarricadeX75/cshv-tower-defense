@@ -39,6 +39,15 @@ public class Player {
 
         lvlSlowTower = 1;
         lvlFastTower = 1;
+        chemin = new Array<Integer>();
+        for(int i=5 ; i<176 ; i+=11){
+            chemin.add(i);
+        }
+        towers = new HashMap<Integer, Integer>();
+        towers.put(81,1);
+        towers.put(83,2);
+        towers.put(70,3);
+        towers.put(72,4);
 
         resetStatsCombat();
     }

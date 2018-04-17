@@ -146,6 +146,7 @@ public class EditorScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                selectButton(validButton, uiButtons);
                 verifChemin();
             }
         });
@@ -237,6 +238,7 @@ public class EditorScreen extends ScreenAdapter {
 
         world = new World(tl.getSol(), tl.getChemin(), trajet, tl.getSpriteTowerFast().get(0), tl.getSpriteTowerSlow().get(0), tl.getSpriteTowerZone().get(0), tl.getSpriteTowerVision().get(0));
         world.cheminEditor(170);
+        chargementMap();
     }
 
     @Override
@@ -252,10 +254,24 @@ public class EditorScreen extends ScreenAdapter {
         //
     }
 
-    //
+    private void chargementMap(){
+        trajet = _player.getChemin();
+        towers = _player.getTowers();
+        trajet.removeIndex(trajet.size-1);
+        for(Integer chemin : trajet){
+            world.cheminEditor(chemin);
+        }
+        for(Integer pos : towers.keySet()){
+            Integer type = towers.get(pos);
+            world.towerEditor(pos,type);
+        }
+    }
 
     private void selectButton(TextButton button, Array<TextButton> buttons) {
         for (TextButton b : buttons) {
+            if(button == buttons.first()){
+                button.setChecked(false);
+            }
             if (b != button)
                 b.setChecked(false);
         }
@@ -293,7 +309,7 @@ public class EditorScreen extends ScreenAdapter {
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
 
         if(numCell <= 175 && numCell >= 0 ){
-
+                System.out.println(numCell);
                 for (int i = 0; i < trajet.size; i++) {
                     if (numCell == trajet.get(i)) {
                         flag = false;
@@ -343,12 +359,12 @@ public class EditorScreen extends ScreenAdapter {
     private boolean verifChemin(){
         if(trajet.first() != 5&& trajet.peek() != 159){
             return false;
+        }else {
+            trajet.add(170);
+            _player.setChemin(trajet);
+            _player.setTowers(towers);
+            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
         }
-        trajet.add(170);
-        _player.setChemin(trajet);
-        _player.setTowers(towers);
-        towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
-
         return true;
     }
 
