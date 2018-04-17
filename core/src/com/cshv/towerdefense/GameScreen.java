@@ -48,8 +48,6 @@ import com.cshv.towerdefense.Spells.ZoneTowerSpell;
 import com.cshv.towerdefense.Towers.FastTower;
 import com.cshv.towerdefense.Towers.SlowTower;
 import com.cshv.towerdefense.Towers.Tower;
-import com.cshv.towerdefense.Towers.VisionTower;
-import com.cshv.towerdefense.Towers.ZoneTower;
 import com.cshv.towerdefense.Units.Chevalier;
 import com.cshv.towerdefense.Units.Fontaine;
 import com.cshv.towerdefense.Units.Healer;
@@ -57,6 +55,8 @@ import com.cshv.towerdefense.Units.Mage;
 import com.cshv.towerdefense.Units.Moine;
 import com.cshv.towerdefense.Units.Rogue;
 import com.cshv.towerdefense.Units.Unit;
+
+import java.util.HashMap;
 
 
 public class GameScreen extends ScreenAdapter {
@@ -115,38 +115,14 @@ public class GameScreen extends ScreenAdapter {
         lvlStage = _player.getLvlStage();
         tl = new TextureLoader(textureAtlas);
 
-        //static chemin
-        Array<Integer> trajet = new Array<Integer>();
-        for(int i=0 ; i<33 ; i+=11 ){
-            trajet.add(i);
-        }
-        for(int i = 33 ; i<43 ; i++){
-            trajet.add(i);
-        }
-        for(int i = 42 ; i<120 ; i+=11){
-            trajet.add(i);
-        }
-        for(int i = 118 ; i>110 ; i--){
-            trajet.add(i);
-        }
-        for(int i = 122 ; i<176 ; i+= 11){
-            trajet.add(i);
-        }
-
-        world = new World(tl.getSol(), tl.getChemin(), trajet);
+        world = new World(tl.getSol(), tl.getChemin(), _player.getChemin());
         chemin = world.getChemin();
         cells = new Cell[chemin.length];
         for(int i=0 ; i<chemin.length ; i++){
             cells[i] = new  Cell(i);
         }
         units.add(new Fontaine(tl.getSpriteFontaine(), this, _player.getLvlFontaine(), _player));
-
-        createTower(Tower.ZONE_TOWER,43);
-        createTower(Tower.ZONE_TOWER,110);
-        createTower(Tower.ZONE_TOWER,130);
-        createTower(Tower.SLOW_TOWER,26);
-
-        //createMob(10);
+        createTower();
 
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
         TextureRegion buttonUpTexture = tl.getButtonUp();
@@ -387,23 +363,24 @@ public class GameScreen extends ScreenAdapter {
         _player.depenserMana(depMana);
     }
 
-    private void createTower(int typeTower, int pos){
-
-        int type = typeTower;
-        int cell = pos;
-        switch (type){
-            case Tower.FAST_TOWER:
-                towers.add(new FastTower(tl.getSpriteTowerFast(), this, _player.getLvlFastTower(),world.getXcase(cell),world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
-                break;
-            case Tower.SLOW_TOWER:
-                towers.add(new SlowTower(tl.getSpriteTowerSlow(), this, _player.getLvlSlowTower(),world.getXcase(cell),world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
-                break;
-            case Tower.VISION_TOWER:
-                towers.add(new FastTower(tl.getSpriteTowerVision(), this, _player.getLvlVisionTower(),world.getXcase(cell),world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
-                break;
-            case Tower.ZONE_TOWER:
-                towers.add(new FastTower(tl.getSpriteTowerZone(), this, _player.getLvlZoneTower(),world.getXcase(cell),world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
-                break;
+    private void createTower(){
+        HashMap<Integer,Integer> towerSave = _player.getTowers();
+        for(Integer cell : towerSave.keySet()) {
+            int type = towerSave.get(cell);
+            switch (type) {
+                case Tower.FAST_TOWER:
+                    towers.add(new FastTower(tl.getSpriteTowerFast(), this, _player.getLvlFastTower(), world.getXcase(cell), world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
+                    break;
+                case Tower.SLOW_TOWER:
+                    towers.add(new SlowTower(tl.getSpriteTowerSlow(), this, _player.getLvlSlowTower(), world.getXcase(cell), world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
+                    break;
+                case Tower.VISION_TOWER:
+                    towers.add(new FastTower(tl.getSpriteTowerVision(), this, _player.getLvlVisionTower(), world.getXcase(cell), world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
+                    break;
+                case Tower.ZONE_TOWER:
+                    towers.add(new FastTower(tl.getSpriteTowerZone(), this, _player.getLvlZoneTower(), world.getXcase(cell), world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
+                    break;
+            }
         }
     }
 

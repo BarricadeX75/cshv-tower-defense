@@ -42,6 +42,8 @@ public class EditorScreen extends ScreenAdapter {
     private BitmapFont bitmapFont;
     private TextureAtlas textureAtlas;
     private TextureLoader tl;
+    private int nbTowerMax;
+    private int nbCellCheminMax;
 
     private Array<TextButton> uiButtons;
     private int editorState;
@@ -77,8 +79,10 @@ public class EditorScreen extends ScreenAdapter {
         textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         tl = new TextureLoader(textureAtlas);
         towers = new HashMap<Integer, Integer>();
-
+        nbTowerMax = 4 + (_player.getLvlFontaine()/5);
+        nbCellCheminMax = 15 + (_player.getLvlFontaine()/2);
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
+
         uiStage = new Stage(viewport) {
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
@@ -284,7 +288,7 @@ public class EditorScreen extends ScreenAdapter {
 
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
 
-        if(numCell <= 165 && numCell >= 11 ){
+        if(numCell <= 165 && numCell >= 11 && trajet.size < nbCellCheminMax){
             if (trajet.peek() + 11 == numCell || trajet.peek() - 11 == numCell || trajet.peek() + 1 == numCell || trajet.peek() - 1 == numCell) {
                 for (int i = 0; i < trajet.size; i++) {
                     if (numCell == trajet.get(i)) {
@@ -308,8 +312,8 @@ public class EditorScreen extends ScreenAdapter {
 
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
 
-        if(numCell <= 175 && numCell >= 0 ){
-                System.out.println(numCell);
+        if(numCell <= 175 && numCell >= 0 && towers.size() < nbTowerMax){
+
                 for (int i = 0; i < trajet.size; i++) {
                     if (numCell == trajet.get(i)) {
                         flag = false;
@@ -357,7 +361,7 @@ public class EditorScreen extends ScreenAdapter {
     }
 
     private boolean verifChemin(){
-        if(trajet.first() != 5&& trajet.peek() != 159){
+        if(trajet.peek() != 159){
             return false;
         }else {
             trajet.add(170);
