@@ -13,10 +13,12 @@ import com.badlogic.gdx.net.HttpParametersUtils;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -57,7 +59,15 @@ public class LoginScreen extends ScreenAdapter {
 
         TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         TextureLoader tl = new TextureLoader(textureAtlas);
-        BitmapFont bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
+        final BitmapFont bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
+
+        /////////////////////////////////////////  STYLES  /////////////////////////////////////////
+        TextureRegion dialogBackground = new TextureRegion(new Texture(Gdx.files.internal("dialogBackground.png"))); //tl.getDialogBackground();
+        Window.WindowStyle windowStyle = new Window.WindowStyle(
+                bitmapFont,
+                Color.WHITE,
+                new TextureRegionDrawable(dialogBackground)
+        );
 
         TextureRegion buttonUpTexture = tl.getButtonUp();
         TextureRegion buttonDownTexture = tl.getButtonDown();
@@ -68,7 +78,7 @@ public class LoginScreen extends ScreenAdapter {
                 bitmapFont
         );
 
-        TextureRegion caretTexture = new TextureRegion(new Texture(Gdx.files.internal("caret.png")));
+        TextureRegion caretTexture = new TextureRegion(new Texture(Gdx.files.internal("caret.png"))); //tl.getCaret();
         TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle(
                 bitmapFont,
                 Color.WHITE,
@@ -78,49 +88,150 @@ public class LoginScreen extends ScreenAdapter {
         );
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
-        Table table = new Table();
-        table.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT / 2);
+        ///////////////////////////////////////  CONNEXION  ////////////////////////////////////////
+        Table connectTable = new Table();
+        connectTable.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT / 2);
 
         float padding = 10f;
 
-        Label loginLabel = new Label("Login :", labelStyle);
-        table.add(loginLabel).padBottom(padding);
+        final Label loginLabel = new Label("Login :", labelStyle);
+        connectTable.add(loginLabel).padBottom(padding);
 
-        table.row();
+        connectTable.row();
 
-        TextField loginTextField = new TextField("", textFieldStyle);
+        final TextField loginTextField = new TextField("", textFieldStyle);
         loginTextField.setAlignment(Align.center);
         loginTextField.setMaxLength(12);
-        table.add(loginTextField).padBottom(padding*2);
+        connectTable.add(loginTextField).padBottom(padding*2);
 
-        table.row();
+        connectTable.row();
 
         Label mdpLabel = new Label("Mot de passe :", labelStyle);
-        table.add(mdpLabel).padBottom(padding);
+        connectTable.add(mdpLabel).padBottom(padding);
 
-        table.row();
+        connectTable.row();
 
-        TextField mdpTextField = new TextField("", textFieldStyle);
-        mdpTextField.setMaxLength(20);
+        final TextField mdpTextField = new TextField("", textFieldStyle);
         mdpTextField.setAlignment(Align.center);
+        mdpTextField.setMaxLength(20);
         mdpTextField.setPasswordMode(true);
         mdpTextField.setPasswordCharacter('*');
-        table.add(mdpTextField).padBottom(padding*2);
+        connectTable.add(mdpTextField).padBottom(padding*2);
 
-        table.row();
+        connectTable.row();
 
         TextButton connectButton = new TextButton("Connexion", textButtonStyle);
         connectButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //
+                connect(loginTextField.getText(), mdpTextField.getText());
             }
         });
-        table.add(connectButton).padTop(padding*2).colspan(2);
+        connectTable.add(connectButton).padTop(padding*2);
 
-        stage.addActor(table);
+        stage.addActor(connectTable);
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////  CRÉATION DE COMPTE  ///////////////////////////////////
+        float leftPadding = 60f;
+        float scaling = 0.6f;
+
+        final Dialog createAccountDialog = new Dialog("Créer un compte", windowStyle);
+        createAccountDialog.setModal(true);
+        createAccountDialog.setMovable(false);
+        createAccountDialog.setResizable(false);
+        createAccountDialog.getTitleTable().padLeft(leftPadding).padTop(0f);
+        createAccountDialog.getTitleTable().setTransform(true);
+        createAccountDialog.getTitleTable().setScale(scaling);
+        createAccountDialog.getContentTable().padLeft(leftPadding);
+        createAccountDialog.getContentTable().setTransform(true);
+        createAccountDialog.getContentTable().setScale(scaling);
+        createAccountDialog.getButtonTable().padLeft(leftPadding);
+        createAccountDialog.getButtonTable().setTransform(true);
+        createAccountDialog.getButtonTable().setScale(scaling);
+
+        Label dialogLoginLabel = new Label("Login :", labelStyle);
+        createAccountDialog.getContentTable().add(dialogLoginLabel).align(Align.right);
+
+        final TextField dialogLoginTextField = new TextField("", textFieldStyle);
+        dialogLoginTextField.setAlignment(Align.left);
+        dialogLoginTextField.setMaxLength(12);
+        createAccountDialog.getContentTable().add(dialogLoginTextField).padLeft(padding).align(Align.left);
+
+        createAccountDialog.getContentTable().row();
+
+        Label dialogMdpLabel = new Label("Mot de passe :", labelStyle);
+        createAccountDialog.getContentTable().add(dialogMdpLabel).align(Align.right);
+
+        final TextField dialogMdpTextField = new TextField("", textFieldStyle);
+        dialogMdpTextField.setAlignment(Align.left);
+        dialogMdpTextField.setMaxLength(20);
+        dialogMdpTextField.setPasswordMode(true);
+        dialogMdpTextField.setPasswordCharacter('*');
+        createAccountDialog.getContentTable().add(dialogMdpTextField).padLeft(padding).align(Align.left);
+
+        createAccountDialog.getContentTable().row();
+
+        Label dialogConfirmationLabel = new Label("Confirmation :", labelStyle);
+        createAccountDialog.getContentTable().add(dialogConfirmationLabel).align(Align.right);
+
+        final TextField dialogConfirmationTextField = new TextField("", textFieldStyle);
+        dialogConfirmationTextField.setAlignment(Align.left);
+        dialogConfirmationTextField.setMaxLength(20);
+        dialogConfirmationTextField.setPasswordMode(true);
+        dialogConfirmationTextField.setPasswordCharacter('*');
+        createAccountDialog.getContentTable().add(dialogConfirmationTextField).padLeft(padding).align(Align.left);
+
+        createAccountDialog.getContentTable().row();
+
+        Label dialogNomLabel = new Label("Nom de joueur :", labelStyle);
+        createAccountDialog.getContentTable().add(dialogNomLabel).align(Align.right);
+
+        final TextField dialogNomTextField = new TextField("", textFieldStyle);
+        dialogNomTextField.setAlignment(Align.left);
+        dialogNomTextField.setMaxLength(12);
+        createAccountDialog.getContentTable().add(dialogNomTextField).padLeft(padding).align(Align.left);
+
+        TextButton dialogCancelButton = new TextButton("Annuler", textButtonStyle);
+        dialogCancelButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                dialogLoginTextField.setText("");
+                dialogMdpTextField.setText("");
+                dialogConfirmationTextField.setText("");
+                dialogNomTextField.setText("");
+                createAccountDialog.hide();
+            }
+        });
+        createAccountDialog.getButtonTable().add(dialogCancelButton).pad(padding);
+
+        TextButton dialogConfirmButton = new TextButton("OK", textButtonStyle);
+        dialogConfirmButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                createAccount(dialogLoginTextField.getText(), dialogMdpTextField.getText(),
+                        dialogConfirmationTextField.getText(), dialogNomTextField.getText());
+            }
+        });
+        createAccountDialog.getButtonTable().add(dialogConfirmButton).pad(padding);
+
+        TextButton createAccountButton = new TextButton("Créer un compte", textButtonStyle);
+        createAccountButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                stage.addActor(createAccountDialog);
+                createAccountDialog.show(stage);
+            }
+        });
+        createAccountButton.setPosition(WORLD_WIDTH / 2, createAccountButton.getHeight(), Align.center);
+        stage.addActor(createAccountButton);
+        ////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     @Override
@@ -148,7 +259,13 @@ public class LoginScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
-    //
+    private void connect(String login, String mdp) {
+        //
+    }
+
+    private void createAccount(String login, String mdp, String confirmation, String nom) {
+        //
+    }
 
     public void requestBdGetPlayer(String login, String mdp){
         Map<String, String> parameters = new HashMap<String, String>();

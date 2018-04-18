@@ -129,6 +129,9 @@ public class TextureLoader {
     private Array<TextureRegion> controleTexture;
 
 
+
+
+    private TextureRegion caret, dialogBackground;
     private TextureRegion buttonUp, buttonDown;
     private TextureRegion barBack, barRed, barBlue;
 
@@ -599,6 +602,14 @@ public class TextureLoader {
         return barBlue;
     }
 
+    public TextureRegion getCaret() {
+        return caret;
+    }
+
+    public TextureRegion getDialogBackground() {
+        return dialogBackground;
+    }
+
     private void initTextures() {
         sol = new Array<TextureRegion>();
         for(int i=0 ; i<1 ; i++){
@@ -616,6 +627,9 @@ public class TextureLoader {
         for(int i=1; i<2 ; i++){
             projectile.add(textureAtlas.findRegion("projectile"+i));
         }
+
+        //caret = textureAtlas.findRegion("caret");
+        //dialogBackground = textureAtlas.findRegion("dialogBackground");
 
         buttonUp = textureAtlas.findRegion("buttonUp");
         buttonDown = textureAtlas.findRegion("buttonDown");
