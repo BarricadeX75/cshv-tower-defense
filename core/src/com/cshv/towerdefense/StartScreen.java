@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -132,7 +133,7 @@ public class StartScreen extends ScreenAdapter {
         parameters.put("pseudo", login);
         parameters.put("mdp", mdp);
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url("http://10.16.0.31/harriSpaceWarrior/setData.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
+        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url("http://10.16.0.74/towerDefence/getData.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
         Gdx.net.sendHttpRequest (httpRequest, new Net.HttpResponseListener() {
 
             @Override
@@ -159,7 +160,66 @@ public class StartScreen extends ScreenAdapter {
 
             @Override
             public void failed(Throwable t) {
-                System.out.println("fail");
+                Gdx.app.log("error","fail");
+                t.printStackTrace();
+            }
+
+            @Override
+            public void cancelled() {
+                Gdx.app.log("NetAPITest", "HTTP request cancelled");
+            }
+        });
+    }
+
+    public void requestBdPostPlayer(String login, String mdp){
+        Map<String, String> parameters = new HashMap<String, String>();
+        parameters.put("login", login);
+        parameters.put("mdp", mdp);
+        parameters.put("nom",_player.getNom());
+        parameters.put("lvlStage",Integer.toString(_player.getLvlStage()));
+        parameters.put("gold",Integer.toString(_player.getGold()));
+        parameters.put("lvlFastTower", Integer.toString(_player.getLvlStage()));
+        parameters.put("lvlZoneTower", Integer.toString(_player.getLvlStage()));
+        parameters.put("lvlSlowTower",Integer.toString(_player.getLvlStage()));
+        parameters.put("lvlVisionTower",Integer.toString(_player.getLvlStage()));
+        parameters.put("lvlChevalier",Integer.toString(_player.getLvlStage()));
+        parameters.put("lvlHealer",Integer.toString(_player.getLvlStage()));
+        parameters.put("lvlMage",Integer.toString(_player.getLvlStage()));
+        parameters.put("lvlRogue",Integer.toString(_player.getLvlStage()));
+        parameters.put("lvlMoine",Integer.toString(_player.getLvlStage()));
+        parameters.put("lvlFontaine",Integer.toString(_player.getLvlStage()));
+        parameters.put("chemin",_player.getCheminString());
+        parameters.put("posTowers",_player.getTowersString());
+        parameters.put("date",Long.toString(_player.getDate()));
+        HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
+        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.POST).url("http://10.16.0.74/towerDefence/sendData.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
+        Gdx.net.sendHttpRequest (httpRequest, new Net.HttpResponseListener() {
+
+            @Override
+            public void handleHttpResponse(Net.HttpResponse httpResponse) {
+
+                final int statusCode = httpResponse.getStatus().getStatusCode();
+                // We are not in main thread right now so we need to post to main thread for ui updates
+
+                if (statusCode != 200) {
+                    Gdx.app.log("NetAPITest", "An error ocurred since statusCode is not OK");
+
+                    return;
+                }
+                String JSONTxt = httpResponse.getResultAsString();
+                playerJsons = new Array<PlayerJson>();
+                Json json = new Json();
+                ArrayList<JsonValue> list = json.fromJson(ArrayList.class, JSONTxt);
+                for (JsonValue v : list) {
+                    playerJsons.add(json.readValue(PlayerJson.class,v));
+                }
+
+
+            }
+
+            @Override
+            public void failed(Throwable t) {
+                Gdx.app.log("error","fail");
                 t.printStackTrace();
             }
 

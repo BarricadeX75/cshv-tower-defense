@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -27,7 +28,15 @@ public class CharacsScreen extends ScreenAdapter {
 
     private Stage stage;
     private Player _player;
-    private int upgrage[] = new int[9];
+    private int upgrage[] = new int[10];
+    private int goldtempo;
+    private Label labelCout[] = new Label[10];
+    private Label labelLvl[] = new Label[10];
+    private Label labelGold;
+    private TextureRegion img[];
+    private int depence = 0;
+    private int cout[];
+    private int lvl[];
 
     private final TowerDefenseGame towerDefenseGame;
 
@@ -44,22 +53,65 @@ public class CharacsScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
 
         TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
-        TextureLoader tl = new TextureLoader(textureAtlas);
+        final TextureLoader tl = new TextureLoader(textureAtlas);
         BitmapFont bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
 
         TextureRegion buttonRightTexture = tl.getFlecheTexture().get(1);
         TextureRegion buttonLeftTexture = tl.getFlecheTexture().get(0);
         TextureRegion validateButton = tl.getControleTexture().get(0);
         TextureRegion cancelButton = tl.getControleTexture().get(1);
+        goldtempo = _player.getGold();
+        cout = new int[] {40,40,40,40,40,80,80,80,80,120};
+        int numSpriteFontaine = _player.getLvlFontaine();
+        if(numSpriteFontaine/10 > 3){
+            numSpriteFontaine = 3;
+        }else{
+            numSpriteFontaine = numSpriteFontaine/10;
+        }
 
-        for(int i=0 ; i<9 ; i++){
+        int numSpriteTowerZone = _player.getLvlZoneTower();
+        if(numSpriteTowerZone/10 > 3){
+            numSpriteTowerZone = 3;
+        }else{
+            numSpriteTowerZone = numSpriteTowerZone/10;
+        }
+
+        int numSpriteTowerSlow = _player.getLvlSlowTower();
+        if(numSpriteTowerSlow/10 > 3){
+            numSpriteTowerSlow = 3;
+        }else{
+            numSpriteTowerSlow = numSpriteTowerSlow/10;
+        }
+
+        int numSpriteTowerFast = _player.getLvlFastTower();
+        if(numSpriteTowerFast/10 > 3){
+            numSpriteTowerFast = 3;
+        }else{
+            numSpriteTowerFast = numSpriteTowerFast/10;
+        }
+
+        int numSpriteTowerVision = _player.getLvlVisionTower();
+        if(numSpriteTowerVision/10 > 3){
+            numSpriteTowerVision = 3;
+        }else{
+            numSpriteTowerVision = numSpriteTowerVision/10;
+        }
+
+        img = new TextureRegion[] { tl.getUnitChevalierDown().get(0), tl.getUnitMageDown().get(0), tl.getUnitMoineDown().get(0),tl.getUnitRogueDown().get(0),
+                tl.getUnitHealerDown().get(0), tl.getSpriteTowerFast().get(numSpriteTowerFast), tl.getSpriteTowerSlow().get(numSpriteTowerSlow),
+                tl.getSpriteTowerZone().get(numSpriteTowerZone), tl.getSpriteTowerVision().get(numSpriteTowerVision), tl.getSpriteFontaine().get(numSpriteFontaine)};
+        lvl = new int[] { _player.getLvlChevalier(), _player.getLvlMage(), _player.getLvlMoine(), _player.getLvlRogue(),
+                _player.getLvlHealer(), _player.getLvlFastTower(), _player.getLvlSlowTower(), _player.getLvlZoneTower(), _player.getLvlVisionTower(), _player.getLvlFontaine()};
+
+
+        for(int i=0 ; i<10 ; i++){
             upgrage[i] = 0;
         }
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
+        Label.LabelStyle labelStyleGold = new Label.LabelStyle(bitmapFont, Color.WHITE);
+        Label.LabelStyle labelStyleDepence = new Label.LabelStyle(bitmapFont, Color.RED);
         float nameScale = 0.5f;
-        float textScale = 0.4f;
-        float padding = 55f;
+        float padding = 50f;
         Gdx.input.setInputProcessor(stage);
 
         ImageButton moinChevalier = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonLeftTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonLeftTexture ) ) );
@@ -70,8 +122,7 @@ public class CharacsScreen extends ScreenAdapter {
                 downgradeUnit(Unit.CHEVALIER);
             }
         });
-        moinChevalier.setPosition( ( 2* WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding  , Align.center );
-        moinChevalier.setBounds( moinChevalier.getX() , moinChevalier.getY() , moinChevalier.getWidth() / 2 , moinChevalier.getHeight() / 2 );
+        moinChevalier.setPosition( ( WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding  , Align.center );
         stage.addActor( moinChevalier );
         ImageButton plusChevalier = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonRightTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonRightTexture ) ) );
         plusChevalier.addListener(new ActorGestureListener() {
@@ -82,8 +133,29 @@ public class CharacsScreen extends ScreenAdapter {
             }
         });
         plusChevalier.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding  , Align.center );
-        plusChevalier.setBounds( plusChevalier.getX() , plusChevalier.getY() , plusChevalier.getWidth() / 2 , plusChevalier.getHeight() / 2 );
         stage.addActor( plusChevalier );
+
+
+        ImageButton moinMage = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonLeftTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonLeftTexture ) ) );
+        moinMage.addListener(new ActorGestureListener() {
+            @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                super.tap(event, x, y, count, button);
+                downgradeUnit(Unit.MAGE);
+            }
+        });
+        moinMage.setPosition( ( WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*2  , Align.center );
+        stage.addActor( moinMage );
+        ImageButton plusMage = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonRightTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonRightTexture ) ) );
+        plusMage.addListener(new ActorGestureListener() {
+            @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                super.tap(event, x, y, count, button);
+                upgradeUnit(Unit.MAGE);
+            }
+        });
+        plusMage.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*2  , Align.center );
+        stage.addActor( plusMage );
 
 
         ImageButton moinMoine = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonLeftTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonLeftTexture ) ) );
@@ -94,8 +166,7 @@ public class CharacsScreen extends ScreenAdapter {
                 downgradeUnit(Unit.MOINE);
             }
         });
-        moinMoine.setPosition( ( 2* WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*2  , Align.center );
-        moinMoine.setBounds( moinMoine.getX() , moinMoine.getY() , moinMoine.getWidth() / 2 , moinMoine.getHeight() / 2 );
+        moinMoine.setPosition( ( WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*3  , Align.center );
         stage.addActor( moinMoine );
         ImageButton plusMoine = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonRightTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonRightTexture ) ) );
         plusMoine.addListener(new ActorGestureListener() {
@@ -105,8 +176,7 @@ public class CharacsScreen extends ScreenAdapter {
                 upgradeUnit(Unit.MOINE);
             }
         });
-        plusMoine.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*2  , Align.center );
-        plusMoine.setBounds( plusMoine.getX() , plusMoine.getY() , plusMoine.getWidth() / 2 , plusMoine.getHeight() / 2 );
+        plusMoine.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*3  , Align.center );
         stage.addActor( plusMoine );
 
 
@@ -118,8 +188,7 @@ public class CharacsScreen extends ScreenAdapter {
                 downgradeUnit(Unit.ROGUE);
             }
         });
-        moinRogue.setPosition( ( 2* WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*3  , Align.center );
-        moinRogue.setBounds( moinRogue.getX() , moinRogue.getY() , moinRogue.getWidth() / 2 , moinRogue.getHeight() / 2 );
+        moinRogue.setPosition( ( WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*4  , Align.center );
         stage.addActor( moinRogue );
         ImageButton plusRogue = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonRightTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonRightTexture ) ) );
         plusRogue.addListener(new ActorGestureListener() {
@@ -129,32 +198,9 @@ public class CharacsScreen extends ScreenAdapter {
                 upgradeUnit(Unit.ROGUE);
             }
         });
-        plusRogue.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*3  , Align.center );
-        plusRogue.setBounds( plusRogue.getX() , plusRogue.getY() , plusRogue.getWidth() / 2 , plusRogue.getHeight() / 2 );
+        plusRogue.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*4  , Align.center );
         stage.addActor( plusRogue );
 
-        ImageButton moinMage = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonLeftTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonLeftTexture ) ) );
-        moinMage.addListener(new ActorGestureListener() {
-            @Override
-            public void tap(InputEvent event, float x, float y, int count, int button) {
-                super.tap(event, x, y, count, button);
-                downgradeUnit(Unit.MAGE);
-            }
-        });
-        moinMage.setPosition( ( 2* WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*4  , Align.center );
-        moinMage.setBounds( moinMage.getX() , moinMage.getY() , moinMage.getWidth() / 2 , moinMage.getHeight() / 2 );
-        stage.addActor( moinMage );
-        ImageButton plusMage = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonRightTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonRightTexture ) ) );
-        plusMage.addListener(new ActorGestureListener() {
-            @Override
-            public void tap(InputEvent event, float x, float y, int count, int button) {
-                super.tap(event, x, y, count, button);
-                upgradeUnit(Unit.MAGE);
-            }
-        });
-        plusMage.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*4  , Align.center );
-        plusMage.setBounds( plusMage.getX() , plusMage.getY() , plusMage.getWidth() / 2 , plusMage.getHeight() / 2 );
-        stage.addActor( plusMage );
 
         ImageButton moinHeal = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonLeftTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonLeftTexture ) ) );
         moinHeal.addListener(new ActorGestureListener() {
@@ -164,8 +210,7 @@ public class CharacsScreen extends ScreenAdapter {
                 downgradeUnit(Unit.HEALER);
             }
         });
-        moinHeal.setPosition( ( 2* WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*5  , Align.center );
-        moinHeal.setBounds( moinHeal.getX() , moinHeal.getY() , moinHeal.getWidth() / 2 , moinHeal.getHeight() / 2 );
+        moinHeal.setPosition( ( WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*5  , Align.center );
         stage.addActor( moinHeal );
         ImageButton plusHeale = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonRightTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonRightTexture ) ) );
         plusHeale.addListener(new ActorGestureListener() {
@@ -176,54 +221,8 @@ public class CharacsScreen extends ScreenAdapter {
             }
         });
         plusHeale.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*5  , Align.center );
-        plusHeale.setBounds( plusHeale.getX() , plusHeale.getY() , plusHeale.getWidth() / 2 , plusHeale.getHeight() / 2 );
         stage.addActor( plusHeale );
 
-        ImageButton zoneTowerMoin = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonLeftTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonLeftTexture ) ) );
-        zoneTowerMoin.addListener(new ActorGestureListener() {
-            @Override
-            public void tap(InputEvent event, float x, float y, int count, int button) {
-                super.tap(event, x, y, count, button);
-                downgradeTower(Tower.ZONE_TOWER);
-            }
-        });
-        zoneTowerMoin.setPosition( ( 2* WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*6  , Align.center );
-        zoneTowerMoin.setBounds( zoneTowerMoin.getX() , zoneTowerMoin.getY() , zoneTowerMoin.getWidth() / 2 , zoneTowerMoin.getHeight() / 2 );
-        stage.addActor( zoneTowerMoin );
-        ImageButton zoneTowerPlus = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonRightTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonRightTexture ) ) );
-        zoneTowerPlus.addListener(new ActorGestureListener() {
-            @Override
-            public void tap(InputEvent event, float x, float y, int count, int button) {
-                super.tap(event, x, y, count, button);
-                upgradeTower(Tower.ZONE_TOWER);
-            }
-        });
-        zoneTowerPlus.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*6  , Align.center );
-        zoneTowerPlus.setBounds( zoneTowerPlus.getX() , zoneTowerPlus.getY() , zoneTowerPlus.getWidth() / 2 , zoneTowerPlus.getHeight() / 2 );
-        stage.addActor( zoneTowerPlus );
-
-        ImageButton visionTowerMoin = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonLeftTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonLeftTexture ) ) );
-        visionTowerMoin.addListener(new ActorGestureListener() {
-            @Override
-            public void tap(InputEvent event, float x, float y, int count, int button) {
-                super.tap(event, x, y, count, button);
-                downgradeTower(Tower.VISION_TOWER);
-            }
-        });
-        visionTowerMoin.setPosition( ( 2* WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*7  , Align.center );
-        visionTowerMoin.setBounds( visionTowerMoin.getX() , visionTowerMoin.getY() , visionTowerMoin.getWidth() / 2 , visionTowerMoin.getHeight() / 2 );
-        stage.addActor( visionTowerMoin );
-        ImageButton visionTowerPlus = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonRightTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonRightTexture ) ) );
-        visionTowerPlus.addListener(new ActorGestureListener() {
-            @Override
-            public void tap(InputEvent event, float x, float y, int count, int button) {
-                super.tap(event, x, y, count, button);
-                upgradeTower(Tower.VISION_TOWER);
-            }
-        });
-        visionTowerPlus.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*7  , Align.center );
-        visionTowerPlus.setBounds( visionTowerPlus.getX() , visionTowerPlus.getY() , visionTowerPlus.getWidth() / 2 , visionTowerPlus.getHeight() / 2 );
-        stage.addActor( visionTowerPlus );
 
         ImageButton fastTowerMoin = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonLeftTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonLeftTexture ) ) );
         fastTowerMoin.addListener(new ActorGestureListener() {
@@ -233,8 +232,7 @@ public class CharacsScreen extends ScreenAdapter {
                 downgradeTower(Tower.FAST_TOWER);
             }
         });
-        fastTowerMoin.setPosition( ( 2* WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*8  , Align.center );
-        fastTowerMoin.setBounds( fastTowerMoin.getX() , fastTowerMoin.getY() , fastTowerMoin.getWidth() / 2 , fastTowerMoin.getHeight() / 2 );
+        fastTowerMoin.setPosition( ( WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*6  , Align.center );
         stage.addActor( fastTowerMoin );
         ImageButton fastTowerPlus = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonRightTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonRightTexture ) ) );
         fastTowerPlus.addListener(new ActorGestureListener() {
@@ -244,9 +242,9 @@ public class CharacsScreen extends ScreenAdapter {
                 upgradeTower(Tower.FAST_TOWER);
             }
         });
-        fastTowerPlus.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*8  , Align.center );
-        fastTowerPlus.setBounds( fastTowerPlus.getX() , fastTowerPlus.getY() , fastTowerPlus.getWidth() / 2 , fastTowerPlus.getHeight() / 2 );
+        fastTowerPlus.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*6  , Align.center );
         stage.addActor( fastTowerPlus );
+
 
         ImageButton slowTowerMoin = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonLeftTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonLeftTexture ) ) );
         slowTowerMoin.addListener(new ActorGestureListener() {
@@ -256,8 +254,7 @@ public class CharacsScreen extends ScreenAdapter {
                 downgradeTower(Tower.SLOW_TOWER);
             }
         });
-        slowTowerMoin.setPosition( ( 2* WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*9  , Align.center );
-        slowTowerMoin.setBounds( slowTowerMoin.getX() , slowTowerMoin.getY() , slowTowerMoin.getWidth() / 2 , slowTowerMoin.getHeight() / 2 );
+        slowTowerMoin.setPosition( ( WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*7 , Align.center );
         stage.addActor( slowTowerMoin );
         ImageButton slowTowerPlus = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonRightTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonRightTexture ) ) );
         slowTowerPlus.addListener(new ActorGestureListener() {
@@ -267,33 +264,125 @@ public class CharacsScreen extends ScreenAdapter {
                 upgradeTower(Tower.SLOW_TOWER);
             }
         });
-        slowTowerPlus.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*9  , Align.center );
-        slowTowerPlus.setBounds( slowTowerPlus.getX() , slowTowerPlus.getY() , slowTowerPlus.getWidth() / 2 , slowTowerPlus.getHeight() / 2 );
+        slowTowerPlus.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*7 , Align.center );
         stage.addActor( slowTowerPlus );
+
+
+        ImageButton zoneTowerMoin = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonLeftTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonLeftTexture ) ) );
+        zoneTowerMoin.addListener(new ActorGestureListener() {
+            @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                super.tap(event, x, y, count, button);
+                downgradeTower(Tower.ZONE_TOWER);
+            }
+        });
+        zoneTowerMoin.setPosition( ( WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*8 , Align.center );
+        stage.addActor( zoneTowerMoin );
+        ImageButton zoneTowerPlus = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonRightTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonRightTexture ) ) );
+        zoneTowerPlus.addListener(new ActorGestureListener() {
+            @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                super.tap(event, x, y, count, button);
+                upgradeTower(Tower.ZONE_TOWER);
+            }
+        });
+        zoneTowerPlus.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*8 , Align.center );
+        stage.addActor( zoneTowerPlus );
+
+
+        ImageButton visionTowerMoin = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonLeftTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonLeftTexture ) ) );
+        visionTowerMoin.addListener(new ActorGestureListener() {
+            @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                super.tap(event, x, y, count, button);
+                downgradeTower(Tower.VISION_TOWER);
+            }
+        });
+        visionTowerMoin.setPosition( ( WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*9 , Align.center );
+        stage.addActor( visionTowerMoin );
+        ImageButton visionTowerPlus = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonRightTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonRightTexture ) ) );
+        visionTowerPlus.addListener(new ActorGestureListener() {
+            @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                super.tap(event, x, y, count, button);
+                upgradeTower(Tower.VISION_TOWER);
+            }
+        });
+        visionTowerPlus.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*9 , Align.center );
+        stage.addActor( visionTowerPlus );
+
+        ImageButton fontaineMoins = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonLeftTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonLeftTexture ) ) );
+        fontaineMoins.addListener(new ActorGestureListener() {
+            @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                super.tap(event, x, y, count, button);
+                upgradeUnit(10);
+            }
+        });
+        fontaineMoins.setPosition( ( WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*10  , Align.center );
+        stage.addActor( fontaineMoins );
+        ImageButton fontainePlus = new ImageButton(new TextureRegionDrawable(new TextureRegion( buttonRightTexture ) ), new TextureRegionDrawable( new TextureRegion( buttonRightTexture ) ) );
+        fontainePlus.addListener(new ActorGestureListener() {
+            @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                super.tap(event, x, y, count, button);
+                downgradeUnit(10);
+            }
+        });
+        fontainePlus.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*10  , Align.center );
+        stage.addActor( fontainePlus );
 
         ImageButton valid = new ImageButton(new TextureRegionDrawable(new TextureRegion( validateButton ) ), new TextureRegionDrawable( new TextureRegion( validateButton ) ) );
         valid.addListener(new ActorGestureListener() {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
+                for(int i=0 ; i<10 ; i++){
+                    _player.addStat(upgrage[i],i);
+                }
+                _player.setGold(_player.getGold()-depence);
+                towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
 
             }
         });
-        valid.setPosition( ( 3* WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*10  , Align.center );
-        valid.setBounds( valid.getX() , valid.getY() , valid.getWidth() / 2 , valid.getHeight() / 2 );
+        valid.setPosition( ( 3* WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*11  , Align.center );
         stage.addActor( valid );
         ImageButton cancel = new ImageButton(new TextureRegionDrawable(new TextureRegion( cancelButton ) ), new TextureRegionDrawable( new TextureRegion( cancelButton ) ) );
         cancel.addListener(new ActorGestureListener() {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
-
+                towerDefenseGame.setScreen(new StartScreen(towerDefenseGame,_player));
+                dispose();
             }
         });
-        cancel.setPosition( (( 6 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*10  , Align.center );
-        cancel.setBounds( cancel.getX() , cancel.getY() , cancel.getWidth() / 2 , cancel.getHeight() / 2 );
+        cancel.setPosition( (( 5 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*11  , Align.center );
         stage.addActor( cancel );
 
+        for(int i=0 ; i<10 ; i++){
+            labelCout[i] = new Label("("+(int)(cout[i]*Math.pow(1.2,lvl[i]-1))+"G)", labelStyleDepence);
+            labelCout[i].setFontScale(nameScale);
+            labelCout[i].setPosition(((5*WORLD_WIDTH)/8)+20, WORLD_HEIGHT-padding*(i+1), Align.center);
+            stage.addActor(labelCout[i]);
+        }
+
+        for(int i=0 ; i<10 ; i++){
+            Image image = new Image(img[i]);
+            image.setPosition(((4*WORLD_WIDTH)/8)-5, WORLD_HEIGHT-padding*(i+1)-2, Align.center);
+            stage.addActor(image);
+        }
+
+        for(int i=0 ; i<10 ; i++){
+            labelLvl[i] = new Label("Lvl: "+lvl[i], labelStyleGold);
+            labelLvl[i].setFontScale(nameScale);
+            labelLvl[i].setPosition(((3*WORLD_WIDTH)/8), WORLD_HEIGHT-padding*(i+1)-2, Align.center);
+            stage.addActor(labelLvl[i]);
+        }
+
+        labelGold = new Label( "Gold: "+goldtempo, labelStyleGold);
+        labelGold.setFontScale(nameScale);
+        labelGold.setPosition(((4*WORLD_WIDTH)/8)+20, WORLD_HEIGHT-20, Align.center);
+        stage.addActor(labelGold);
     }
 
     @Override
@@ -306,6 +395,7 @@ public class CharacsScreen extends ScreenAdapter {
     public void render(float delta) {
         super.render(delta);
         clearScreen();
+        update();
         stage.act(delta);
         stage.draw();
     }
@@ -322,87 +412,43 @@ public class CharacsScreen extends ScreenAdapter {
     }
 
     private void upgradeUnit(int unit){
-        switch (unit){
-            case Unit.CHEVALIER: upgrage[unit-1]++;
-                break;
-            case Unit.MOINE: upgrage[unit-1]++;
-                break;
-            case Unit.MAGE: upgrage[unit-1]++;
-                break;
-            case Unit.HEALER: upgrage[unit-1]++;
-                break;
-            case Unit.ROGUE: upgrage[unit-1]++;
-                break;
+        if(goldtempo >= (int)((cout[unit-1]*Math.pow(1.15,lvl[unit-1]-1))*Math.pow(1.15,upgrage[unit-1]))){
+            upgrage[unit - 1]++;
         }
+
     }
 
     public void upgradeTower(int tower){
-        switch (tower){
-            case Tower.FAST_TOWER: upgrage[tower+4]++;
-                break;
-            case Tower.SLOW_TOWER: upgrage[tower+4]++;
-                break;
-            case Tower.ZONE_TOWER: upgrage[tower+4]++;
-                break;
-            case Tower.VISION_TOWER: upgrage[tower+4]++;
-                break;
+        if(goldtempo >= (int)((cout[tower+4]*Math.pow(1.15,lvl[tower+4]-1))*Math.pow(1.15,upgrage[tower+4]))){
+            upgrage[tower+4]++;
         }
     }
 
     private void downgradeUnit(int unit){
-        switch (unit){
-            case Unit.CHEVALIER:
-                if(upgrage[unit-1]>0){
-                    upgrage[unit-1]--;
-                }
-                break;
-            case Unit.MOINE:
-                if(upgrage[unit-1]>0){
-                    upgrage[unit-1]--;
-                }
-                break;
-            case Unit.MAGE:
-                if(upgrage[unit-1]>0){
-                    upgrage[unit-1]--;
-                }
-                break;
-            case Unit.HEALER:
-                if(upgrage[unit-1]>0){
-                    upgrage[unit-1]--;
-                }
-                break;
-            case Unit.ROGUE:
-                if(upgrage[unit-1]>0){
-                    upgrage[unit-1]--;
-                }
-                break;
+        if(upgrage[unit-1]>0){
+            upgrage[unit-1]--;
         }
     }
 
     public void downgradeTower(int tower){
-        switch (tower){
-            case Tower.FAST_TOWER:
-                if(upgrage[tower+4]>0) {
-                    upgrage[tower + 4]--;
-                }
-                break;
-            case Tower.SLOW_TOWER:
-                if(upgrage[tower+4]>0) {
-                    upgrage[tower + 4]--;
-                }
-                break;
-            case Tower.ZONE_TOWER:
-                if(upgrage[tower+4]>0) {
-                    upgrage[tower + 4]--;
-                }
-                break;
-            case Tower.VISION_TOWER:
-                if(upgrage[tower+4]>0) {
-                    upgrage[tower + 4]--;
-                }
-                break;
+        if(upgrage[tower+4]>0) {
+            upgrage[tower + 4]--;
         }
     }
+
+    public void update(){
+        goldtempo = _player.getGold();
+        for(int i=0 ; i<10 ; i++){
+            labelLvl[i].setText("Lvl: "+(lvl[i]+upgrage[i]));
+            labelCout[i].setText("("+(int)((cout[i]*Math.pow(1.15,lvl[i]-1))*Math.pow(1.15,upgrage[i]))+"G)");
+            for(int j=0 ; j<upgrage[i]; j++){
+                goldtempo -= (int)((cout[i]*Math.pow(1.15,lvl[i]-1))*Math.pow(1.15,j));
+            }
+        }
+        labelGold.setText("Gold: "+goldtempo);
+        depence = goldtempo;
+    }
+
 
 
 }

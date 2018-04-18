@@ -2,6 +2,7 @@ package com.cshv.towerdefense;
 
 import com.badlogic.gdx.utils.Array;
 
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -18,9 +19,6 @@ public class Player {
     private HashMap< Integer, Integer> towers;
 
 
-    /*public Player(){
-
-    }*/
 
     public Player() {
         nom = "Brioche";
@@ -84,8 +82,33 @@ public class Player {
         return gold;
     }
 
+    public void setGold(int gold){
+        this.gold = gold;
+    }
+
     public void addGold(int gold) {
         this.gold += gold;
+    }
+
+    public String getCheminString(){
+        String _chemin = "";
+        for(Integer integer : chemin){
+            _chemin += integer+"::";
+        }
+        return _chemin;
+    }
+
+    public long getDate(){
+        return new Date().getTime();
+    }
+
+    public String getTowersString(){
+        String tower = "";
+        for(Integer pos: towers.keySet()){
+            Integer type = towers.get(pos);
+            tower += pos+",,"+type+"::";
+        }
+        return tower;
     }
 
     public int getLvlFastTower() {
@@ -201,6 +224,8 @@ public class Player {
     }
 
     public void resetStatsCombat() {
+        vie = 300 + 15 * (lvlFontaine-1);
+        mana = 160 + 5 * (lvlFontaine-1);
         vieCombat = vie;
         manaCombat = mana;
     }
@@ -236,4 +261,33 @@ public class Player {
                 manaCombat = 0;
         }
     }
+
+    public void addStat(int lvlSupp, int cible){
+        switch (cible){
+            case 0: lvlChevalier += lvlSupp;
+                break;
+            case 1: lvlMage += lvlSupp;
+                break;
+            case 2: lvlMoine += lvlSupp;
+                break;
+            case 3: lvlRogue += lvlSupp;
+                break;
+            case 4: lvlHealer += lvlSupp;
+                break;
+            case 5: lvlFastTower += lvlSupp;
+                break;
+            case 6: lvlSlowTower += lvlSupp;
+                break;
+            case 7: lvlZoneTower += lvlSupp;
+                break;
+            case 8: lvlVisionTower += lvlSupp;
+                break;
+            case 9: lvlFontaine += lvlSupp;
+                break;
+        }
+
+        resetStatsCombat();
+    }
+
+
 }

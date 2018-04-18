@@ -30,11 +30,16 @@ public class Fontaine extends Unit {
 
     @Override
     public void setCarrac(int lvlStage) {
-        vie = 0;
+        vie = 1;
+        vieMax = 1;
     }
 
     public void update(float delta) {
 
+    }
+
+    public float getVita() {
+        return 1;
     }
 
     public void setDegats(int degats) {
