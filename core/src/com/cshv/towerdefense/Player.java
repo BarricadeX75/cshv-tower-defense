@@ -1,6 +1,7 @@
 package com.cshv.towerdefense;
 
 import com.badlogic.gdx.utils.Array;
+import com.cshv.towerdefense.Towers.Tower;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -13,41 +14,48 @@ public class Player {
 
     private String nom;
     private float vie, vieCombat, mana, manaCombat;
-    private int lvlStage, gold, lvlFastTower, lvlZoneTower, lvlVisionTower, lvlSlowTower;
+    private int gold, lvlStage, lvlFastTower, lvlZoneTower, lvlVisionTower, lvlSlowTower;
     private int lvlChevalier, lvlHealer, lvlMage, lvlRogue, lvlMoine, lvlFontaine;
     private Array<Integer> chemin;
-    private HashMap< Integer, Integer> towers;
+    private HashMap<Integer, Integer> towers;
 
 
-
+    //Constructeur par défaut
     public Player() {
         nom = "Brioche";
         vie = 300;
         mana = 160;
+        gold = 0;
         lvlChevalier = 1;
         lvlRogue = 1;
         lvlMoine = 1;
         lvlHealer = 1;
         lvlMage = 1;
         lvlStage = 1;
-        gold = 0;
+        lvlFastTower = 1;
+        lvlSlowTower = 1;
         lvlZoneTower = 1;
         lvlVisionTower = 1;
-        lvlFontaine =1;
+        lvlFontaine = 1;
 
-        lvlSlowTower = 1;
-        lvlFastTower = 1;
         chemin = new Array<Integer>();
         for(int i=5 ; i<176 ; i+=11){
             chemin.add(i);
         }
+
         towers = new HashMap<Integer, Integer>();
-        towers.put(81,1);
-        towers.put(83,2);
-        towers.put(70,3);
-        towers.put(72,4);
+        towers.put(81, Tower.FAST_TOWER);
+        towers.put(83, Tower.SLOW_TOWER);
+        towers.put(70, Tower.ZONE_TOWER);
+        towers.put(72, Tower.VISION_TOWER);
 
         resetStatsCombat();
+    }
+
+    //Constructeur pour un nouveau joueur
+    public Player(String nom) {
+        this();
+        this.nom = nom;
     }
 
     public Array<Integer> getChemin() {
@@ -82,12 +90,16 @@ public class Player {
         return gold;
     }
 
-    public void setGold(int gold){
+    public void setGold(int gold) {
         this.gold = gold;
     }
 
     public void addGold(int gold) {
         this.gold += gold;
+    }
+
+    public void removeGold(int gold) {
+        this.gold -= gold;
     }
 
     public String getCheminString(){
@@ -98,11 +110,11 @@ public class Player {
         return _chemin;
     }
 
-    public long getDate(){
+    public long getDate() {
         return new Date().getTime();
     }
 
-    public String getTowersString(){
+    public String getTowersString() {
         String tower = "";
         for(Integer pos: towers.keySet()){
             Integer type = towers.get(pos);
