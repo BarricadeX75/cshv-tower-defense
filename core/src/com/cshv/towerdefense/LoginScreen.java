@@ -143,7 +143,7 @@ public class LoginScreen extends ScreenAdapter {
         createAccountDialog.setModal(true);
         createAccountDialog.setMovable(false);
         createAccountDialog.setResizable(false);
-        createAccountDialog.getTitleTable().padLeft(leftPadding).padTop(0f);
+        createAccountDialog.getTitleTable().padLeft(leftPadding).padTop(120f);
         createAccountDialog.getTitleTable().setTransform(true);
         createAccountDialog.getTitleTable().setScale(scaling);
         createAccountDialog.getContentTable().padLeft(leftPadding);
