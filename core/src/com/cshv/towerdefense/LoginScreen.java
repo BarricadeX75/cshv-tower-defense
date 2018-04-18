@@ -5,6 +5,7 @@ import com.badlogic.gdx.Net;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,7 +13,10 @@ import com.badlogic.gdx.net.HttpParametersUtils;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -25,8 +29,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by Barricade on 17/04/2018.
+ */
 
-public class StartScreen extends ScreenAdapter {
+public class LoginScreen extends ScreenAdapter {
 
     private static final float WORLD_WIDTH = TowerDefenseGame.WORLD_WIDTH;
     private static final float WORLD_HEIGHT = TowerDefenseGame.WORLD_HEIGHT;
@@ -38,9 +45,8 @@ public class StartScreen extends ScreenAdapter {
     private final TowerDefenseGame towerDefenseGame;
 
 
-    public StartScreen(TowerDefenseGame towerDefenseGame, Player player) {
+    public LoginScreen(TowerDefenseGame towerDefenseGame) {
         this.towerDefenseGame = towerDefenseGame;
-        _player = player;
     }
 
     @Override
@@ -62,41 +68,59 @@ public class StartScreen extends ScreenAdapter {
                 bitmapFont
         );
 
-        TextButton playButton = new TextButton("Jouer", textButtonStyle);
-        playButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 3 / 6, Align.center);
-        playButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                towerDefenseGame.setScreen(new GameScreen(towerDefenseGame, _player));
-                dispose();
-            }
-        });
-        stage.addActor(playButton);
+        TextureRegion caretTexture = new TextureRegion(new Texture(Gdx.files.internal("caret.png")));
+        TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle(
+                bitmapFont,
+                Color.WHITE,
+                new TextureRegionDrawable(caretTexture),
+                null,
+                null
+        );
 
-        TextButton editorButton = new TextButton("Éditeur", textButtonStyle);
-        editorButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 2 / 6, Align.center);
-        editorButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                towerDefenseGame.setScreen(new EditorScreen(towerDefenseGame, _player));
-                dispose();
-            }
-        });
-        stage.addActor(editorButton);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
 
-        TextButton characsButton = new TextButton("Caractéristiques", textButtonStyle);
-        characsButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 1 / 6, Align.center);
-        characsButton.addListener(new ClickListener() {
+        Table table = new Table();
+        table.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT / 2);
+
+        float padding = 10f;
+
+        Label loginLabel = new Label("Login :", labelStyle);
+        table.add(loginLabel).padBottom(padding);
+
+        table.row();
+
+        TextField loginTextField = new TextField("", textFieldStyle);
+        loginTextField.setAlignment(Align.center);
+        loginTextField.setMaxLength(12);
+        table.add(loginTextField).padBottom(padding*2);
+
+        table.row();
+
+        Label mdpLabel = new Label("Mot de passe :", labelStyle);
+        table.add(mdpLabel).padBottom(padding);
+
+        table.row();
+
+        TextField mdpTextField = new TextField("", textFieldStyle);
+        mdpTextField.setMaxLength(20);
+        mdpTextField.setAlignment(Align.center);
+        mdpTextField.setPasswordMode(true);
+        mdpTextField.setPasswordCharacter('*');
+        table.add(mdpTextField).padBottom(padding*2);
+
+        table.row();
+
+        TextButton connectButton = new TextButton("Connexion", textButtonStyle);
+        connectButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                towerDefenseGame.setScreen(new CharacsScreen(towerDefenseGame, _player));
-                dispose();
+                //
             }
         });
-        stage.addActor(characsButton);
+        table.add(connectButton).padTop(padding*2).colspan(2);
+
+        stage.addActor(table);
     }
 
     @Override
@@ -124,28 +148,14 @@ public class StartScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
-    public void requestBdPostPlayer(String login, String mdp){
+    //
+
+    public void requestBdGetPlayer(String login, String mdp){
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("login", login);
         parameters.put("mdp", mdp);
-        parameters.put("nom",_player.getNom());
-        parameters.put("lvlStage",Integer.toString(_player.getLvlStage()));
-        parameters.put("gold",Integer.toString(_player.getGold()));
-        parameters.put("lvlFastTower", Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlZoneTower", Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlSlowTower",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlVisionTower",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlChevalier",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlHealer",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlMage",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlRogue",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlMoine",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlFontaine",Integer.toString(_player.getLvlStage()));
-        parameters.put("chemin",_player.getCheminString());
-        parameters.put("posTowers",_player.getTowersString());
-        parameters.put("date",Long.toString(_player.getDate()));
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.POST).url("http://10.16.0.74/towerdefense/sendData.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
+        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url("http://10.16.0.74/towerdefense/getData.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
         Gdx.net.sendHttpRequest (httpRequest, new Net.HttpResponseListener() {
 
             @Override

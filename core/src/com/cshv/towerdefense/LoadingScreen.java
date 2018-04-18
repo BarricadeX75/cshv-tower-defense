@@ -63,7 +63,8 @@ public class LoadingScreen extends ScreenAdapter {
 
     private void update() {
         if (towerDefenseGame.getAssetManager().update()) {
-            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame));
+            towerDefenseGame.setScreen(new LoginScreen(towerDefenseGame));
+            //towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, new Player()));
             dispose();
         }
         else {
