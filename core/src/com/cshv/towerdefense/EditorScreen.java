@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cshv.towerdefense.Towers.Tower;
 
 import java.util.HashMap;
 
@@ -108,16 +109,16 @@ public class EditorScreen extends ScreenAdapter {
                     removeCell(screenX, screenY);
                     break;
                 case STATE_FAST_TOWER:
-                    insertTower(screenX,screenY,1);
+                    insertTower(screenX, screenY, Tower.FAST_TOWER);
                     break;
                 case STATE_SLOW_TOWER:
-                    insertTower(screenX,screenY,2);
+                    insertTower(screenX, screenY, Tower.SLOW_TOWER);
                     break;
                 case STATE_ZONE_TOWER:
-                    insertTower(screenX,screenY,3);
+                    insertTower(screenX, screenY, Tower.ZONE_TOWER);
                     break;
                 case STATE_VISION_TOWER:
-                    insertTower(screenX,screenY,4);
+                    insertTower(screenX, screenY, Tower.VISION_TOWER);
                     break;
                 }
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.cshv.towerdefense.Towers.Tower;
 
 /**
  * Created by harri on 16/03/2018.
@@ -108,13 +109,13 @@ public class World {
 
     public void towerEditor(int cell, int type){
         switch (type){
-            case 1:blockImgTower[cell] = BLOCK_TOWER_FAST;
+            case Tower.FAST_TOWER:blockImgTower[cell] = BLOCK_TOWER_FAST;
                 break;
-            case 2:blockImgTower[cell] = BLOCK_TOWER_SLOW;
+            case Tower.SLOW_TOWER:blockImgTower[cell] = BLOCK_TOWER_SLOW;
                 break;
-            case 3:blockImgTower[cell] = BLOCK_TOWER_ZONE;
+            case Tower.ZONE_TOWER:blockImgTower[cell] = BLOCK_TOWER_ZONE;
                 break;
-            case 4:blockImgTower[cell] = BLOCK_TOWER_VISION;
+            case Tower.VISION_TOWER:blockImgTower[cell] = BLOCK_TOWER_VISION;
                 break;
         }
     }
