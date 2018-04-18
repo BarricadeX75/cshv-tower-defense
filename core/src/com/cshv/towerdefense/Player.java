@@ -16,13 +16,13 @@ public class Player {
     private float vie, vieCombat, mana, manaCombat;
     private int gold, lvlStage, lvlFastTower, lvlZoneTower, lvlVisionTower, lvlSlowTower;
     private int lvlChevalier, lvlHealer, lvlMage, lvlRogue, lvlMoine, lvlFontaine;
+    private float regenMana;
     private Array<Integer> chemin;
     private HashMap<Integer, Integer> towers;
 
 
     //Constructeur par défaut
     public Player() {
-        nom = "Brioche";
         vie = 300;
         mana = 160;
         gold = 0;
@@ -238,8 +238,16 @@ public class Player {
     public void resetStatsCombat() {
         vie = 300 + 15 * (lvlFontaine-1);
         mana = 160 + 5 * (lvlFontaine-1);
+        regenMana = 0.02f + (0.001f * lvlFontaine);
         vieCombat = vie;
         manaCombat = mana;
+    }
+
+    public void updateRegenMana(){
+        manaCombat += regenMana;
+        if(manaCombat> mana){
+            manaCombat = mana;
+        }
     }
 
     public void recevoirDegats(float degats) {

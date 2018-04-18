@@ -76,6 +76,9 @@ public class GameScreen extends ScreenAdapter {
     private int mobCreer = 1;
     private int numWave = 1;
     private int gold = 0;
+    private boolean win = false,lose = false;
+    private Label labelLose, labelWin;
+
     protected Timer.Task setWave;
     protected Timer.Task setMob;
 
@@ -88,7 +91,7 @@ public class GameScreen extends ScreenAdapter {
     private Array<Tower> towers = new Array<Tower>();
 
     private Player _player;
-    private Stage uiStage;
+    private Stage uiStage,loseStage;
 
 
     public GameScreen(TowerDefenseGame towerDefenseGame, Player player) {
@@ -141,12 +144,21 @@ public class GameScreen extends ScreenAdapter {
         float padding = 15f;
 
         uiStage = new Stage(viewport);
+        loseStage = new Stage(viewport);
         Gdx.input.setInputProcessor(uiStage);
 
         Label nameLabel = new Label(_player.getNom(), labelStyle);
         nameLabel.setFontScale(nameScale);
         nameLabel.setPosition(WORLD_WIDTH / 2 + ((nameLabel.getWidth() / 2) * nameScale), 70, Align.center);
         uiStage.addActor(nameLabel);
+
+        labelLose = new Label(" You Lose ", labelStyle);
+        labelLose.setScale(2f);
+        labelLose.setPosition(WORLD_WIDTH/2, WORLD_HEIGHT/2, Align.center);
+
+        labelWin = new Label(" You Win ", labelStyle);
+        labelWin.setScale(2f);
+        labelWin.setPosition(WORLD_WIDTH/2, WORLD_HEIGHT/2, Align.center);
 
         PlayerBar playerBar = new PlayerBar(_player, 0, WORLD_WIDTH, 50, bitmapFont, textScale,
                 tl.getBarBack(), tl.getBarRed(), tl.getBarBlue());
@@ -162,9 +174,11 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (_player.getManaCombat() >= Unit.COUT_CHEVALIER) {
-                    _player.depenserMana(Unit.COUT_CHEVALIER);
-                    ajouterUnite(Unit.CHEVALIER);
+                if(!lose) {
+                    if (_player.getManaCombat() >= Unit.COUT_CHEVALIER) {
+                        _player.depenserMana(Unit.COUT_CHEVALIER);
+                        ajouterUnite(Unit.CHEVALIER);
+                    }
                 }
             }
         });
@@ -175,9 +189,11 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (_player.getManaCombat() >= Unit.COUT_MAGE) {
-                    _player.depenserMana(Unit.COUT_MAGE);
-                    ajouterUnite(Unit.MAGE);
+                if(!lose) {
+                    if (_player.getManaCombat() >= Unit.COUT_MAGE) {
+                        _player.depenserMana(Unit.COUT_MAGE);
+                        ajouterUnite(Unit.MAGE);
+                    }
                 }
             }
         });
@@ -188,9 +204,11 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (_player.getManaCombat() >= Unit.COUT_MOINE) {
-                    _player.depenserMana(Unit.COUT_MOINE);
-                    ajouterUnite(Unit.MOINE);
+                if(!lose) {
+                    if (_player.getManaCombat() >= Unit.COUT_MOINE) {
+                        _player.depenserMana(Unit.COUT_MOINE);
+                        ajouterUnite(Unit.MOINE);
+                    }
                 }
             }
         });
@@ -201,9 +219,11 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (_player.getManaCombat() >= Unit.COUT_ROGUE) {
-                    _player.depenserMana(Unit.COUT_ROGUE);
-                    ajouterUnite(Unit.ROGUE);
+                if(!lose) {
+                    if (_player.getManaCombat() >= Unit.COUT_ROGUE) {
+                        _player.depenserMana(Unit.COUT_ROGUE);
+                        ajouterUnite(Unit.ROGUE);
+                    }
                 }
             }
         });
@@ -214,9 +234,11 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (_player.getManaCombat() >= Unit.COUT_HEALER) {
-                    _player.depenserMana(Unit.COUT_HEALER);
-                    ajouterUnite(Unit.HEALER);
+                if(!lose) {
+                    if (_player.getManaCombat() >= Unit.COUT_HEALER) {
+                        _player.depenserMana(Unit.COUT_HEALER);
+                        ajouterUnite(Unit.HEALER);
+                    }
                 }
             }
         });
@@ -259,6 +281,7 @@ public class GameScreen extends ScreenAdapter {
 
     private void update(float delta) {
         controlerTask();
+        _player.updateRegenMana();
         checkGame();
         updateCells();
         updateMobs(delta);
@@ -281,16 +304,17 @@ public class GameScreen extends ScreenAdapter {
     public void checkGame(){
         if(_player.getVieCombat() == 0){
             _player.addGold(gold);
-            _player.resetStatsCombat();
-            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
-            dispose();
+            //_player.resetStatsCombat();
+            //towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
+            //dispose();
+            lose = true;
         }else if(numWave == 5 && mobs.size ==0){
             int goldWin = (int) (200 * Math.pow(1.2,lvlStage-1));
             goldWin = (int) (goldWin / (_player.getVieCombat()/_player.getVie()));
             gold += goldWin;
             _player.addGold(goldWin);
-            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
-            dispose();
+            _player.setLvlStage(lvlStage+1);
+            win = true;
         }
     }
 
@@ -341,39 +365,45 @@ public class GameScreen extends ScreenAdapter {
 
     private void acitivationSpell(){
         if(Gdx.input.justTouched()){
-            float x = (Gdx.input.getX() - 45)/2;
-            float y = WORLD_HEIGHT-((Gdx.input.getY())/2);
+            if(!win) {
+                float x = (Gdx.input.getX() - 45) / 2;
+                float y = WORLD_HEIGHT - ((Gdx.input.getY()) / 2);
 
-            for(Tower tower : towers){
-                if (x >= tower.getX() && x <= tower.getX()+32 && y >= tower.getY() && y <= tower.getY()+32) {
-                    int type = tower.useSpell();
-                    switch(type){
-                        case 1:
-                            if(_player.getManaCombat()>=30) {
-                                ((FastTower) tower).boosterOn();
-                            }
-                            break;
-                        case 2:
-                            if(_player.getManaCombat()>=50) {
-                                tower.getTarget(1);
-                            }
-                            break;
-                        case 3:
-                            if(_player.getManaCombat()>=60) {
-                                tower.getTarget(1);
-                            }
-                            break;
-                        case 4:
-                            if(_player.getManaCombat()>=30) {
-                                manaUse(Tower.SPELL_VISION);
-                                for (Cell cell : cells) {
-                                    cell.spellVisionOk();
+                for (Tower tower : towers) {
+                    if (x >= tower.getX() && x <= tower.getX() + 32 && y >= tower.getY() && y <= tower.getY() + 32) {
+                        int type = tower.useSpell();
+                        switch (type) {
+                            case 1:
+                                if (_player.getManaCombat() >= 30) {
+                                    ((FastTower) tower).boosterOn();
                                 }
-                            }
+                                break;
+                            case 2:
+                                if (_player.getManaCombat() >= 50) {
+                                    tower.getTarget(1);
+                                }
+                                break;
+                            case 3:
+                                if (_player.getManaCombat() >= 60) {
+                                    tower.getTarget(1);
+                                }
+                                break;
+                            case 4:
+                                if (_player.getManaCombat() >= 30) {
+                                    manaUse(Tower.SPELL_VISION);
+                                    for (Cell cell : cells) {
+                                        cell.spellVisionOk();
+                                    }
+                                }
 
-                            break;
+                                break;
+                        }
                     }
                 }
+            }else{
+                towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
+                _player.resetStatsCombat();
+                dispose();
             }
         }
     }
@@ -406,7 +436,7 @@ public class GameScreen extends ScreenAdapter {
     private void createMob(){
 
         int type;
-        int range = 3+ (lvlStage /3);
+        int range = 2+ (lvlStage /3);
         int rand = MathUtils.random(range);
         switch (rand){
             case 0:
