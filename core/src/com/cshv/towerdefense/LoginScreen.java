@@ -128,6 +128,7 @@ public class LoginScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 connect(loginTextField.getText(), mdpTextField.getText());
+
             }
         });
         connectTable.add(connectButton).padTop(padding*2);

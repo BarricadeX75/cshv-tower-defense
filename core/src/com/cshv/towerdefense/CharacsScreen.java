@@ -381,7 +381,7 @@ public class CharacsScreen extends ScreenAdapter {
 
         labelGold = new Label( "Gold: "+goldtempo, labelStyleGold);
         labelGold.setFontScale(nameScale);
-        labelGold.setPosition(((4*WORLD_WIDTH)/8)+20, WORLD_HEIGHT-20, Align.center);
+        labelGold.setPosition(((4*WORLD_WIDTH)/8)+20, WORLD_HEIGHT-15, Align.center);
         stage.addActor(labelGold);
     }
 

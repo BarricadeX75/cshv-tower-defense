@@ -14,9 +14,11 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -77,7 +79,8 @@ public class GameScreen extends ScreenAdapter {
     private int numWave = 1;
     private int gold = 0;
     private boolean win = false,lose = false;
-    private Label labelLose, labelWin;
+    private Label labelLose, labelWin, labelProsition;
+    private ImageButton validButton, cancelButton;
 
     protected Timer.Task setWave;
     protected Timer.Task setMob;
@@ -139,26 +142,27 @@ public class GameScreen extends ScreenAdapter {
                 bitmapFont
         );
         Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
+        Label.LabelStyle labelStyleLose = new Label.LabelStyle(bitmapFont, Color.RED);
+        Label.LabelStyle labelStyleStage = new Label.LabelStyle(bitmapFont, Color.FIREBRICK);
         float nameScale = 0.5f;
         float textScale = 0.4f;
         float padding = 15f;
 
         uiStage = new Stage(viewport);
-        loseStage = new Stage(viewport);
+        //loseStage = new Stage(viewport);
         Gdx.input.setInputProcessor(uiStage);
+        //Gdx.input.setInputProcessor(loseStage);
 
         Label nameLabel = new Label(_player.getNom(), labelStyle);
         nameLabel.setFontScale(nameScale);
         nameLabel.setPosition(WORLD_WIDTH / 2 + ((nameLabel.getWidth() / 2) * nameScale), 70, Align.center);
         uiStage.addActor(nameLabel);
 
-        labelLose = new Label(" You Lose ", labelStyle);
-        labelLose.setScale(2f);
-        labelLose.setPosition(WORLD_WIDTH/2, WORLD_HEIGHT/2, Align.center);
+        Label lvlStageLabel = new Label("Stage: "+lvlStage, labelStyleStage);
+        lvlStageLabel.setFontScale(nameScale);
+        lvlStageLabel.setPosition((7*WORLD_WIDTH) / 8 + ((lvlStageLabel.getWidth() / 2) * nameScale), WORLD_HEIGHT-15, Align.center);
+        uiStage.addActor(lvlStageLabel);
 
-        labelWin = new Label(" You Win ", labelStyle);
-        labelWin.setScale(2f);
-        labelWin.setPosition(WORLD_WIDTH/2, WORLD_HEIGHT/2, Align.center);
 
         PlayerBar playerBar = new PlayerBar(_player, 0, WORLD_WIDTH, 50, bitmapFont, textScale,
                 tl.getBarBack(), tl.getBarRed(), tl.getBarBlue());
@@ -245,6 +249,50 @@ public class GameScreen extends ScreenAdapter {
         table.add(uiButton5).pad(padding);
 
         uiStage.addActor(table);
+        ///////////////////////////////////////////////////////////////////////////
+
+        labelLose = new Label(" You Lose ", labelStyleLose);
+        labelLose.setFontScale(1.5f);
+        labelLose.setPosition((WORLD_WIDTH/3)+20, (4*WORLD_HEIGHT)/5, Align.center);
+
+        labelWin = new Label(" You Win ", labelStyle);
+        labelWin.setFontScale(1.5f);
+        labelWin.setPosition((WORLD_WIDTH/3)+20, WORLD_HEIGHT/2, Align.center);
+
+        labelProsition = new Label(" Need you Downgrade Stage ? ", labelStyleLose);
+        labelProsition.setFontScale(0.65f);
+        labelProsition.setPosition((3*WORLD_WIDTH)/4, WORLD_HEIGHT/2, Align.center);
+
+        Array<TextureRegion> textureControleButton = tl.getBigControleTexture();
+
+        validButton = new ImageButton(new TextureRegionDrawable(new TextureRegion( textureControleButton.get(0) ) ), new TextureRegionDrawable( new TextureRegion( textureControleButton.get(0) ) ) );
+        validButton.addListener(new ActorGestureListener() {
+            @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                super.tap(event, x, y, count, button);
+                _player.setLvlStage(lvlStage-1);
+                _player.resetStatsCombat();
+                towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
+                dispose();
+            }
+        });
+        validButton.setPosition( WORLD_WIDTH/3, WORLD_HEIGHT/3  , Align.center );
+
+        cancelButton = new ImageButton(new TextureRegionDrawable(new TextureRegion( textureControleButton.get(1) ) ), new TextureRegionDrawable( new TextureRegion( textureControleButton.get(1) ) ) );
+        cancelButton.addListener(new ActorGestureListener() {
+            @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                super.tap(event, x, y, count, button);
+                _player.resetStatsCombat();
+                towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
+                dispose();
+
+            }
+        });
+        cancelButton.setPosition( (2*WORLD_WIDTH)/3, WORLD_HEIGHT/3  , Align.center );
+
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -304,16 +352,23 @@ public class GameScreen extends ScreenAdapter {
     public void checkGame(){
         if(_player.getVieCombat() == 0){
             _player.addGold(gold);
-            //_player.resetStatsCombat();
-            //towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
-            //dispose();
-            lose = true;
+            if(lvlStage<2){
+                win = true;
+                uiStage.addActor(labelLose);
+            }else {
+                uiStage.addActor(labelLose);
+                uiStage.addActor(labelProsition);
+                uiStage.addActor(validButton);
+                uiStage.addActor(cancelButton);
+                lose = true;
+            }
         }else if(numWave == 5 && mobs.size ==0){
             int goldWin = (int) (200 * Math.pow(1.2,lvlStage-1));
             goldWin = (int) (goldWin / (_player.getVieCombat()/_player.getVie()));
             gold += goldWin;
             _player.addGold(goldWin);
             _player.setLvlStage(lvlStage+1);
+            uiStage.addActor(labelWin);
             win = true;
         }
     }
@@ -636,19 +691,36 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void getTargetMobTower(Tower tower, int cell, int type){
+        int direction;
+        float difX = tower.getX() - chemin[cell].getX();
+        float difY = tower.getY() - chemin[cell].getY();
+
+        if((difX*difX)>(difY*difY)){
+            if(difX>0){
+                direction = 1;
+            }else{
+                direction = 2;
+            }
+        }else {
+            if(difY>0){
+                direction = 3;
+            }else{
+                direction = 4;
+            }
+        }
 
         switch (type) {
             case 1:
-                spells.add(new TowerProjectile(tl.getProjectileTower()[0], tower, cells, cells[cell].getMob(), 1));
+                spells.add(new TowerProjectile(tl.getProjectileTower()[0], tower, cells, cells[cell].getMob(), 1, direction));
                 break;
             case 2:
-                spells.add(new TowerProjectile(tl.getProjectileTower()[1], tower, cells, cells[cell].getMob(), 1));
+                spells.add(new TowerProjectile(tl.getProjectileTower()[1], tower, cells, cells[cell].getMob(), 1, direction));
                 break;
             case 3:
-                spells.add(new TowerProjectile(tl.getProjectileTower()[3], tower, cells, cells[cell].getMob(), 1));
+                spells.add(new TowerProjectile(tl.getProjectileTower()[3], tower, cells, cells[cell].getMob(), 1, direction));
                 break;
             case 4:
-                spells.add(new TowerProjectile(tl.getProjectileTower()[2], tower, cells, cells[cell].getMob(), 1));
+                spells.add(new TowerProjectile(tl.getProjectileTower()[2], tower, cells, cells[cell].getMob(), 1, direction));
                 break;
             case 5:
                 spells.add( new SlowTowerSpell( tl.getSpellSlowTower(),tower,cells[cell].getMob(),cells));
