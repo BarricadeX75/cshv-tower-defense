@@ -137,22 +137,24 @@ public class LoginScreen extends ScreenAdapter {
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         ///////////////////////////////////  CRÉATION DE COMPTE  ///////////////////////////////////
-        float labelLeftPadding = 40f;
+        float labelLeftPadding = 35f;
         float scaling = 0.6f;
 
         final Dialog createAccountDialog = new Dialog("Créer un compte", windowStyle);
         createAccountDialog.setModal(true);
         createAccountDialog.setMovable(false);
         createAccountDialog.setResizable(false);
-        createAccountDialog.getTitleTable().padLeft(150f).padTop(100f);
+        createAccountDialog.setTransform(true);
+        createAccountDialog.setScale(0.75f);
         createAccountDialog.getTitleTable().setTransform(true);
         createAccountDialog.getTitleTable().setScale(scaling);
-        createAccountDialog.getContentTable().padLeft(labelLeftPadding);
+        createAccountDialog.getTitleTable().padLeft(labelLeftPadding).padTop(100f);
         createAccountDialog.getContentTable().setTransform(true);
         createAccountDialog.getContentTable().setScale(scaling);
-        createAccountDialog.getButtonTable().padLeft(125f).padBottom(30f);
+        createAccountDialog.getContentTable().padLeft(labelLeftPadding);
         createAccountDialog.getButtonTable().setTransform(true);
         createAccountDialog.getButtonTable().setScale(scaling);
+        createAccountDialog.getButtonTable().padLeft(labelLeftPadding).padBottom(30f);
 
         Label dialogLoginLabel = new Label("Login :", labelStyle);
         createAccountDialog.getContentTable().add(dialogLoginLabel).align(Align.right);
@@ -232,7 +234,7 @@ public class LoginScreen extends ScreenAdapter {
                 createAccountDialog.show(stage);
             }
         });
-        createAccountButton.setPosition(WORLD_WIDTH / 2, createAccountButton.getHeight() / 2, Align.center);
+        createAccountButton.setPosition(WORLD_WIDTH / 2, createAccountButton.getHeight() / 2 + padding, Align.center);
         stage.addActor(createAccountButton);
         ////////////////////////////////////////////////////////////////////////////////////////////
     }
