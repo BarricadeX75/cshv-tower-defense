@@ -39,7 +39,7 @@ public class Chevalier extends Unit {
         vieMax = 100 + ( lvlStage * 25 );
         vie = vieMax;
         attaque = 10 + ( lvlStage );
-        defense = 15 + (3* lvlStage );
+        defense = 10 + (3* lvlStage );
         vitesse = 1 ;
         portee = 1;
     }

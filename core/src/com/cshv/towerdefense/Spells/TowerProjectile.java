@@ -28,9 +28,10 @@ public class TowerProjectile extends Spell{
     private float yTarget;
     private float vitesseX;
     private float vitesseY;
+    private int _direction;
     private int conter;
 
-    public TowerProjectile(Array<TextureRegion> projectileT, Tower tower, Cell[] cell, Mob mob, int type){
+    public TowerProjectile(Array<TextureRegion> projectileT, Tower tower, Cell[] cell, Mob mob, int type, int direction){
         projectile = new Animation<TextureRegion>(FRAME_DURATION,projectileT);
         projectile.setPlayMode(Animation.PlayMode.LOOP);
         this.tower = tower;
@@ -41,6 +42,7 @@ public class TowerProjectile extends Spell{
         this.mob = mob;
         xTarget = mob.getX();
         yTarget = mob.getY();
+        _direction = direction;
         vitesseX = (x-xTarget)/10;
         vitesseY = (y-yTarget)/10;
         conter = 0;
@@ -77,6 +79,33 @@ public class TowerProjectile extends Spell{
         TextureRegion spell = projectile.getKeyFrame(animationTimer);
 
         batch.draw(spell,x,y);
+
+        switch (_direction){
+            case 1:
+                if(x<=xTarget){
+                    setDegat();
+                    return true;
+                }
+                break;
+            case 2:
+                if(x>=xTarget){
+                    setDegat();
+                    return true;
+                }
+                break;
+            case 3:
+                if(y <= yTarget){
+                    setDegat();
+                    return true;
+                }
+                break;
+            case 4:
+                if(y >= yTarget){
+                    setDegat();
+                    return true;
+                }
+                break;
+        }
 
         if(conter == 10 ){
             setDegat();

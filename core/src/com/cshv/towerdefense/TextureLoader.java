@@ -1,5 +1,7 @@
 package com.cshv.towerdefense;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
@@ -127,6 +129,7 @@ public class TextureLoader {
     private Array<TextureRegion> spriteFontaine;
     private Array<TextureRegion> flecheTexture;
     private Array<TextureRegion> controleTexture;
+    private Array<TextureRegion> bigControleTexture;
 
 
 
@@ -830,6 +833,10 @@ public class TextureLoader {
         return controleTexture;
     }
 
+    public Array<TextureRegion> getBigControleTexture(){
+        return  bigControleTexture;
+    }
+
     private void initSpritesMobs() {
         for(int j=1 ; j<9 ; j++){
             mobSlimeUp[j-1] = new Array<TextureRegion>();
@@ -1163,5 +1170,9 @@ public class TextureLoader {
         for(int i=1; i<3 ; i++){
             controleTexture.add(textureAtlas.findRegion("valid ("+i+")"));
         }
+        bigControleTexture = new Array<TextureRegion>();
+        bigControleTexture.add(new TextureRegion(new Texture(Gdx.files.internal("confirmation (1).png"))));
+        bigControleTexture.add(new TextureRegion(new Texture(Gdx.files.internal("confirmation (2).png"))));
+
     }
 }
