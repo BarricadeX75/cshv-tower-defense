@@ -2,6 +2,7 @@ package com.cshv.towerdefense;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -44,6 +45,8 @@ public class LoginScreen extends ScreenAdapter {
     private Array<PlayerJson>  playerJsons;
     private Player _player;
 
+    private Preferences preferences;
+
     private final TowerDefenseGame towerDefenseGame;
 
 
@@ -60,6 +63,8 @@ public class LoginScreen extends ScreenAdapter {
         TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         TextureLoader tl = new TextureLoader(textureAtlas);
         final BitmapFont bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
+
+        preferences = Gdx.app.getPreferences("com.cshv.towerdefense");
 
         /////////////////////////////////////////  STYLES  /////////////////////////////////////////
         TextureRegion dialogBackground = new TextureRegion(new Texture(Gdx.files.internal("dialogBackground.png"))); //tl.getDialogBackground();
@@ -101,7 +106,7 @@ public class LoginScreen extends ScreenAdapter {
 
         connectTable.row();
 
-        final TextField loginTextField = new TextField("", textFieldStyle);
+        final TextField loginTextField = new TextField(preferences.getString("login", ""), textFieldStyle);
         loginTextField.setAlignment(Align.center);
         loginTextField.setMaxLength(12);
         connectTable.add(loginTextField).padBottom(padding*2);
@@ -113,7 +118,7 @@ public class LoginScreen extends ScreenAdapter {
 
         connectTable.row();
 
-        final TextField mdpTextField = new TextField("", textFieldStyle);
+        final TextField mdpTextField = new TextField(preferences.getString("mdp", ""), textFieldStyle);
         mdpTextField.setAlignment(Align.center);
         mdpTextField.setMaxLength(20);
         mdpTextField.setPasswordMode(true);
@@ -305,7 +310,7 @@ public class LoginScreen extends ScreenAdapter {
         }
     }
 
-    public void requestBdGetPlayer(String login, String mdp){
+    public void requestBdGetPlayer(final String login, final String mdp){
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("login", login);
         parameters.put("mdp", mdp);
@@ -332,7 +337,16 @@ public class LoginScreen extends ScreenAdapter {
                     playerJsons.add(json.readValue(PlayerJson.class,v));
                 }
 
-                //
+                if (playerJsons.size == 0) {
+                    //
+                }
+                else {
+                    preferences.putString("login", login);
+                    preferences.putString("mdp", mdp);
+                    preferences.flush();
+
+                    //
+                }
             }
 
             @Override
