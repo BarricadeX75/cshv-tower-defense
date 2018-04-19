@@ -137,20 +137,20 @@ public class LoginScreen extends ScreenAdapter {
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         ///////////////////////////////////  CRÉATION DE COMPTE  ///////////////////////////////////
-        float leftPadding = 60f;
+        float labelLeftPadding = 40f;
         float scaling = 0.6f;
 
         final Dialog createAccountDialog = new Dialog("Créer un compte", windowStyle);
         createAccountDialog.setModal(true);
         createAccountDialog.setMovable(false);
         createAccountDialog.setResizable(false);
-        createAccountDialog.getTitleTable().padLeft(leftPadding).padTop(120f);
+        createAccountDialog.getTitleTable().padLeft(150f).padTop(100f);
         createAccountDialog.getTitleTable().setTransform(true);
         createAccountDialog.getTitleTable().setScale(scaling);
-        createAccountDialog.getContentTable().padLeft(leftPadding);
+        createAccountDialog.getContentTable().padLeft(labelLeftPadding);
         createAccountDialog.getContentTable().setTransform(true);
         createAccountDialog.getContentTable().setScale(scaling);
-        createAccountDialog.getButtonTable().padLeft(leftPadding);
+        createAccountDialog.getButtonTable().padLeft(125f).padBottom(30f);
         createAccountDialog.getButtonTable().setTransform(true);
         createAccountDialog.getButtonTable().setScale(scaling);
 
@@ -208,7 +208,7 @@ public class LoginScreen extends ScreenAdapter {
                 createAccountDialog.hide();
             }
         });
-        createAccountDialog.getButtonTable().add(dialogCancelButton).pad(padding);
+        createAccountDialog.getButtonTable().add(dialogCancelButton).padRight(padding);
 
         TextButton dialogConfirmButton = new TextButton("OK", textButtonStyle);
         dialogConfirmButton.addListener(new ClickListener() {
@@ -219,7 +219,7 @@ public class LoginScreen extends ScreenAdapter {
                         dialogConfirmationTextField.getText(), dialogNomTextField.getText());
             }
         });
-        createAccountDialog.getButtonTable().add(dialogConfirmButton).pad(padding);
+        createAccountDialog.getButtonTable().add(dialogConfirmButton).padLeft(padding);
 
         TextButton createAccountButton = new TextButton("Créer un compte", textButtonStyle);
         createAccountButton.addListener(new ClickListener() {
@@ -263,13 +263,44 @@ public class LoginScreen extends ScreenAdapter {
     }
 
     private void connect(String login, String mdp) {
-        requestBdGetPlayer(login, mdp);
+        if (login.isEmpty()) {
+            //
+        }
+        else if (!login.matches("[A-Za-z0-9]+")) {
+            //
+        }
+        else if (mdp.isEmpty()) {
+            //
+        }
+        else {
+            requestBdGetPlayer(login, mdp);
+        }
     }
 
     private void createAccount(String login, String mdp, String confirmation, String nom) {
-        _player = new Player(nom);
+        if (login.isEmpty()) {
+            //
+        }
+        else if (!login.matches("[A-Za-z0-9]+")) {
+            //
+        }
+        else if (mdp.isEmpty()) {
+            //
+        }
+        else if (!confirmation.equals(mdp)) {
+            //
+        }
+        else if (nom.isEmpty()) {
+            //
+        }
+        else if (!nom.matches("[A-Za-z0-9]+")) {
+            //
+        }
+        else {
+            _player = new Player(nom);
 
-        requestBdPostPlayer(login, mdp);
+            requestBdPostPlayer(login, mdp);
+        }
     }
 
     public void requestBdGetPlayer(String login, String mdp){
@@ -298,6 +329,8 @@ public class LoginScreen extends ScreenAdapter {
                 for (JsonValue v : list) {
                     playerJsons.add(json.readValue(PlayerJson.class,v));
                 }
+
+                //
             }
 
             @Override
