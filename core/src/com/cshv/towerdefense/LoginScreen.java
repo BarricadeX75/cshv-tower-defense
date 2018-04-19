@@ -294,6 +294,9 @@ public class LoginScreen extends ScreenAdapter {
         else if (mdp.isEmpty()) {
             //
         }
+        else if (mdp.equals(login)) {
+            //
+        }
         else if (!confirmation.equals(mdp)) {
             //
         }
