@@ -262,11 +262,13 @@ public class LoginScreen extends ScreenAdapter {
     }
 
     private void connect(String login, String mdp) {
-        //
+        requestBdGetPlayer(login, mdp);
     }
 
     private void createAccount(String login, String mdp, String confirmation, String nom) {
-        //
+        _player = new Player(nom);
+
+        requestBdPostPlayer(login, mdp);
     }
 
     public void requestBdGetPlayer(String login, String mdp){
@@ -274,7 +276,7 @@ public class LoginScreen extends ScreenAdapter {
         parameters.put("login", login);
         parameters.put("mdp", mdp);
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url("http://10.16.0.74/towerdefense/getData.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
+        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.POST).url("http://10.16.0.74/towerdefense/getData.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
         Gdx.net.sendHttpRequest (httpRequest, new Net.HttpResponseListener() {
 
             @Override
@@ -295,8 +297,6 @@ public class LoginScreen extends ScreenAdapter {
                 for (JsonValue v : list) {
                     playerJsons.add(json.readValue(PlayerJson.class,v));
                 }
-
-
             }
 
             @Override
@@ -347,15 +347,8 @@ public class LoginScreen extends ScreenAdapter {
 
                     return;
                 }
-                String JSONTxt = httpResponse.getResultAsString();
-                playerJsons = new Array<PlayerJson>();
-                Json json = new Json();
-                ArrayList<JsonValue> list = json.fromJson(ArrayList.class, JSONTxt);
-                for (JsonValue v : list) {
-                    playerJsons.add(json.readValue(PlayerJson.class,v));
-                }
 
-
+                //
             }
 
             @Override
