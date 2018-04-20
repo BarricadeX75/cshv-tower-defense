@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cshv.towerdefense.Towers.Tower;
 import com.cshv.towerdefense.Units.Unit;
 
@@ -25,7 +26,8 @@ public class CharacsScreen extends ScreenAdapter {
     private static final float WORLD_WIDTH = TowerDefenseGame.WORLD_WIDTH;
     private static final float WORLD_HEIGHT = TowerDefenseGame.WORLD_HEIGHT;
 
-    private Stage stage;
+    private Stage stage, stageBackground;
+    private Viewport viewport;
     private Player _player;
     private int upgrage[] = new int[10];
     private int goldtempo;
@@ -48,12 +50,18 @@ public class CharacsScreen extends ScreenAdapter {
     @Override
     public void show() {
         super.show();
-        stage = new Stage(new FitViewport(WORLD_WIDTH, WORLD_HEIGHT));
+        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
+        stage = new Stage(viewport);
+        stageBackground = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
         TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         final TextureLoader tl = new TextureLoader(textureAtlas);
         BitmapFont bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
+
+        Image fondBackground = new Image(tl.getBagroundTexture().get(2));
+        fondBackground.setPosition(0,0);
+        stageBackground.addActor(fondBackground);
 
         TextureRegion buttonRightTexture = tl.getFlecheTexture().get(1);
         TextureRegion buttonLeftTexture = tl.getFlecheTexture().get(0);
@@ -396,6 +404,7 @@ public class CharacsScreen extends ScreenAdapter {
         clearScreen();
         update();
         stage.act(delta);
+        stageBackground.draw();
         stage.draw();
     }
 

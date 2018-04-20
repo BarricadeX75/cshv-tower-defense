@@ -135,6 +135,7 @@ public class TextureLoader {
 
 
 
+
     private TextureRegion caret, dialogBackground;
     private TextureRegion buttonUp, buttonDown;
     private TextureRegion barBack, barRed, barBlue;
@@ -1182,8 +1183,8 @@ public class TextureLoader {
         bagroundTexture = new Array<TextureRegion>();
         bagroundTexture.add(textureAtlas.findRegion("Titre"));
         bagroundTexture.add(textureAtlas.findRegion("Tittre_fond"));
-        //bigControleTexture.add(new TextureRegion(new Texture(Gdx.files.internal("confirmation (1).png"))));
-        //bigControleTexture.add(new TextureRegion(new Texture(Gdx.files.internal("confirmation (2).png"))));
+        bagroundTexture.add(textureAtlas.findRegion("islamic_geometric_interwoven_pattern-295"));
+
 
     }
 }

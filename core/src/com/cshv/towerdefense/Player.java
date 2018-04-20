@@ -20,7 +20,24 @@ public class Player {
     private Array<Integer> chemin;
     private HashMap<Integer, Integer> towers;
 
-
+    public Player(String nom, int gold, int lvlChevalier, int lvlMage, int lvlMoine, int lvlRogue,
+                  int lvlHealer, int lvlFastTower, int lvlSlowTower, int lvlZoneTower, int lvlVisionTower, int lvlFontaine, Array<Integer> chemin, HashMap<Integer, Integer> towers, int lvlStage){
+        this.nom = nom;
+        this.gold = gold;
+        this.lvlChevalier = lvlChevalier;
+        this.lvlMage = lvlMage;
+        this.lvlMoine = lvlMoine;
+        this.lvlRogue = lvlRogue;
+        this.lvlHealer = lvlHealer;
+        this.lvlFastTower = lvlFastTower;
+        this.lvlSlowTower = lvlSlowTower;
+        this.lvlZoneTower = lvlZoneTower;
+        this.lvlVisionTower = lvlVisionTower;
+        this.chemin = chemin;
+        this.towers = towers;
+        this.lvlFontaine = lvlFontaine;
+        this.lvlStage = lvlStage;
+    }
     //Constructeur par défaut
     public Player() {
         vie = 300;
