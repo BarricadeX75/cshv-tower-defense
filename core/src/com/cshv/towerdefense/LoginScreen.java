@@ -224,6 +224,7 @@ public class LoginScreen extends ScreenAdapter {
                 super.clicked(event, x, y);
                 createAccount(dialogLoginTextField.getText(), dialogMdpTextField.getText(),
                         dialogConfirmationTextField.getText(), dialogNomTextField.getText());
+                createAccountDialog.hide();
             }
         });
         createAccountDialog.getButtonTable().add(dialogConfirmButton).padLeft(padding);
@@ -294,7 +295,7 @@ public class LoginScreen extends ScreenAdapter {
         else if (mdp.isEmpty()) {
             //
         }
-        else if (mdp.equals(login)) {
+        else if (mdp.equals(login) || mdp.equals(nom)) {
             //
         }
         else if (!confirmation.equals(mdp)) {
@@ -386,7 +387,7 @@ public class LoginScreen extends ScreenAdapter {
         parameters.put("posTowers",_player.getTowersString());
         parameters.put("date",Long.toString(_player.getDate()));
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.POST).url("http://10.16.0.74/towerdefense/sendData.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
+        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.POST).url("http://10.16.0.74/towerdefense/createAccount.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
         Gdx.net.sendHttpRequest (httpRequest, new Net.HttpResponseListener() {
 
             @Override
@@ -401,7 +402,14 @@ public class LoginScreen extends ScreenAdapter {
                     return;
                 }
 
-                //
+                String result = httpResponse.getResultAsString();
+
+                if (result.equals("fail")) {
+                    //
+                }
+                else {
+                    //
+                }
             }
 
             @Override
