@@ -307,11 +307,10 @@ public class LoginScreen extends ScreenAdapter {
         animationTimer += delta;
         stageBackground.draw();
         stage.draw();
+        draw();
 
         if (toast != null)
             toast.render(delta);
-        draw();
-
     }
 
     @Override
