@@ -58,8 +58,10 @@ public class Healer extends Unit {
                     if(currentCase+i <= chemin.length-1){
                         if(!parent.testCase(currentCase+i,3)) {
                             if(!parent.testCase(currentCase+i,2)) {
-                                if(i == 1) {
-                                    currentCase++;
+                                if(currentCase < chemin.length-4) {
+                                    if (i == 1) {
+                                        currentCase++;
+                                    }
                                 }
                             }
                         }else{

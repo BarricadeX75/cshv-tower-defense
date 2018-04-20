@@ -14,6 +14,7 @@ public class MobProjectile extends Spell {
     private TextureRegion projectile;
     private Mob mob;
     private Unit unit;
+    private int _direction;
     private float x;
     private float y;
     private float xTarget;
@@ -22,7 +23,7 @@ public class MobProjectile extends Spell {
     private float vitesseY;
     private int conter;
 
-    public MobProjectile(TextureRegion projectile, Mob mob, Unit unit) {
+    public MobProjectile(TextureRegion projectile, Mob mob, Unit unit, int direction) {
         this.projectile = projectile;
         this.mob = mob;
         x = mob.getX();
@@ -33,6 +34,7 @@ public class MobProjectile extends Spell {
         vitesseX = (x - xTarget) / 10;
         vitesseY = (y - yTarget) / 10;
         conter = 0;
+        _direction = direction;
 
     }
 
@@ -54,7 +56,34 @@ public class MobProjectile extends Spell {
 
     @Override
     public boolean draw(SpriteBatch batch) {
-        batch.draw(projectile, x, y);
+        batch.draw(projectile, x+15, y+15);
+
+        switch (_direction){
+            case 1:
+                if(x<=xTarget){
+                    setDegat();
+                    return true;
+                }
+                break;
+            case 2:
+                if(x>=xTarget){
+                    setDegat();
+                    return true;
+                }
+                break;
+            case 3:
+                if(y <= yTarget){
+                    setDegat();
+                    return true;
+                }
+                break;
+            case 4:
+                if(y >= yTarget){
+                    setDegat();
+                    return true;
+                }
+                break;
+        }
 
         if (conter == 10) {
             setDegat();

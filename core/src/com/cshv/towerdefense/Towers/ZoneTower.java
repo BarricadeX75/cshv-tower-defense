@@ -26,6 +26,7 @@ public class ZoneTower extends Tower {
                       TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
         type = ZONE_TOWER;
+        this.lvlTower = lvlTower;
         int numSprite = lvlTower/10;
         if(numSprite>3){
             numSprite = 3;
@@ -40,8 +41,8 @@ public class ZoneTower extends Tower {
 
     public void setStat( int lvlTower){
         attaque = 20 + (lvlTower*3);
-        portee = 3 + lvlTower/4;
-        atcSpeed = 3 - (lvlTower /20);
+        portee = 3 + (lvlTower/15);
+        atcSpeed = 3 - (float)(lvlTower /20);
         malus = 0;
         if(atcSpeed < 1.5f){
             atcSpeed = 1.5f;
@@ -105,7 +106,7 @@ public class ZoneTower extends Tower {
             }
             if(poidsMax>0){
                 parent.activationSpellZone(this,direction,caseSpell[direction-1]);
-                parent.manaUse(Tower.SPELL_ZONE);
+                parent.manaUse(Tower.SPELL_ZONE + (2*lvlTower));
             }else{
                 chargementSpell = 32f;
             }

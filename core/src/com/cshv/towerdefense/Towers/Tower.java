@@ -11,13 +11,14 @@ public abstract class Tower {
     public static final int FAST_TOWER = 1, SLOW_TOWER = 2, ZONE_TOWER = 3, VISION_TOWER = 4;
     public static final int SPELL_ZONE = 60, SPELL_SLOW = 50, SPELL_FAST = 30, SPELL_VISION = 30;
 
-    private static final float BAR_WIDTH = 32f;
-    private static final float BAR_HEIGHT = 4f;
+    public static final float BAR_WIDTH = 32f;
+    public static final float BAR_HEIGHT = 4f;
 
     protected float _x;
     protected float _y;
     protected boolean tireOK = true;
     protected GameScreen parent;
+    protected int lvlTower;
     protected int type;
     protected int attaque;
     protected float chargementSpell = 0;
@@ -34,7 +35,7 @@ public abstract class Tower {
         }
     };
 
-    private TextureRegion barBack, barFront;
+    protected TextureRegion barBack, barFront;
 
 
     public Tower(TextureRegion barBack, TextureRegion barFront) {

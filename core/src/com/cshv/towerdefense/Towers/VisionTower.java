@@ -1,6 +1,7 @@
 package com.cshv.towerdefense.Towers;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -24,6 +25,7 @@ public class VisionTower extends Tower {
                         TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
         type = VISION_TOWER;
+        this.lvlTower = lvlTower;
         int numSprite = lvlTower/10;
         if(numSprite>3){
             numSprite = 3;
@@ -39,8 +41,8 @@ public class VisionTower extends Tower {
 
     public void setStat( int lvlTower){
         attaque = 20 + (lvlTower*3);
-        portee = 4 + (lvlTower/5);
-        atcSpeed = 3 - (lvlTower / 25);
+        portee = 4 + (lvlTower/15);
+        atcSpeed = 3 - (float)(lvlTower / 25);
         malus = 0;
         if(atcSpeed < 1.5f){
             atcSpeed = 1.5f;
@@ -71,5 +73,15 @@ public class VisionTower extends Tower {
                 }
             }
         }
+    }
+
+    public void draw(SpriteBatch batch) {
+        if(lvlTower>=30){
+            batch.draw(_tower,_x-11,_y);
+        }else {
+            batch.draw(_tower, _x + 1, _y);
+        }
+        batch.draw(barBack, _x, _y, BAR_WIDTH, BAR_HEIGHT);
+        batch.draw(barFront, _x, _y, chargementSpell, BAR_HEIGHT);
     }
 }

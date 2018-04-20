@@ -84,7 +84,7 @@ public class EditorScreen extends ScreenAdapter {
         tl = new TextureLoader(textureAtlas);
         towers = new HashMap<Integer, Integer>();
         nbTowerMax = 4 + (_player.getLvlFontaine()/5);
-        nbCellCheminMax = 15 + (_player.getLvlFontaine()/2);
+        nbCellCheminMax = 15 + (_player.getLvlFontaine()/3);
         stageBackground = new Stage(viewport);
         Image fondBackground = new Image(tl.getBagroundTexture().get(2));
         fondBackground.setPosition(0,0);
@@ -370,8 +370,10 @@ public class EditorScreen extends ScreenAdapter {
         if(numCell <= 165 && numCell >= 11 ){
             for (int i = 0; i < trajet.size; i++) {
                 if (numCell == trajet.get(i)) {
-                    world.suppCellCheminEditor(numCell);
-                    trajet.removeIndex(i);
+                    for(int j=trajet.size-1 ; j>i-1 ; j--) {
+                        world.suppCellCheminEditor(trajet.get(j));
+                        trajet.removeIndex(j);
+                    }
                 }
             }
         }

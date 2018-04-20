@@ -24,6 +24,7 @@ public class SlowTower extends Tower {
                       TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
         type = SLOW_TOWER;
+        this.lvlTower = lvlTower;
         int numSprite = lvlTower/10;
         if(numSprite>3){
             numSprite = 3;
@@ -38,7 +39,7 @@ public class SlowTower extends Tower {
 
     public void setStat( int lvlTower){
         attaque = 15 + (lvlTower*3);
-        portee = 3 + (lvlTower/5);
+        portee = 3 + (lvlTower/15);
         atcSpeed = 3 - (lvlTower / 20);
         malus = 0.5f + (lvlTower/20);
         if(atcSpeed < 1.5f){
@@ -74,9 +75,9 @@ public class SlowTower extends Tower {
             for (int i = 0; i < caseDistOk.size; i++) {
                 if (parent.testCase(caseDistOk.get(i), 2)) {
                     parent.getTargetMobTower(this, caseDistOk.get(i), 5);
-                    parent.manaUse(Tower.SPELL_SLOW);
+                    parent.manaUse(Tower.SPELL_SLOW + (2*lvlTower));
                     break;
-                }else if (typeAtc == 1) {
+                }else  {
                     chargementSpell = 32f;
                 }
             }

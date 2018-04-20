@@ -11,7 +11,7 @@ import com.cshv.towerdefense.GameScreen;
 public abstract class Unit {
 
     public static final int CHEVALIER = 1, MAGE = 2, MOINE = 3, ROGUE = 4, HEALER = 5;
-    public static final float COUT_CHEVALIER = 6, COUT_MAGE = 10, COUT_MOINE = 8, COUT_ROGUE = 6, COUT_HEALER = 10;
+    public static final float COUT_CHEVALIER = 12, COUT_MAGE = 15, COUT_MOINE = 8, COUT_ROGUE = 6, COUT_HEALER = 15;
 
     protected int vieMax;
     protected int vie;
@@ -61,10 +61,12 @@ public abstract class Unit {
         }else{
             if(currentCase < chemin.length-1 && attaqueOk){
                 for(int i = portee; i>0 ; i--){
-                    if(currentCase+i < chemin.length-1){
+                    if(currentCase+i <= chemin.length-1){
                         if(!parent.testCase(currentCase+i,2)) {
-                            if(i == 1) {
-                                currentCase++;
+                            if(currentCase < chemin.length-2) {
+                                if (i == 1) {
+                                    currentCase++;
+                                }
                             }
                         }else{
                             animationTimer = 0;

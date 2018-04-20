@@ -55,6 +55,8 @@ import com.cshv.towerdefense.Spells.ZoneTowerSpell;
 import com.cshv.towerdefense.Towers.FastTower;
 import com.cshv.towerdefense.Towers.SlowTower;
 import com.cshv.towerdefense.Towers.Tower;
+import com.cshv.towerdefense.Towers.VisionTower;
+import com.cshv.towerdefense.Towers.ZoneTower;
 import com.cshv.towerdefense.Units.Chevalier;
 import com.cshv.towerdefense.Units.Fontaine;
 import com.cshv.towerdefense.Units.Healer;
@@ -85,6 +87,7 @@ public class GameScreen extends ScreenAdapter {
     private int mobCreer = 1;
     private int numWave = 1;
     private int gold = 0;
+    private boolean waveFinal = false;
     private boolean win = false,lose = false;
     private Label labelLose, labelWin, labelProsition;
     private ImageButton validButton, cancelButton;
@@ -191,8 +194,9 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if(!lose) {
-                    if (_player.getManaCombat() >= Unit.COUT_CHEVALIER) {
-                        _player.depenserMana(Unit.COUT_CHEVALIER);
+                    int lvl = _player.getLvlChevalier();
+                    if (_player.getManaCombat() >= Unit.COUT_CHEVALIER + lvl) {
+                        _player.depenserMana(Unit.COUT_CHEVALIER + lvl);
                         ajouterUnite(Unit.CHEVALIER);
                     }
                 }
@@ -206,8 +210,9 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if(!lose) {
-                    if (_player.getManaCombat() >= Unit.COUT_MAGE) {
-                        _player.depenserMana(Unit.COUT_MAGE);
+                    int lvl = _player.getLvlMage();
+                    if (_player.getManaCombat() >= Unit.COUT_MAGE + lvl) {
+                        _player.depenserMana(Unit.COUT_MAGE + lvl);
                         ajouterUnite(Unit.MAGE);
                     }
                 }
@@ -221,8 +226,9 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if(!lose) {
-                    if (_player.getManaCombat() >= Unit.COUT_MOINE) {
-                        _player.depenserMana(Unit.COUT_MOINE);
+                    int lvl = _player.getLvlMoine();
+                    if (_player.getManaCombat() >= Unit.COUT_MOINE + lvl) {
+                        _player.depenserMana(Unit.COUT_MOINE + lvl);
                         ajouterUnite(Unit.MOINE);
                     }
                 }
@@ -236,8 +242,9 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if(!lose) {
-                    if (_player.getManaCombat() >= Unit.COUT_ROGUE) {
-                        _player.depenserMana(Unit.COUT_ROGUE);
+                    int lvl = _player.getLvlRogue();
+                    if (_player.getManaCombat() >= Unit.COUT_ROGUE + lvl) {
+                        _player.depenserMana(Unit.COUT_ROGUE + lvl);
                         ajouterUnite(Unit.ROGUE);
                     }
                 }
@@ -251,8 +258,9 @@ public class GameScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if(!lose) {
-                    if (_player.getManaCombat() >= Unit.COUT_HEALER) {
-                        _player.depenserMana(Unit.COUT_HEALER);
+                    int lvl = _player.getLvlHealer();
+                    if (_player.getManaCombat() >= Unit.COUT_HEALER + lvl) {
+                        _player.depenserMana(Unit.COUT_HEALER + lvl);
                         ajouterUnite(Unit.HEALER);
                     }
                 }
@@ -355,34 +363,42 @@ public class GameScreen extends ScreenAdapter {
     private void controlerTask(){
         if(mobCreer == nbMonster){
             setMob.cancel();
+            if(numWave == 5 ){
+                waveFinal = true;
+            }
+
         }
         if(numWave == 5){
             setWave.cancel();
+
         }
     }
 
     public void checkGame(){
-        if(_player.getVieCombat() == 0){
-            _player.addGold(gold);
-            if(lvlStage<2){
+        if(!win && !lose) {
+            if (_player.getVieCombat() == 0) {
+                _player.addGold(gold);
+                if (lvlStage < 2) {
+                    win = true;
+                    uiStage.addActor(labelLose);
+                } else {
+                    uiStage.addActor(labelLose);
+                    uiStage.addActor(labelProsition);
+                    uiStage.addActor(validButton);
+                    uiStage.addActor(cancelButton);
+                    lose = true;
+                }
+            } else if (numWave == 5 && mobs.size == 0 && waveFinal) {
+                int goldWin = (int) (250 * Math.pow(1.2, lvlStage - 1));
+                goldWin = (int) (goldWin / (_player.getVieCombat() / _player.getVie()));
+                gold += goldWin;
+                System.out.println(gold);
+                _player.addGold(goldWin);
+                _player.setLvlStage(lvlStage + 1);
+                uiStage.addActor(labelWin);
+                requestBdPostPlayer(preferences.getString("login", ""), preferences.getString("mdp", ""));
                 win = true;
-                uiStage.addActor(labelLose);
-            }else {
-                uiStage.addActor(labelLose);
-                uiStage.addActor(labelProsition);
-                uiStage.addActor(validButton);
-                uiStage.addActor(cancelButton);
-                lose = true;
             }
-        }else if(numWave == 5 && mobs.size ==0){
-            int goldWin = (int) (200 * Math.pow(1.2,lvlStage-1));
-            goldWin = (int) (goldWin / (_player.getVieCombat()/_player.getVie()));
-            gold += goldWin;
-            _player.addGold(goldWin);
-            _player.setLvlStage(lvlStage+1);
-            uiStage.addActor(labelWin);
-            requestBdPostPlayer( preferences.getString("login", ""), preferences.getString("mdp", ""));
-            win = true;
         }
     }
 
@@ -442,23 +458,23 @@ public class GameScreen extends ScreenAdapter {
                         int type = tower.useSpell();
                         switch (type) {
                             case 1:
-                                if (_player.getManaCombat() >= 30) {
+                                if (_player.getManaCombat() >= 30 + _player.getLvlFastTower()) {
                                     ((FastTower) tower).boosterOn();
                                 }
                                 break;
                             case 2:
-                                if (_player.getManaCombat() >= 50) {
+                                if (_player.getManaCombat() >= 50 + (2*_player.getLvlSlowTower())) {
                                     tower.getTarget(1);
                                 }
                                 break;
                             case 3:
-                                if (_player.getManaCombat() >= 60) {
+                                if (_player.getManaCombat() >= 60 + (2*_player.getLvlZoneTower())) {
                                     tower.getTarget(1);
                                 }
                                 break;
                             case 4:
-                                if (_player.getManaCombat() >= 30) {
-                                    manaUse(Tower.SPELL_VISION);
+                                if (_player.getManaCombat() >= 30 + _player.getLvlVisionTower()) {
+                                    manaUse(Tower.SPELL_VISION + (_player.getLvlVisionTower()));
                                     for (Cell cell : cells) {
                                         cell.spellVisionOk();
                                     }
@@ -492,10 +508,10 @@ public class GameScreen extends ScreenAdapter {
                     towers.add(new SlowTower(tl.getSpriteTowerSlow(), this, _player.getLvlSlowTower(), world.getXcase(cell), world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
                     break;
                 case Tower.VISION_TOWER:
-                    towers.add(new FastTower(tl.getSpriteTowerVision(), this, _player.getLvlVisionTower(), world.getXcase(cell), world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
+                    towers.add(new VisionTower(tl.getSpriteTowerVision(), this, _player.getLvlVisionTower(), world.getXcase(cell), world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
                     break;
                 case Tower.ZONE_TOWER:
-                    towers.add(new FastTower(tl.getSpriteTowerZone(), this, _player.getLvlZoneTower(), world.getXcase(cell), world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
+                    towers.add(new ZoneTower(tl.getSpriteTowerZone(), this, _player.getLvlZoneTower(), world.getXcase(cell), world.getYcase(cell), tl.getBarBack(), tl.getBarBlue()));
                     break;
             }
         }
@@ -601,7 +617,7 @@ public class GameScreen extends ScreenAdapter {
                 case 1: spells.add(new SlashSpell(tl.getAtkCacMobLeft(), tl.getAtkCacMobRight(), target, mob, direction, 1));
                     break;
                 case 2: int rand = MathUtils.random(5);
-                    spells.add(new MobProjectile(tl.getProjectileMob().get(rand), mob, target));
+                    spells.add(new MobProjectile(tl.getProjectileMob().get(rand), mob, target, direction));
                     break;
                 case 3: if(MathUtils.randomBoolean(0.5f)) {
                         spells.add(new MagicSpell(tl.getSpellFire(), target, mob, cells, 1));

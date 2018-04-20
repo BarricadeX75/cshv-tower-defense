@@ -257,7 +257,7 @@ public class Player {
     public void resetStatsCombat() {
         vie = 300 + 15 * (lvlFontaine-1);
         mana = 160 + 5 * (lvlFontaine-1);
-        regenMana = 0.02f + (0.001f * lvlFontaine);
+        regenMana = 0.025f + (0.002f * lvlFontaine);
         vieCombat = vie;
         manaCombat = mana;
     }

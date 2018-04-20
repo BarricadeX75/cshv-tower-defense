@@ -3,6 +3,7 @@ package com.cshv.towerdefense.Units;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
 import com.cshv.towerdefense.World;
 
@@ -34,12 +35,57 @@ public class Mage extends Unit {
 
     @Override
     public void setCarrac(int lvlStage) {
-        vieMax = 70 + ( lvlStage * 10 );
+        vieMax = 50 + ( lvlStage * 10 );
         vie = vieMax;
         attaque = 15 + (3* lvlStage );
         defense = (int)(0.25f * lvlStage );
         vitesse = 1 ;
         portee = 3;
+    }
+
+    public void move() {
+
+        if (_x != chemin[currentCase].getX()) {
+            if (_x < chemin[currentCase].getX()) {
+                currentAnimation = animeRight;
+                _x += vitesse;
+            } else {
+                currentAnimation = animeLeft;
+                _x -= vitesse;
+            }
+        } else if(_y != chemin[currentCase].getY() ){
+            if (_y < chemin[currentCase].getY()) {
+                currentAnimation = animeUp;
+                _y += vitesse;
+            } else {
+                currentAnimation = animeDown;
+                _y -= vitesse;
+            }
+        }else{
+            if(currentCase < chemin.length-1 && attaqueOk){
+                for(int i = portee; i>0 ; i--){
+                    if(currentCase+i <= chemin.length-1){
+                        if(!parent.testCase(currentCase+i,2)) {
+                            if(currentCase < chemin.length-3) {
+                                if (i == 1) {
+                                    currentCase++;
+                                }
+                            }
+                        }else{
+                            animationTimer = 0;
+                            if(parent.getTargetMob(this)) {
+                                attaqueOk = false;
+                                Timer.schedule(getAttaque, 2.5F);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+            }else{
+                //animationTimer = 0;
+            }
+        }
     }
 
 }

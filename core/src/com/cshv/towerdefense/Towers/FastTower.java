@@ -33,6 +33,7 @@ public class FastTower extends Tower {
                      TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
         type = FAST_TOWER;
+        this.lvlTower = lvlTower;
         int numSprite = lvlTower/10;
         if(numSprite>3){
             numSprite = 3;
@@ -50,8 +51,8 @@ public class FastTower extends Tower {
 
     public void setStat( int lvlTower){
         attaque = 20 + (lvlTower*4);
-        portee = 3 + (lvlTower/5);
-        atcSpeed = 3 - (lvlTower/15);
+        portee = 3 + (lvlTower/15);
+        atcSpeed = 3 - (float)(lvlTower/15);
         malus = 0;
         if(atcSpeed < 1.5f){
             atcSpeed = 1.5f;
@@ -61,7 +62,8 @@ public class FastTower extends Tower {
     public void boosterOn(){
         attaque += 15 + _lvlTower;
         atcSpeed -= 1.5f;
-        parent.manaUse(Tower.SPELL_FAST);
+        parent.manaUse(Tower.SPELL_FAST + (lvlTower));
+        chargementSpell = 0;
         Timer.schedule(spellBooster, 10);
     }
 
