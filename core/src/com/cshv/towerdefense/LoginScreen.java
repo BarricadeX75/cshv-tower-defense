@@ -340,13 +340,13 @@ public class LoginScreen extends ScreenAdapter {
 
     private void connect(String login, String mdp) {
         if (login.isEmpty()) {
-            //
+            toast = toastFactory.create("Le login est vide !", Toast.Length.SHORT);
         }
         else if (!login.matches("[A-Za-z0-9]+")) {
-            //
+            toast = toastFactory.create("Le login n'est pas alphanumérique !", Toast.Length.SHORT);
         }
         else if (mdp.isEmpty()) {
-            //
+            toast = toastFactory.create("Le mot de passe est vide !", Toast.Length.SHORT);
         }
         else {
             requestBdGetPlayer(login, mdp);
@@ -355,25 +355,25 @@ public class LoginScreen extends ScreenAdapter {
 
     private void createAccount(String login, String mdp, String confirmation, String nom) {
         if (login.isEmpty()) {
-            //
+            toast = toastFactory.create("Le login ne peut pas être vide !", Toast.Length.SHORT);
         }
         else if (!login.matches("[A-Za-z0-9]+")) {
-            //
+            toast = toastFactory.create("Le login doit être alphanumérique !", Toast.Length.SHORT);
         }
         else if (mdp.isEmpty()) {
-            //
+            toast = toastFactory.create("Le mot de passe ne peut pas être vide !", Toast.Length.SHORT);
         }
         else if (mdp.equals(login) || mdp.equals(nom)) {
-            //
+            toast = toastFactory.create("Le mot de passe doit être différent du login et du nom !", Toast.Length.SHORT);
         }
         else if (!confirmation.equals(mdp)) {
-            //
+            toast = toastFactory.create("La confirmation ne correspond pas au mot de passe !", Toast.Length.SHORT);
         }
         else if (nom.isEmpty()) {
-            //
+            toast = toastFactory.create("Le nom ne peut pas être vide !", Toast.Length.SHORT);
         }
         else if (!nom.matches("[A-Za-z0-9]+")) {
-            //
+            toast = toastFactory.create("Le nom doit être alphanumérique !", Toast.Length.SHORT);
         }
         else {
             _player = new Player(nom);
@@ -418,7 +418,7 @@ public class LoginScreen extends ScreenAdapter {
                     preferences.putString("mdp", mdp);
                     preferences.flush();
 
-                    _player = playerJsons.get(0).getPlayer();
+                    _player = playerJsons.first().getPlayer();
                     connectOk = true;
 
                 }
