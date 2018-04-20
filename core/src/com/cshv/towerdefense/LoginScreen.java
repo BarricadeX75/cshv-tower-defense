@@ -224,11 +224,6 @@ public class LoginScreen extends ScreenAdapter {
                 super.clicked(event, x, y);
                 createAccount(dialogLoginTextField.getText(), dialogMdpTextField.getText(),
                         dialogConfirmationTextField.getText(), dialogNomTextField.getText());
-                dialogLoginTextField.setText("");
-                dialogMdpTextField.setText("");
-                dialogConfirmationTextField.setText("");
-                dialogNomTextField.setText("");
-                createAccountDialog.hide();
             }
         });
         createAccountDialog.getButtonTable().add(dialogConfirmButton).padLeft(padding);
