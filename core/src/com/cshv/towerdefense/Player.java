@@ -20,6 +20,7 @@ public class Player {
     private Array<Integer> chemin;
     private HashMap<Integer, Integer> towers;
 
+    //Constructeur pour un joueur existant
     public Player(String nom, int gold, int lvlChevalier, int lvlMage, int lvlMoine, int lvlRogue,
                   int lvlHealer, int lvlFastTower, int lvlSlowTower, int lvlZoneTower, int lvlVisionTower, int lvlFontaine, Array<Integer> chemin, HashMap<Integer, Integer> towers, int lvlStage){
         this.nom = nom;

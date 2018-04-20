@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -110,7 +109,7 @@ public class LoginScreen extends ScreenAdapter {
         toastFactory = new Toast.ToastFactory.Builder().font(bitmapFont).build();
 
         /////////////////////////////////////////  STYLES  /////////////////////////////////////////
-        TextureRegion dialogBackground = new TextureRegion(new Texture(Gdx.files.internal("dialogBackground.png"))); //tl.getDialogBackground();
+        TextureRegion dialogBackground = tl.getDialogBackground();
         Window.WindowStyle windowStyle = new Window.WindowStyle(
                 bitmapFont,
                 Color.WHITE,
@@ -126,7 +125,7 @@ public class LoginScreen extends ScreenAdapter {
                 bitmapFont
         );
 
-        TextureRegion caretTexture = new TextureRegion(new Texture(Gdx.files.internal("caret.png"))); //tl.getCaret();
+        TextureRegion caretTexture = tl.getCaret();
         TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle(
                 bitmapFont,
                 Color.WHITE,
