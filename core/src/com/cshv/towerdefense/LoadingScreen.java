@@ -50,7 +50,6 @@ public class LoadingScreen extends ScreenAdapter {
         shapeRenderer = new ShapeRenderer();
         towerDefenseGame.getAssetManager().load("font.fnt", BitmapFont.class);
         towerDefenseGame.getAssetManager().load("test1.atlas", TextureAtlas.class);
-        //
     }
 
     @Override
@@ -63,8 +62,8 @@ public class LoadingScreen extends ScreenAdapter {
 
     private void update() {
         if (towerDefenseGame.getAssetManager().update()) {
-            //towerDefenseGame.setScreen(new LoadingScreen(towerDefenseGame));
-            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, new Player("Brioche")));
+            towerDefenseGame.setScreen(new LoginScreen(towerDefenseGame));
+            //towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, new Player("Brioche")));
             dispose();
         }
         else {

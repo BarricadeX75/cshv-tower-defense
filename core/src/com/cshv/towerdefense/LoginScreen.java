@@ -2,6 +2,7 @@ package com.cshv.towerdefense;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -44,6 +45,8 @@ public class LoginScreen extends ScreenAdapter {
     private Array<PlayerJson>  playerJsons;
     private Player _player;
 
+    private Preferences preferences;
+
     private final TowerDefenseGame towerDefenseGame;
 
 
@@ -60,6 +63,8 @@ public class LoginScreen extends ScreenAdapter {
         TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         TextureLoader tl = new TextureLoader(textureAtlas);
         final BitmapFont bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
+
+        preferences = Gdx.app.getPreferences("com.cshv.towerdefense");
 
         /////////////////////////////////////////  STYLES  /////////////////////////////////////////
         TextureRegion dialogBackground = new TextureRegion(new Texture(Gdx.files.internal("dialogBackground.png"))); //tl.getDialogBackground();
@@ -101,7 +106,7 @@ public class LoginScreen extends ScreenAdapter {
 
         connectTable.row();
 
-        final TextField loginTextField = new TextField("", textFieldStyle);
+        final TextField loginTextField = new TextField(preferences.getString("login", ""), textFieldStyle);
         loginTextField.setAlignment(Align.center);
         loginTextField.setMaxLength(12);
         connectTable.add(loginTextField).padBottom(padding*2);
@@ -113,7 +118,7 @@ public class LoginScreen extends ScreenAdapter {
 
         connectTable.row();
 
-        final TextField mdpTextField = new TextField("", textFieldStyle);
+        final TextField mdpTextField = new TextField(preferences.getString("mdp", ""), textFieldStyle);
         mdpTextField.setAlignment(Align.center);
         mdpTextField.setMaxLength(20);
         mdpTextField.setPasswordMode(true);
@@ -137,22 +142,24 @@ public class LoginScreen extends ScreenAdapter {
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         ///////////////////////////////////  CRÉATION DE COMPTE  ///////////////////////////////////
-        float leftPadding = 60f;
+        float labelLeftPadding = 35f;
         float scaling = 0.6f;
 
         final Dialog createAccountDialog = new Dialog("Créer un compte", windowStyle);
         createAccountDialog.setModal(true);
         createAccountDialog.setMovable(false);
         createAccountDialog.setResizable(false);
-        createAccountDialog.getTitleTable().padLeft(leftPadding).padTop(120f);
+        createAccountDialog.setTransform(true);
+        createAccountDialog.setScale(0.75f);
         createAccountDialog.getTitleTable().setTransform(true);
         createAccountDialog.getTitleTable().setScale(scaling);
-        createAccountDialog.getContentTable().padLeft(leftPadding);
+        createAccountDialog.getTitleTable().padLeft(labelLeftPadding).padTop(100f);
         createAccountDialog.getContentTable().setTransform(true);
         createAccountDialog.getContentTable().setScale(scaling);
-        createAccountDialog.getButtonTable().padLeft(leftPadding);
+        createAccountDialog.getContentTable().padLeft(labelLeftPadding);
         createAccountDialog.getButtonTable().setTransform(true);
         createAccountDialog.getButtonTable().setScale(scaling);
+        createAccountDialog.getButtonTable().padLeft(labelLeftPadding).padBottom(30f);
 
         Label dialogLoginLabel = new Label("Login :", labelStyle);
         createAccountDialog.getContentTable().add(dialogLoginLabel).align(Align.right);
@@ -208,7 +215,7 @@ public class LoginScreen extends ScreenAdapter {
                 createAccountDialog.hide();
             }
         });
-        createAccountDialog.getButtonTable().add(dialogCancelButton).pad(padding);
+        createAccountDialog.getButtonTable().add(dialogCancelButton).padRight(padding);
 
         TextButton dialogConfirmButton = new TextButton("OK", textButtonStyle);
         dialogConfirmButton.addListener(new ClickListener() {
@@ -217,9 +224,10 @@ public class LoginScreen extends ScreenAdapter {
                 super.clicked(event, x, y);
                 createAccount(dialogLoginTextField.getText(), dialogMdpTextField.getText(),
                         dialogConfirmationTextField.getText(), dialogNomTextField.getText());
+                createAccountDialog.hide();
             }
         });
-        createAccountDialog.getButtonTable().add(dialogConfirmButton).pad(padding);
+        createAccountDialog.getButtonTable().add(dialogConfirmButton).padLeft(padding);
 
         TextButton createAccountButton = new TextButton("Créer un compte", textButtonStyle);
         createAccountButton.addListener(new ClickListener() {
@@ -232,7 +240,7 @@ public class LoginScreen extends ScreenAdapter {
                 createAccountDialog.show(stage);
             }
         });
-        createAccountButton.setPosition(WORLD_WIDTH / 2, createAccountButton.getHeight() / 2, Align.center);
+        createAccountButton.setPosition(WORLD_WIDTH / 2, createAccountButton.getHeight() / 2 + padding, Align.center);
         stage.addActor(createAccountButton);
         ////////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -263,16 +271,50 @@ public class LoginScreen extends ScreenAdapter {
     }
 
     private void connect(String login, String mdp) {
-        requestBdGetPlayer(login, mdp);
+        if (login.isEmpty()) {
+            //
+        }
+        else if (!login.matches("[A-Za-z0-9]+")) {
+            //
+        }
+        else if (mdp.isEmpty()) {
+            //
+        }
+        else {
+            requestBdGetPlayer(login, mdp);
+        }
     }
 
     private void createAccount(String login, String mdp, String confirmation, String nom) {
-        _player = new Player(nom);
+        if (login.isEmpty()) {
+            //
+        }
+        else if (!login.matches("[A-Za-z0-9]+")) {
+            //
+        }
+        else if (mdp.isEmpty()) {
+            //
+        }
+        else if (mdp.equals(login) || mdp.equals(nom)) {
+            //
+        }
+        else if (!confirmation.equals(mdp)) {
+            //
+        }
+        else if (nom.isEmpty()) {
+            //
+        }
+        else if (!nom.matches("[A-Za-z0-9]+")) {
+            //
+        }
+        else {
+            _player = new Player(nom);
 
-        requestBdPostPlayer(login, mdp);
+            requestBdPostPlayer(login, mdp);
+        }
     }
 
-    public void requestBdGetPlayer(String login, String mdp){
+    public void requestBdGetPlayer(final String login, final String mdp){
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("login", login);
         parameters.put("mdp", mdp);
@@ -297,6 +339,17 @@ public class LoginScreen extends ScreenAdapter {
                 ArrayList<JsonValue> list = json.fromJson(ArrayList.class, JSONTxt);
                 for (JsonValue v : list) {
                     playerJsons.add(json.readValue(PlayerJson.class,v));
+                }
+
+                if (playerJsons.size == 0) {
+                    //
+                }
+                else {
+                    preferences.putString("login", login);
+                    preferences.putString("mdp", mdp);
+                    preferences.flush();
+
+                    //
                 }
             }
 
@@ -334,7 +387,7 @@ public class LoginScreen extends ScreenAdapter {
         parameters.put("posTowers",_player.getTowersString());
         parameters.put("date",Long.toString(_player.getDate()));
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.POST).url("http://10.16.0.74/towerdefense/sendData.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
+        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.POST).url("http://10.16.0.74/towerdefense/createAccount.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
         Gdx.net.sendHttpRequest (httpRequest, new Net.HttpResponseListener() {
 
             @Override
@@ -349,7 +402,14 @@ public class LoginScreen extends ScreenAdapter {
                     return;
                 }
 
-                //
+                String result = httpResponse.getResultAsString();
+
+                if (result.equals("fail")) {
+                    //
+                }
+                else {
+                    //
+                }
             }
 
             @Override
