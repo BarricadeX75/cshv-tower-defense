@@ -40,6 +40,7 @@ public class Player {
     }
     //Constructeur par défaut
     public Player() {
+        nom = "Brioche";
         vie = 300;
         mana = 160;
         gold = 0;
