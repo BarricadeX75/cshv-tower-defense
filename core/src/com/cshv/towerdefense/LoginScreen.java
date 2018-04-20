@@ -4,23 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.net.HttpParametersUtils;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -38,6 +32,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import cz.tchalupnik.libgdx.Toast;
 
 /**
  * Created by Barricade on 17/04/2018.
@@ -61,6 +57,9 @@ public class LoginScreen extends ScreenAdapter {
     private Animation<TextureRegion> thunder;
     private float animationTimer = 0;
 
+
+    private Toast.ToastFactory toastFactory;
+    private Toast toast = null;
 
     private final TowerDefenseGame towerDefenseGame;
 
@@ -101,6 +100,8 @@ public class LoginScreen extends ScreenAdapter {
         thunder = new Animation<TextureRegion>(FRAME_DURATION, tl.getProjectileTower()[MathUtils.random(3)]);
         thunder.setPlayMode(Animation.PlayMode.LOOP);
         preferences = Gdx.app.getPreferences("com.cshv.towerdefense");
+
+        toastFactory = new Toast.ToastFactory.Builder().font(bitmapFont).build();
 
         /////////////////////////////////////////  STYLES  /////////////////////////////////////////
         TextureRegion dialogBackground = new TextureRegion(new Texture(Gdx.files.internal("dialogBackground.png"))); //tl.getDialogBackground();
@@ -260,7 +261,6 @@ public class LoginScreen extends ScreenAdapter {
                 super.clicked(event, x, y);
                 createAccount(dialogLoginTextField.getText(), dialogMdpTextField.getText(),
                         dialogConfirmationTextField.getText(), dialogNomTextField.getText());
-                createAccountDialog.hide();
             }
         });
         createAccountDialog.getButtonTable().add(dialogConfirmButton).padLeft(padding);
@@ -297,11 +297,13 @@ public class LoginScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         super.render(delta);
-        connect();
         clearScreen();
-        animationTimer += delta;
         stage.act(delta);
         stageBackground.draw();
+        stage.draw();
+
+        if (toast != null)
+            toast.render(delta);
         draw();
 
     }
@@ -430,7 +432,7 @@ public class LoginScreen extends ScreenAdapter {
         });
     }
 
-    public void requestBdPostPlayer( final String login, final String mdp){
+    public void requestBdPostPlayer(String login, String mdp){
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("login", login);
         parameters.put("mdp", mdp);
