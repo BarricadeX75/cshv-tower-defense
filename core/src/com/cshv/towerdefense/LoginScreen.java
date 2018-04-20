@@ -56,7 +56,7 @@ public class LoginScreen extends ScreenAdapter {
     private Camera camera;
     private Viewport viewport;
     private SpriteBatch batch;
-    private boolean connectOk = false;
+
     private Preferences preferences;
     private Animation<TextureRegion> towerShot;
     private Animation<TextureRegion> thunder;
@@ -286,13 +286,6 @@ public class LoginScreen extends ScreenAdapter {
         ////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-    public void connect(){
-        if(connectOk) {
-            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
-            dispose();
-        }
-    }
-
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
@@ -407,19 +400,24 @@ public class LoginScreen extends ScreenAdapter {
                     playerJsons.add(json.readValue(PlayerJson.class,v));
                 }
 
-                if (playerJsons.size == 0) {
-                    toast = toastFactory.create("Login inexistant ou mot de passe incorrect !", Toast.Length.SHORT);
-                }
-                else {
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (playerJsons.size == 0) {
+                            toast = toastFactory.create("Login inexistant ou mot de passe incorrect !", Toast.Length.SHORT);
+                        }
+                        else {
+                            preferences.putString("login", login);
+                            preferences.putString("mdp", mdp);
+                            preferences.flush();
 
-                    preferences.putString("login", login);
-                    preferences.putString("mdp", mdp);
-                    preferences.flush();
+                            _player = playerJsons.first().getPlayer();
 
-                    _player = playerJsons.first().getPlayer();
-                    connectOk = true;
-
-                }
+                            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
+                            dispose();
+                        }
+                    }
+                });
             }
 
             @Override
@@ -473,18 +471,24 @@ public class LoginScreen extends ScreenAdapter {
                     return;
                 }
 
-                String result = httpResponse.getResultAsString();
+                final String result = httpResponse.getResultAsString();
 
-                if (result.equals("fail")) {
-                    toast = toastFactory.create("Ce login est déjà pris !", Toast.Length.SHORT);
-                }
-                else {
-                    preferences.putString("login", login);
-                    preferences.putString("mdp", mdp);
-                    preferences.flush();
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (result.equals("fail")) {
+                            toast = toastFactory.create("Ce login est déjà pris !", Toast.Length.SHORT);
+                        }
+                        else {
+                            preferences.putString("login", login);
+                            preferences.putString("mdp", mdp);
+                            preferences.flush();
 
-                    connectOk = true;
-                }
+                            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
+                            dispose();
+                        }
+                    }
+                });
             }
 
             @Override
