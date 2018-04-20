@@ -275,10 +275,8 @@ public class LoginScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (stage.getActors().contains(createAccountDialog, true))
-                    stage.addActor(createAccountDialog);
-
                 createAccountDialog.show(stage);
+                createAccountDialog.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 3 / 5, Align.center);
             }
         });
         createAccountButton.setPosition(WORLD_WIDTH / 2, createAccountButton.getHeight() / 2 + padding, Align.center);
