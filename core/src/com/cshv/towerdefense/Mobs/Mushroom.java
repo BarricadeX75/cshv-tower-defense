@@ -39,7 +39,7 @@ public class Mushroom extends Mob {
     public void setCarrac(int lvlStage) {
         vie = 100 + ( lvlStage * 30 );
         attaque = 15 + ( 2*lvlStage );
-        defense = 0 + ( 2*lvlStage );
+        defense = (int) ( 0.25*lvlStage );
         vitesse = 1 ;
         portee = 1;
     }

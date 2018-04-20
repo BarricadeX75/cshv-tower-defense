@@ -41,20 +41,20 @@ public class Lamia extends Mob {
     public void setCarrac(int lvlStage) {
         if(_type%3 == 1) {
             vie = 85 + (lvlStage * 15);
-            attaque = 12 + (2 * lvlStage);
-            defense = 0 + (1 * lvlStage);
+            attaque = 12 + (3 * lvlStage);
+            defense =  (1 * lvlStage);
             vitesse = 1f;
             portee = 3;
         }else if(_type%2==1){
             vie = 85 + (lvlStage * 15);
-            attaque = 15 + (3 * lvlStage);
-            defense = 4 + (2 * lvlStage);
+            attaque = 15 + (5 * lvlStage);
+            defense =  (1 * lvlStage);
             vitesse = 1f;
             portee = 2;
         }else{
             vie = 120 + (lvlStage * 20);
-            attaque = 20 + (3 * lvlStage);
-            defense = 10 + (2 * lvlStage);
+            attaque = 20 + (5 * lvlStage);
+            defense = (1 * lvlStage);
             vitesse = 1f;
             portee = 1;
         }

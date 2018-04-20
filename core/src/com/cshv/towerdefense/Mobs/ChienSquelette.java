@@ -98,7 +98,7 @@ public class ChienSquelette extends Mob {
     public void setCarrac(int lvlStage) {
         vie = 50 + ( lvlStage * 10 );
         attaque = 25 + (4* lvlStage );
-        defense = 0 + ((int) (lvlStage/2) );
+        defense = (int) (lvlStage/5);
         vitesse = 2 ;
         portee = 1;
     }

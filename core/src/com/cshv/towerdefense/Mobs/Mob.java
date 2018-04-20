@@ -143,6 +143,7 @@ public abstract class Mob {
         if(malus > vitesse){
             _malus = vitesse;
         }
+        malusOn = true;
         Timer.schedule(malusOff,5);
     }
     public boolean draw(SpriteBatch batch) {

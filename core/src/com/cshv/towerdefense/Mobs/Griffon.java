@@ -42,7 +42,7 @@ public class Griffon extends Mob {
     public void setCarrac(int lvlStage) {
         vie = 130 + ( lvlStage * 10 );
         attaque = 15 + (2* lvlStage );
-        defense = 15 + (2* lvlStage );
+        defense = (int) (0.25* lvlStage);
         vitesse = 1 ;
         portee = 1;
     }

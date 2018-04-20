@@ -38,15 +38,15 @@ public class Dragon extends Mob {
     @Override
     public void setCarrac(int lvlStage) {
         if(_type == 1) {
-            vie = 100 + (lvlStage * 30);
-            attaque = 15 + (3 * lvlStage);
-            defense = 25 + (2 * lvlStage);
+            vie = 100 + (lvlStage * 35);
+            attaque = 25 + (3 * lvlStage);
+            defense = lvlStage;
             vitesse = 0.5f;
             portee = 1;
         }else {
-            vie = 100 + (lvlStage * 30);
-            attaque = 25 + (2 * lvlStage);
-            defense = 10 + (3 * lvlStage);
+            vie = 100 + (lvlStage * 25);
+            attaque = 25 + (6 * lvlStage);
+            defense =  lvlStage;
             vitesse = 0.5f;
             portee = 3;
         }

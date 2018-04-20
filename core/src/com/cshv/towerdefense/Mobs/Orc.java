@@ -41,20 +41,20 @@ public class Orc extends Mob {
     public void setCarrac(int lvlStage) {
         if(_type == 4) {
             vie = 100 + (lvlStage * 30);
-            attaque = 20 + (2 * lvlStage);
-            defense = 4 + (2 * lvlStage);
+            attaque = 20 + (5 * lvlStage);
+            defense = (int) (0.25 * lvlStage);
             vitesse = 0.5f;
             portee = 2;
         }else if(_type == 3) {
             vie = 100 + (lvlStage * 15);
-            attaque = 15 + (2 * lvlStage);
-            defense = 4 + (2 * lvlStage);
+            attaque = 15 + (4 * lvlStage);
+            defense = (int) (0.25 * lvlStage);
             vitesse = 0.5f;
             portee = 3;
         }else {
             vie = 100 + (lvlStage * 30);
             attaque = 15 + (2 * lvlStage);
-            defense = 10 + (2 * lvlStage);
+            defense = (int) (0.5 * lvlStage);
             vitesse = 0.5f;
             portee = 1;
         }

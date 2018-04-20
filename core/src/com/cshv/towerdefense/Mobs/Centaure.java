@@ -42,20 +42,20 @@ public class Centaure extends Mob {
     public void setCarrac(int lvlStage) {
         if(_type%3 == 1) {
             vie = 85 + (lvlStage * 25);
-            attaque = 18 + (2 * lvlStage);
-            defense = 0 + (1 * lvlStage);
+            attaque = 18 + (5 * lvlStage);
+            defense =  ( lvlStage/2);
             vitesse = 1f;
             portee = 3;
         }else if(_type%2==1){
             vie = 100 + (lvlStage * 25);
-            attaque = 15 + (2 * lvlStage);
-            defense = 0 + (2 * lvlStage);
+            attaque = 15 + (4 * lvlStage);
+            defense =  lvlStage;
             vitesse = 1f;
             portee = 1;
         }else{
             vie = 40 + (lvlStage * 10);
-            attaque = 30 + (4 * lvlStage);
-            defense = 0 + (int)(0.5f * lvlStage);
+            attaque = 30 + (6 * lvlStage);
+            defense = (int)(0.5f * lvlStage);
             vitesse = 2f;
             portee = 1;
         }

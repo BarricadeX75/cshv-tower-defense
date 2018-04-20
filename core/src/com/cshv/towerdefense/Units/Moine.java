@@ -37,7 +37,7 @@ public class Moine extends Unit {
         vieMax = 100 + ( lvlStage * 15 );
         vie = vieMax;
         attaque = 15 + (4* lvlStage );
-        defense = (2 * lvlStage );
+        defense = (int) (0.33 * lvlStage);
         vitesse = 1 ;
         portee = 1;
     }
