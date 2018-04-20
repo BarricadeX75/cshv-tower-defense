@@ -159,7 +159,7 @@ public class StartScreen extends ScreenAdapter {
         batch.setTransformMatrix(camera.view);
         batch.begin();
         batch.draw(animeShot,132,460);
-        batch.draw(animeThunder,52,490);
+        batch.draw(animeThunder,50,490);
         batch.end();
         stage.draw();
     }
