@@ -153,7 +153,7 @@ public class EditorScreen extends ScreenAdapter {
 
         uiButtons = new Array<TextButton>(6);
 
-        final TextButton validButton  = new TextButton("Validation", textButtonStyle);
+        final TextButton validButton  = new TextButton("Valider", textButtonStyle);
         validButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -260,7 +260,7 @@ public class EditorScreen extends ScreenAdapter {
         limCheminLabel.setPosition(((7*WORLD_WIDTH) / 8) + 5, WORLD_HEIGHT-15, Align.center);
         uiStage.addActor(limCheminLabel);
 
-        limTowerLabel = new Label("Tower: "+towers.size()+"/"+nbTowerMax,labelStyle);
+        limTowerLabel = new Label("Tours: "+towers.size()+"/"+nbTowerMax,labelStyle);
         limTowerLabel.setFontScale(0.5f);
         limTowerLabel.setPosition((2*WORLD_WIDTH) / 8 , WORLD_HEIGHT-15, Align.center);
         uiStage.addActor(limTowerLabel);
@@ -278,7 +278,7 @@ public class EditorScreen extends ScreenAdapter {
 
     private void update(float delta) {
         uiStage.act(delta);
-        limTowerLabel.setText("Tower: "+towers.size()+"/"+nbTowerMax);
+        limTowerLabel.setText("Tours: "+towers.size()+"/"+nbTowerMax);
         limCheminLabel.setText("Chemin: "+trajet.size+"/"+nbCellCheminMax);
     }
 

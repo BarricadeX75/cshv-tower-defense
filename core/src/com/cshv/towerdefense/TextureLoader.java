@@ -1,7 +1,5 @@
 package com.cshv.towerdefense;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
@@ -633,8 +631,8 @@ public class TextureLoader {
             projectile.add(textureAtlas.findRegion("projectile"+i));
         }
 
-        //caret = textureAtlas.findRegion("caret");
-        //dialogBackground = textureAtlas.findRegion("dialogBackground");
+        caret = textureAtlas.findRegion("caret");
+        dialogBackground = textureAtlas.findRegion("dialogBackground");
 
         buttonUp = textureAtlas.findRegion("buttonUp");
         buttonDown = textureAtlas.findRegion("buttonDown");

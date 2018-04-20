@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -57,7 +56,7 @@ public class LoginScreen extends ScreenAdapter {
     private Camera camera;
     private Viewport viewport;
     private SpriteBatch batch;
-    private boolean connectOk = false;
+
     private Preferences preferences;
     private Animation<TextureRegion> towerShot;
     private Animation<TextureRegion> thunder;
@@ -110,7 +109,7 @@ public class LoginScreen extends ScreenAdapter {
         toastFactory = new Toast.ToastFactory.Builder().font(bitmapFont).build();
 
         /////////////////////////////////////////  STYLES  /////////////////////////////////////////
-        TextureRegion dialogBackground = new TextureRegion(new Texture(Gdx.files.internal("dialogBackground.png"))); //tl.getDialogBackground();
+        TextureRegion dialogBackground = tl.getDialogBackground();
         Window.WindowStyle windowStyle = new Window.WindowStyle(
                 bitmapFont,
                 Color.WHITE,
@@ -126,7 +125,7 @@ public class LoginScreen extends ScreenAdapter {
                 bitmapFont
         );
 
-        TextureRegion caretTexture = new TextureRegion(new Texture(Gdx.files.internal("caret.png"))); //tl.getCaret();
+        TextureRegion caretTexture = tl.getCaret();
         TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle(
                 bitmapFont,
                 Color.WHITE,
@@ -276,22 +275,13 @@ public class LoginScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (stage.getActors().contains(createAccountDialog, true))
-                    stage.addActor(createAccountDialog);
-
                 createAccountDialog.show(stage);
+                createAccountDialog.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 3 / 5, Align.center);
             }
         });
         createAccountButton.setPosition(WORLD_WIDTH / 2, createAccountButton.getHeight() / 2 + padding, Align.center);
         stage.addActor(createAccountButton);
         ////////////////////////////////////////////////////////////////////////////////////////////
-    }
-
-    public void connect(){
-        if(connectOk) {
-            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
-            dispose();
-        }
     }
 
     @Override
@@ -308,11 +298,10 @@ public class LoginScreen extends ScreenAdapter {
         animationTimer += delta;
         stageBackground.draw();
         stage.draw();
+        draw();
 
         if (toast != null)
             toast.render(delta);
-        draw();
-
     }
 
     @Override
@@ -340,13 +329,13 @@ public class LoginScreen extends ScreenAdapter {
 
     private void connect(String login, String mdp) {
         if (login.isEmpty()) {
-            //
+            toast = toastFactory.create("Le login est vide !", Toast.Length.SHORT);
         }
         else if (!login.matches("[A-Za-z0-9]+")) {
-            //
+            toast = toastFactory.create("Le login n'est pas alphanumérique !", Toast.Length.SHORT);
         }
         else if (mdp.isEmpty()) {
-            //
+            toast = toastFactory.create("Le mot de passe est vide !", Toast.Length.SHORT);
         }
         else {
             requestBdGetPlayer(login, mdp);
@@ -355,25 +344,25 @@ public class LoginScreen extends ScreenAdapter {
 
     private void createAccount(String login, String mdp, String confirmation, String nom) {
         if (login.isEmpty()) {
-            //
+            toast = toastFactory.create("Le login ne peut pas être vide !", Toast.Length.SHORT);
         }
         else if (!login.matches("[A-Za-z0-9]+")) {
-            //
+            toast = toastFactory.create("Le login doit être alphanumérique !", Toast.Length.SHORT);
         }
         else if (mdp.isEmpty()) {
-            //
+            toast = toastFactory.create("Le mot de passe ne peut pas être vide !", Toast.Length.SHORT);
         }
         else if (mdp.equals(login) || mdp.equals(nom)) {
-            //
+            toast = toastFactory.create("Le mot de passe doit être différent du login et du nom !", Toast.Length.SHORT);
         }
         else if (!confirmation.equals(mdp)) {
-            //
+            toast = toastFactory.create("La confirmation ne correspond pas au mot de passe !", Toast.Length.SHORT);
         }
         else if (nom.isEmpty()) {
-            //
+            toast = toastFactory.create("Le nom ne peut pas être vide !", Toast.Length.SHORT);
         }
         else if (!nom.matches("[A-Za-z0-9]+")) {
-            //
+            toast = toastFactory.create("Le nom doit être alphanumérique !", Toast.Length.SHORT);
         }
         else {
             _player = new Player(nom);
@@ -409,19 +398,24 @@ public class LoginScreen extends ScreenAdapter {
                     playerJsons.add(json.readValue(PlayerJson.class,v));
                 }
 
-                if (playerJsons.size == 0) {
-                    //
-                }
-                else {
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (playerJsons.size == 0) {
+                            toast = toastFactory.create("Login inexistant ou mot de passe incorrect !", Toast.Length.SHORT);
+                        }
+                        else {
+                            preferences.putString("login", login);
+                            preferences.putString("mdp", mdp);
+                            preferences.flush();
 
-                    preferences.putString("login", login);
-                    preferences.putString("mdp", mdp);
-                    preferences.flush();
+                            _player = playerJsons.first().getPlayer();
 
-                    _player = playerJsons.get(0).getPlayer();
-                    connectOk = true;
-
-                }
+                            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
+                            dispose();
+                        }
+                    }
+                });
             }
 
             @Override
@@ -475,18 +469,24 @@ public class LoginScreen extends ScreenAdapter {
                     return;
                 }
 
-                String result = httpResponse.getResultAsString();
+                final String result = httpResponse.getResultAsString();
 
-                if (result.equals("fail")) {
-                    //
-                }
-                else {
-                    preferences.putString("login", login);
-                    preferences.putString("mdp", mdp);
-                    preferences.flush();
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (result.equals("fail")) {
+                            toast = toastFactory.create("Ce login est déjà pris !", Toast.Length.SHORT);
+                        }
+                        else {
+                            preferences.putString("login", login);
+                            preferences.putString("mdp", mdp);
+                            preferences.flush();
 
-                    connectOk = true;
-                }
+                            towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
+                            dispose();
+                        }
+                    }
+                });
             }
 
             @Override

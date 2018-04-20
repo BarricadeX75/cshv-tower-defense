@@ -352,7 +352,7 @@ public class CharacsScreen extends ScreenAdapter {
 
             }
         });
-        valid.setPosition( ( 3* WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*11  , Align.center );
+        valid.setPosition( (( 5 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*11  , Align.center );
         stage.addActor( valid );
         ImageButton cancel = new ImageButton(new TextureRegionDrawable(new TextureRegion( cancelButton ) ), new TextureRegionDrawable( new TextureRegion( cancelButton ) ) );
         cancel.addListener(new ActorGestureListener() {
@@ -363,7 +363,7 @@ public class CharacsScreen extends ScreenAdapter {
                 dispose();
             }
         });
-        cancel.setPosition( (( 5 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*11  , Align.center );
+        cancel.setPosition( ( 3* WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*11  , Align.center );
         stage.addActor( cancel );
 
         for(int i=0 ; i<10 ; i++){
