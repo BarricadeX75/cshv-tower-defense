@@ -130,6 +130,7 @@ public class TextureLoader {
     private Array<TextureRegion> flecheTexture;
     private Array<TextureRegion> controleTexture;
     private Array<TextureRegion> bigControleTexture;
+    private Array<TextureRegion> bagroundTexture;
 
 
 
@@ -837,6 +838,10 @@ public class TextureLoader {
         return  bigControleTexture;
     }
 
+    public Array<TextureRegion> getBagroundTexture() {
+        return bagroundTexture;
+    }
+
     private void initSpritesMobs() {
         for(int j=1 ; j<9 ; j++){
             mobSlimeUp[j-1] = new Array<TextureRegion>();
@@ -1171,8 +1176,14 @@ public class TextureLoader {
             controleTexture.add(textureAtlas.findRegion("valid ("+i+")"));
         }
         bigControleTexture = new Array<TextureRegion>();
-        bigControleTexture.add(new TextureRegion(new Texture(Gdx.files.internal("confirmation (1).png"))));
-        bigControleTexture.add(new TextureRegion(new Texture(Gdx.files.internal("confirmation (2).png"))));
+        for(int i=1 ; i<3 ; i++){
+            bigControleTexture.add(textureAtlas.findRegion("confirmation ("+i+")"));
+        }
+        bagroundTexture = new Array<TextureRegion>();
+        bagroundTexture.add(textureAtlas.findRegion("Titre"));
+        bagroundTexture.add(textureAtlas.findRegion("Tittre_fond"));
+        //bigControleTexture.add(new TextureRegion(new Texture(Gdx.files.internal("confirmation (1).png"))));
+        //bigControleTexture.add(new TextureRegion(new Texture(Gdx.files.internal("confirmation (2).png"))));
 
     }
 }

@@ -3,11 +3,16 @@ package com.cshv.towerdefense;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.net.HttpParametersUtils;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -20,6 +25,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,12 +35,21 @@ import java.util.Map;
 
 public class StartScreen extends ScreenAdapter {
 
+    private static final float FRAME_DURATION = 0.1F;
+    private static final float FRAME_DURATION1 = 0.125F;
+
     private static final float WORLD_WIDTH = TowerDefenseGame.WORLD_WIDTH;
     private static final float WORLD_HEIGHT = TowerDefenseGame.WORLD_HEIGHT;
-
+    private Camera camera;
     private Stage stage;
     private Array<PlayerJson>  playerJsons;
     private Player _player;
+    private Viewport viewport;
+    private SpriteBatch batch;
+
+    private Animation<TextureRegion> towerShot;
+    private Animation<TextureRegion> thunder;
+    private float animationTimer = 0;
 
     private final TowerDefenseGame towerDefenseGame;
 
@@ -46,12 +62,28 @@ public class StartScreen extends ScreenAdapter {
     @Override
     public void show() {
         super.show();
-        stage = new Stage(new FitViewport(WORLD_WIDTH, WORLD_HEIGHT));
+        batch = new SpriteBatch();
+        camera = new OrthographicCamera();
+        camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
+        camera.update();
+        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT,camera);
+        stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
-
         TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         TextureLoader tl = new TextureLoader(textureAtlas);
         BitmapFont bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
+
+        Image background = new Image(tl.getBagroundTexture().get(0));
+        background.setPosition(0,0);
+        stage.addActor(background);
+        Image titreBackground = new Image(tl.getBagroundTexture().get(1));
+        titreBackground.setPosition(0,0);
+        stage.addActor(titreBackground);
+
+        towerShot = new Animation<TextureRegion>(FRAME_DURATION, tl.getSpellSlowTower());
+        towerShot.setPlayMode(Animation.PlayMode.LOOP);
+        thunder = new Animation<TextureRegion>(FRAME_DURATION, tl.getProjectileTower()[MathUtils.random(3)]);
+        thunder.setPlayMode(Animation.PlayMode.LOOP);
 
         TextureRegion buttonUpTexture = tl.getButtonUp();
         TextureRegion buttonDownTexture = tl.getButtonDown();
@@ -109,14 +141,27 @@ public class StartScreen extends ScreenAdapter {
     public void render(float delta) {
         super.render(delta);
         clearScreen();
+        animationTimer += delta;
         stage.act(delta);
-        stage.draw();
+        draw();
     }
 
     @Override
     public void dispose() {
         super.dispose();
         stage.dispose();
+    }
+
+    private void draw() {
+        TextureRegion animeShot = towerShot.getKeyFrame(animationTimer);
+        TextureRegion animeThunder = thunder.getKeyFrame(animationTimer);
+        batch.setProjectionMatrix(camera.projection);
+        batch.setTransformMatrix(camera.view);
+        batch.begin();
+        batch.draw(animeShot,132,460);
+        batch.draw(animeThunder,52,490);
+        batch.end();
+        stage.draw();
     }
 
     private void clearScreen() {
