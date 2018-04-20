@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -36,13 +38,14 @@ public class EditorScreen extends ScreenAdapter {
     private static final float WORLD_WIDTH = TowerDefenseGame.WORLD_WIDTH;
     private static final float WORLD_HEIGHT = TowerDefenseGame.WORLD_HEIGHT;
 
-    private Stage uiStage;
+    private Stage uiStage,stageBackground;
     private Viewport viewport;
     private Camera camera;
     private SpriteBatch batch;
     private BitmapFont bitmapFont;
     private TextureAtlas textureAtlas;
     private TextureLoader tl;
+    private Label limTowerLabel, limCheminLabel;
     private int nbTowerMax;
     private int nbCellCheminMax;
 
@@ -82,6 +85,10 @@ public class EditorScreen extends ScreenAdapter {
         towers = new HashMap<Integer, Integer>();
         nbTowerMax = 4 + (_player.getLvlFontaine()/5);
         nbCellCheminMax = 15 + (_player.getLvlFontaine()/2);
+        stageBackground = new Stage(viewport);
+        Image fondBackground = new Image(tl.getBagroundTexture().get(2));
+        fondBackground.setPosition(0,0);
+        stageBackground.addActor(fondBackground);
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
 
         uiStage = new Stage(viewport) {
@@ -138,7 +145,7 @@ public class EditorScreen extends ScreenAdapter {
         );
         float textScale = 0.4f;
         float padding = 15f;
-
+        Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.RED);
         Table table = new Table();
         table.setTransform(true);
         table.setScale(textScale);
@@ -233,8 +240,10 @@ public class EditorScreen extends ScreenAdapter {
         uiButtons.add(uiButton6);
 
         uiStage.addActor(table);
-        ////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+        /////////////////////////////////////////////////////////////////////////////////////
         editorState = STATE_CHEMIN;
         uiButton1.setChecked(true);
 
@@ -244,6 +253,18 @@ public class EditorScreen extends ScreenAdapter {
         world = new World(tl.getSol(), tl.getChemin(), trajet, tl.getSpriteTowerFast().get(0), tl.getSpriteTowerSlow().get(0), tl.getSpriteTowerZone().get(0), tl.getSpriteTowerVision().get(0));
         world.cheminEditor(170);
         chargementMap();
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        limCheminLabel = new Label("Chemin: "+trajet.size+"/"+nbCellCheminMax,labelStyle);
+        limCheminLabel.setFontScale(0.5f);
+        limCheminLabel.setPosition(((7*WORLD_WIDTH) / 8) + 5, WORLD_HEIGHT-15, Align.center);
+        uiStage.addActor(limCheminLabel);
+
+        limTowerLabel = new Label("Tower: "+towers.size()+"/"+nbTowerMax,labelStyle);
+        limTowerLabel.setFontScale(0.5f);
+        limTowerLabel.setPosition((2*WORLD_WIDTH) / 8 , WORLD_HEIGHT-15, Align.center);
+        uiStage.addActor(limTowerLabel);
+
     }
 
     @Override
@@ -251,12 +272,14 @@ public class EditorScreen extends ScreenAdapter {
         super.render(delta);
         update(delta);
         clearScreen();
+        stageBackground.draw();
         draw();
     }
 
     private void update(float delta) {
         uiStage.act(delta);
-        //
+        limTowerLabel.setText("Tower: "+towers.size()+"/"+nbTowerMax);
+        limCheminLabel.setText("Chemin: "+trajet.size+"/"+nbCellCheminMax);
     }
 
     private void chargementMap(){

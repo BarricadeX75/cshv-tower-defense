@@ -2,6 +2,7 @@ package com.cshv.towerdefense;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -36,15 +37,15 @@ import java.util.Map;
 public class StartScreen extends ScreenAdapter {
 
     private static final float FRAME_DURATION = 0.1F;
-    private static final float FRAME_DURATION1 = 0.125F;
 
     private static final float WORLD_WIDTH = TowerDefenseGame.WORLD_WIDTH;
     private static final float WORLD_HEIGHT = TowerDefenseGame.WORLD_HEIGHT;
     private Camera camera;
-    private Stage stage;
+    private Stage stage,stageBackground;
     private Array<PlayerJson>  playerJsons;
     private Player _player;
     private Viewport viewport;
+    private Preferences preferences;
     private SpriteBatch batch;
 
     private Animation<TextureRegion> towerShot;
@@ -68,10 +69,13 @@ public class StartScreen extends ScreenAdapter {
         camera.update();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT,camera);
         stage = new Stage(viewport);
+        stageBackground = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         TextureAtlas textureAtlas = towerDefenseGame.getAssetManager().get("test1.atlas");
         TextureLoader tl = new TextureLoader(textureAtlas);
         BitmapFont bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
+        preferences = Gdx.app.getPreferences("com.cshv.towerdefense");
+        requestBdPostPlayer( preferences.getString("login", ""), preferences.getString("mdp", ""));
 
         Image background = new Image(tl.getBagroundTexture().get(0));
         background.setPosition(0,0);
@@ -79,9 +83,20 @@ public class StartScreen extends ScreenAdapter {
         Image titreBackground = new Image(tl.getBagroundTexture().get(1));
         titreBackground.setPosition(0,0);
         stage.addActor(titreBackground);
+        Image fondBackground = new Image(tl.getBagroundTexture().get(2));
+        fondBackground.setPosition(0,0);
+        stageBackground.addActor(fondBackground);
 
-        towerShot = new Animation<TextureRegion>(FRAME_DURATION, tl.getSpellSlowTower());
+        Array<TextureRegion>[] sortBackground = new Array[5];
+        sortBackground[0] = tl.getAtkMage();
+        sortBackground[1] = tl.getSpellSlowTower();
+        sortBackground[2] = tl.getSpellFire();
+        sortBackground[3] = tl.getSpellWater();
+        sortBackground[4] = tl.getExploMushroom();
+
+        towerShot = new Animation<TextureRegion>(FRAME_DURATION, sortBackground[MathUtils.random(4)]);
         towerShot.setPlayMode(Animation.PlayMode.LOOP);
+
         thunder = new Animation<TextureRegion>(FRAME_DURATION, tl.getProjectileTower()[MathUtils.random(3)]);
         thunder.setPlayMode(Animation.PlayMode.LOOP);
 
@@ -143,6 +158,7 @@ public class StartScreen extends ScreenAdapter {
         clearScreen();
         animationTimer += delta;
         stage.act(delta);
+        stageBackground.draw();
         draw();
     }
 
@@ -205,12 +221,12 @@ public class StartScreen extends ScreenAdapter {
                     return;
                 }
                 String JSONTxt = httpResponse.getResultAsString();
-                playerJsons = new Array<PlayerJson>();
+                /*playerJsons = new Array<PlayerJson>();
                 Json json = new Json();
                 ArrayList<JsonValue> list = json.fromJson(ArrayList.class, JSONTxt);
                 for (JsonValue v : list) {
                     playerJsons.add(json.readValue(PlayerJson.class,v));
-                }
+                }*/
 
 
             }
