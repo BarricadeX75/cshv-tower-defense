@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import cz.tchalupnik.libgdx.Toast;
+
 /**
  * Created by Barricade on 17/04/2018.
  */
@@ -46,6 +48,9 @@ public class LoginScreen extends ScreenAdapter {
     private Player _player;
 
     private Preferences preferences;
+
+    private Toast.ToastFactory toastFactory;
+    private Toast toast = null;
 
     private final TowerDefenseGame towerDefenseGame;
 
@@ -65,6 +70,8 @@ public class LoginScreen extends ScreenAdapter {
         final BitmapFont bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
 
         preferences = Gdx.app.getPreferences("com.cshv.towerdefense");
+
+        toastFactory = new Toast.ToastFactory.Builder().font(bitmapFont).build();
 
         /////////////////////////////////////////  STYLES  /////////////////////////////////////////
         TextureRegion dialogBackground = new TextureRegion(new Texture(Gdx.files.internal("dialogBackground.png"))); //tl.getDialogBackground();
@@ -256,6 +263,9 @@ public class LoginScreen extends ScreenAdapter {
         clearScreen();
         stage.act(delta);
         stage.draw();
+
+        if (toast != null)
+            toast.render(delta);
     }
 
     @Override
@@ -271,13 +281,13 @@ public class LoginScreen extends ScreenAdapter {
 
     private void connect(String login, String mdp) {
         if (login.isEmpty()) {
-            //
+            toast = toastFactory.create("Vous n'avez pas entré de login !", Toast.Length.SHORT);
         }
         else if (!login.matches("[A-Za-z0-9]+")) {
-            //
+            toast = toastFactory.create("Votre login doit être alphanumérique !", Toast.Length.SHORT);
         }
         else if (mdp.isEmpty()) {
-            //
+            toast = toastFactory.create("Vous n'avez pas entré de mot de passe !", Toast.Length.SHORT);
         }
         else {
             requestBdGetPlayer(login, mdp);
@@ -286,25 +296,25 @@ public class LoginScreen extends ScreenAdapter {
 
     private void createAccount(String login, String mdp, String confirmation, String nom) {
         if (login.isEmpty()) {
-            //
+            toast = toastFactory.create("Le login ne peut pas être vide !", Toast.Length.SHORT);
         }
         else if (!login.matches("[A-Za-z0-9]+")) {
-            //
+            toast = toastFactory.create("Le login doit être alphanumérique !", Toast.Length.SHORT);
         }
         else if (mdp.isEmpty()) {
-            //
+            toast = toastFactory.create("Le mot de passe ne peut pas être vide !", Toast.Length.SHORT);
         }
         else if (mdp.equals(login) || mdp.equals(nom)) {
-            //
+            toast = toastFactory.create("Le mot de passe doit être différent du login et du nom !", Toast.Length.SHORT);
         }
         else if (!confirmation.equals(mdp)) {
-            //
+            toast = toastFactory.create("La confirmation est différente du mot de passe !", Toast.Length.SHORT);
         }
         else if (nom.isEmpty()) {
-            //
+            toast = toastFactory.create("Le nom ne peut pas être vide !", Toast.Length.SHORT);
         }
         else if (!nom.matches("[A-Za-z0-9]+")) {
-            //
+            toast = toastFactory.create("Le nom doit être alphanumérique !", Toast.Length.SHORT);
         }
         else {
             _player = new Player(nom);
