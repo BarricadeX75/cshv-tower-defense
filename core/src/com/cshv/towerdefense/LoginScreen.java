@@ -351,7 +351,7 @@ public class LoginScreen extends ScreenAdapter {
                 }
 
                 if (playerJsons.size == 0) {
-                    //
+                    toast = toastFactory.create("Login inexistant ou mot de passe incorrect !", Toast.Length.SHORT);
                 }
                 else {
                     preferences.putString("login", login);
@@ -414,7 +414,7 @@ public class LoginScreen extends ScreenAdapter {
                 String result = httpResponse.getResultAsString();
 
                 if (result.equals("fail")) {
-                    //
+                    toast = toastFactory.create("Ce login est déjà pris !", Toast.Length.SHORT);
                 }
                 else {
                     //
