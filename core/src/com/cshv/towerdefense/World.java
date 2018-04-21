@@ -2,6 +2,7 @@ package com.cshv.towerdefense;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.cshv.towerdefense.Towers.Tower;
@@ -20,6 +21,7 @@ public class World {
     public boolean[] isSolid;
     private TextureRegion[] blockImg;
     private TextureRegion[] blockImgTower;
+    private TextureRegion[] blockDecore;
     //10*16
     private final int arrayNum = 176;
 
@@ -84,7 +86,11 @@ public class World {
                 blockImg[i] = BLOCK_SOL;
                 isSolid[i] = true;
                 blocks[i] = new Rectangle(x, y, 32, 32);
-
+            if(MathUtils.randomBoolean(0.1f)){
+                
+            }else{
+                blockDecore[i] = null;
+            }
             x += 32;
         }
         for(int i=0 ; i<_chemin.size ; i++){
@@ -144,9 +150,11 @@ public class World {
     public void draw(SpriteBatch batch){
         for (int i=0; i<arrayNum; i++){
             batch.draw(blockImg[i],blocks[i].x, blocks[i].y);
-            /*if(blockImgChemin[i] != null){
-                batch.draw(blockImgChemin[i],blocks[i].x, blocks[i].y);
-            }*/
+            if(blockDecore[i] != null){
+                if (blockImg[i] != BLOCK_CHEMIN) {
+                    batch.draw(blockDecore[i],blocks[i].x, blocks[i].y);
+                }
+            }
         }
     }
 
