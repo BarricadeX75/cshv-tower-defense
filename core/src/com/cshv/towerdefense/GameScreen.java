@@ -136,8 +136,8 @@ public class GameScreen extends ScreenAdapter {
         fondBackground.setPosition(0,0);
         stageBackground.addActor(fondBackground);
         preferences = Gdx.app.getPreferences("com.cshv.towerdefense");
-
-        world = new World(tl.getSol(), tl.getChemin(), _player.getChemin());
+        world = new World(tl.getLandTexture(),tl.getChemin(),_player.getChemin(), tl.getDecoreTexture());
+        //world = new World(tl.getSol(), tl.getChemin(), _player.getChemin());
         chemin = world.getChemin();
         cells = new Cell[chemin.length];
         for(int i=0 ; i<chemin.length ; i++){

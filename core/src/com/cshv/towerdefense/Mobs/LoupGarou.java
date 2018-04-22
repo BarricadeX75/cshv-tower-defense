@@ -98,19 +98,19 @@ public class LoupGarou extends Mob {
     @Override
     public void setCarrac(int lvlStage) {
         if(_type%3 == 1) {
-            vie = 85 + (lvlStage * 15);
+            vie = 85 + (lvlStage * 20);
             attaque = 12 + (3 * lvlStage);
             defense = 0 + (1 * lvlStage);
             vitesse = 1f;
             portee = 3;
         }else if(_type%2==1){
-            vie = 100 + (lvlStage * 20);
+            vie = 100 + (lvlStage * 25);
             attaque = 15 + (5 * lvlStage);
             defense = (int) (0.5 * lvlStage);
             vitesse = 1f;
             portee = 1;
         }else{
-            vie = 40 + (lvlStage * 10);
+            vie = 40 + (lvlStage * 25);
             attaque = 30 + (5 * lvlStage);
             defense = (int)(0.25f * lvlStage);
             vitesse = 2f;

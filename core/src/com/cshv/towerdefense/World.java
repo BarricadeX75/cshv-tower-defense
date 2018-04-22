@@ -22,19 +22,27 @@ public class World {
     private TextureRegion[] blockImg;
     private TextureRegion[] blockImgTower;
     private TextureRegion[] blockDecore;
+    private boolean newMap = false;
     //10*16
     private final int arrayNum = 176;
 
     //Block Images
     private TextureRegion BLOCK_CHEMIN, BLOCK_SOL, BLOCK_TOWER_ZONE, BLOCK_TOWER_FAST, BLOCK_TOWER_SLOW, BLOCK_TOWER_VISION;
-    private TextureRegion[] solMult = new TextureRegion[8];
-    private TextureRegion[] cheminMult = new TextureRegion[8];
+    private Array<TextureRegion>[] multdecore;
+    private Array<TextureRegion> decore;
+    private Array<TextureRegion> solMult;
     private Array<Integer> _chemin;
     private int x, y;
 
 
     // Map navigation
+    private void initsol() {
+        int rand = MathUtils.random(3);
+        BLOCK_SOL = solMult.get(rand);
+        decore = multdecore[rand];
+        blockDecore = new TextureRegion[arrayNum];
 
+    }
 
 
 
@@ -44,6 +52,23 @@ public class World {
             blockImgTower[i] = null;
         }
     }
+
+    public World( Array<TextureRegion> sols, Array<TextureRegion> chemins, Array<Integer> chemin, Array<TextureRegion>[] decore){
+        _chemin = chemin;
+        y=88;
+        //init();
+        solMult = sols;
+        multdecore = decore;
+        BLOCK_CHEMIN = chemins.get(0);
+        newMap = true;
+        blocks = new Rectangle[arrayNum];
+        blockImg = new TextureRegion[arrayNum];
+        isSolid = new boolean[arrayNum];
+        initsol();
+        loadArrays();
+
+    }
+
 
 
     public World( Array<TextureRegion> sols, Array<TextureRegion> chemins, Array<Integer> chemin){
@@ -55,6 +80,7 @@ public class World {
         blocks = new Rectangle[arrayNum];
         blockImg = new TextureRegion[arrayNum];
         isSolid = new boolean[arrayNum];
+        blockDecore = new TextureRegion[arrayNum];
         loadArrays();
 
     }
@@ -67,6 +93,7 @@ public class World {
         BLOCK_CHEMIN = chemins.get(0);
         blocks = new Rectangle[arrayNum];
         blockImg = new TextureRegion[arrayNum];
+        blockDecore = new TextureRegion[arrayNum];
         isSolid = new boolean[arrayNum];
         BLOCK_TOWER_FAST = towerFast;
         BLOCK_TOWER_SLOW = towerSlow;
@@ -86,11 +113,14 @@ public class World {
                 blockImg[i] = BLOCK_SOL;
                 isSolid[i] = true;
                 blocks[i] = new Rectangle(x, y, 32, 32);
-            if(MathUtils.randomBoolean(0.1f)){
-                
-            }else{
+
+            if (MathUtils.randomBoolean(0.075f) && newMap) {
+                    blockDecore[i] = decore.get(MathUtils.random(7));
+
+            } else {
                 blockDecore[i] = null;
             }
+
             x += 32;
         }
         for(int i=0 ; i<_chemin.size ; i++){

@@ -323,7 +323,7 @@ public class CharacsScreen extends ScreenAdapter {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
-                upgradeUnit(10);
+                downgradeUnit(10);
             }
         });
         fontaineMoins.setPosition( ( WORLD_WIDTH ) / 8, WORLD_HEIGHT-padding*10  , Align.center );
@@ -333,7 +333,7 @@ public class CharacsScreen extends ScreenAdapter {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
-                downgradeUnit(10);
+                 upgradeUnit(10);
             }
         });
         fontainePlus.setPosition( (( 7 * WORLD_WIDTH ) / 8)+5, WORLD_HEIGHT-padding*10  , Align.center );
@@ -347,7 +347,7 @@ public class CharacsScreen extends ScreenAdapter {
                 for(int i=0 ; i<10 ; i++){
                     _player.addStat(upgrage[i],i);
                 }
-                _player.setGold(_player.getGold()-depence);
+                _player.setGold(goldtempo);
                 towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
 
             }

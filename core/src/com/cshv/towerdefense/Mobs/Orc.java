@@ -40,7 +40,7 @@ public class Orc extends Mob {
     @Override
     public void setCarrac(int lvlStage) {
         if(_type == 4) {
-            vie = 100 + (lvlStage * 30);
+            vie = 100 + (lvlStage * 40);
             attaque = 20 + (5 * lvlStage);
             defense = (int) (0.25 * lvlStage);
             vitesse = 0.5f;
@@ -52,7 +52,7 @@ public class Orc extends Mob {
             vitesse = 0.5f;
             portee = 3;
         }else {
-            vie = 100 + (lvlStage * 30);
+            vie = 100 + (lvlStage * 60);
             attaque = 15 + (2 * lvlStage);
             defense = (int) (0.5 * lvlStage);
             vitesse = 0.5f;

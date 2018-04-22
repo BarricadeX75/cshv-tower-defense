@@ -40,8 +40,8 @@ public class Griffon extends Mob {
 
     @Override
     public void setCarrac(int lvlStage) {
-        vie = 130 + ( lvlStage * 10 );
-        attaque = 15 + (2* lvlStage );
+        vie = 130 + ( lvlStage * 20 );
+        attaque = 15 + (5* lvlStage );
         defense = (int) (0.25* lvlStage);
         vitesse = 1 ;
         portee = 1;

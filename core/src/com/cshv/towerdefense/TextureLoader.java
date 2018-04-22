@@ -129,6 +129,8 @@ public class TextureLoader {
     private Array<TextureRegion> controleTexture;
     private Array<TextureRegion> bigControleTexture;
     private Array<TextureRegion> bagroundTexture;
+    private Array<TextureRegion> decoreTexture[] = new Array[4];
+    private Array<TextureRegion> landTexture;
 
 
 
@@ -841,6 +843,14 @@ public class TextureLoader {
         return bagroundTexture;
     }
 
+    public Array<TextureRegion>[] getDecoreTexture() {
+        return  decoreTexture;
+    }
+
+    public Array<TextureRegion> getLandTexture() {
+        return landTexture;
+    }
+
     private void initSpritesMobs() {
         for(int j=1 ; j<9 ; j++){
             mobSlimeUp[j-1] = new Array<TextureRegion>();
@@ -1182,6 +1192,18 @@ public class TextureLoader {
         bagroundTexture.add(textureAtlas.findRegion("Titre"));
         bagroundTexture.add(textureAtlas.findRegion("Tittre_fond"));
         bagroundTexture.add(textureAtlas.findRegion("islamic_geometric_interwoven_pattern-295"));
+
+        for(int i=1 ; i<5 ; i++){
+            decoreTexture[i-1] = new Array<TextureRegion>();
+            for(int j=1 ; j<9 ; j++){
+                decoreTexture[i-1].add(textureAtlas.findRegion("decore"+i+"_  ("+j+")"));
+            }
+        }
+
+        landTexture = new Array<TextureRegion>();
+        for(int i=1 ; i<5 ; i++){
+            landTexture.add(textureAtlas.findRegion("land"+i));
+        }
 
 
     }
