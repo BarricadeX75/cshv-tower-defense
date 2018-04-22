@@ -44,7 +44,7 @@ public class Player {
         nom = "Brioche";
         vie = 300;
         mana = 160;
-        gold = 200;
+        gold = 0;
         lvlChevalier = 1;
         lvlRogue = 1;
         lvlMoine = 1;
