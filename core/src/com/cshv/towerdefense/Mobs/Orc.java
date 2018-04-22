@@ -39,13 +39,13 @@ public class Orc extends Mob {
 
     @Override
     public void setCarrac(int lvlStage) {
-        if(_type == 4) {
+        if(_type == 3) {
             vie = 100 + (lvlStage * 40);
             attaque = 20 + (5 * lvlStage);
             defense = (int) (0.25 * lvlStage);
             vitesse = 0.5f;
             portee = 2;
-        }else if(_type == 3) {
+        }else if(_type == 2) {
             vie = 100 + (lvlStage * 15);
             attaque = 15 + (4 * lvlStage);
             defense = (int) (0.25 * lvlStage);
