@@ -18,20 +18,19 @@ import com.badlogic.gdx.net.HttpParametersUtils;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import cz.tchalupnik.libgdx.Toast;
 
 
 public class StartScreen extends ScreenAdapter {
@@ -42,7 +41,6 @@ public class StartScreen extends ScreenAdapter {
     private static final float WORLD_HEIGHT = TowerDefenseGame.WORLD_HEIGHT;
     private Camera camera;
     private Stage stage,stageBackground;
-    private Array<PlayerJson>  playerJsons;
     private Player _player;
     private Viewport viewport;
     private Preferences preferences;
@@ -51,6 +49,9 @@ public class StartScreen extends ScreenAdapter {
     private Animation<TextureRegion> towerShot;
     private Animation<TextureRegion> thunder;
     private float animationTimer = 0;
+
+    private Toast.ToastFactory toastFactory;
+    private Toast toast = null;
 
     private final TowerDefenseGame towerDefenseGame;
 
@@ -75,6 +76,9 @@ public class StartScreen extends ScreenAdapter {
         TextureLoader tl = new TextureLoader(textureAtlas);
         BitmapFont bitmapFont = towerDefenseGame.getAssetManager().get("font.fnt");
         preferences = Gdx.app.getPreferences("com.cshv.towerdefense");
+
+        toastFactory = new Toast.ToastFactory.Builder().font(bitmapFont).build();
+
         requestBdPostPlayer( preferences.getString("login", ""), preferences.getString("mdp", ""));
 
         Image background = new Image(tl.getBagroundTexture().get(0));
@@ -160,6 +164,9 @@ public class StartScreen extends ScreenAdapter {
         stage.act(delta);
         stageBackground.draw();
         draw();
+
+        if (toast != null)
+            toast.render(delta);
     }
 
     @Override
@@ -216,23 +223,28 @@ public class StartScreen extends ScreenAdapter {
                 // We are not in main thread right now so we need to post to main thread for ui updates
 
                 if (statusCode != 200) {
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            toast = toastFactory.create("Impossible de se connecter au serveur", Toast.Length.SHORT);
+                        }
+                    });
+
                     Gdx.app.log("NetAPITest", "An error ocurred since statusCode is not OK");
 
                     return;
                 }
-                String JSONTxt = httpResponse.getResultAsString();
-                /*playerJsons = new Array<PlayerJson>();
-                Json json = new Json();
-                ArrayList<JsonValue> list = json.fromJson(ArrayList.class, JSONTxt);
-                for (JsonValue v : list) {
-                    playerJsons.add(json.readValue(PlayerJson.class,v));
-                }*/
-
-
             }
 
             @Override
             public void failed(Throwable t) {
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast = toastFactory.create("Impossible de se connecter au serveur", Toast.Length.SHORT);
+                    }
+                });
+
                 Gdx.app.log("error","fail");
                 t.printStackTrace();
             }

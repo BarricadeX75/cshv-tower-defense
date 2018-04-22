@@ -174,8 +174,8 @@ public class LoginScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //connect(loginTextField.getText(), mdpTextField.getText());
-                towerDefenseGame.setScreen(new StartScreen(towerDefenseGame,new Player("harri")));
+                connect(loginTextField.getText(), mdpTextField.getText());
+                //towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, new Player()));
             }
         });
         connectTable.add(connectButton).padTop(padding*2);
@@ -386,6 +386,13 @@ public class LoginScreen extends ScreenAdapter {
                 // We are not in main thread right now so we need to post to main thread for ui updates
 
                 if (statusCode != 200) {
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            toast = toastFactory.create("Impossible de se connecter au serveur", Toast.Length.SHORT);
+                        }
+                    });
+
                     Gdx.app.log("NetAPITest", "An error ocurred since statusCode is not OK");
 
                     return;
@@ -420,6 +427,13 @@ public class LoginScreen extends ScreenAdapter {
 
             @Override
             public void failed(Throwable t) {
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast = toastFactory.create("Impossible de se connecter au serveur", Toast.Length.SHORT);
+                    }
+                });
+
                 Gdx.app.log("error","fail");
                 t.printStackTrace();
             }
@@ -464,6 +478,13 @@ public class LoginScreen extends ScreenAdapter {
                 // We are not in main thread right now so we need to post to main thread for ui updates
 
                 if (statusCode != 200) {
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            toast = toastFactory.create("Impossible de se connecter au serveur", Toast.Length.SHORT);
+                        }
+                    });
+
                     Gdx.app.log("NetAPITest", "An error ocurred since statusCode is not OK");
 
                     return;
@@ -491,6 +512,13 @@ public class LoginScreen extends ScreenAdapter {
 
             @Override
             public void failed(Throwable t) {
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast = toastFactory.create("Impossible de se connecter au serveur", Toast.Length.SHORT);
+                    }
+                });
+
                 Gdx.app.log("error","fail");
                 t.printStackTrace();
             }
