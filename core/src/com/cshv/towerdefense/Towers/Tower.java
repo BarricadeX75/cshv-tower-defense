@@ -50,6 +50,9 @@ public abstract class Tower {
         }
         return 0;
     }
+    public void noManaForSpell(){
+        chargementSpell = 32;
+    }
 
     public abstract void getTarget(int typeAtc);
 

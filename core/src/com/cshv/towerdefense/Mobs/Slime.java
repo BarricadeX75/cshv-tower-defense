@@ -47,7 +47,7 @@ public class Slime extends Mob {
             vitesse = 0.5f;
             portee = 3;
         }else if(_type%2==1){
-            vie = 100 + (lvlStage * 20);
+            vie = 100 + (lvlStage * 35);
             attaque = 15 + (2*lvlStage);
             defense = (lvlStage);
             vitesse = 0.5f;

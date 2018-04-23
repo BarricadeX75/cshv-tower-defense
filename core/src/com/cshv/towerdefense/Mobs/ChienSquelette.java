@@ -96,7 +96,7 @@ public class ChienSquelette extends Mob {
 
     @Override
     public void setCarrac(int lvlStage) {
-        vie = 50 + ( lvlStage * 10 );
+        vie = 50 + ( lvlStage * 15 );
         attaque = 25 + (4* lvlStage );
         defense = (int) (lvlStage/5);
         vitesse = 2 ;

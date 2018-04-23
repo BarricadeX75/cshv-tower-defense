@@ -460,16 +460,22 @@ public class GameScreen extends ScreenAdapter {
                             case 1:
                                 if (_player.getManaCombat() >= 30 + _player.getLvlFastTower()) {
                                     ((FastTower) tower).boosterOn();
+                                }else{
+                                    tower.noManaForSpell();
                                 }
                                 break;
                             case 2:
                                 if (_player.getManaCombat() >= 50 + (2*_player.getLvlSlowTower())) {
                                     tower.getTarget(1);
+                                }else{
+                                    tower.noManaForSpell();
                                 }
                                 break;
                             case 3:
                                 if (_player.getManaCombat() >= 60 + (2*_player.getLvlZoneTower())) {
                                     tower.getTarget(1);
+                                }else{
+                                    tower.noManaForSpell();
                                 }
                                 break;
                             case 4:
@@ -478,8 +484,9 @@ public class GameScreen extends ScreenAdapter {
                                     for (Cell cell : cells) {
                                         cell.spellVisionOk();
                                     }
+                                }else{
+                                    tower.noManaForSpell();
                                 }
-
                                 break;
                         }
                     }
@@ -743,13 +750,13 @@ public class GameScreen extends ScreenAdapter {
                 spells.add(new TowerProjectile(tl.getProjectileTower()[0], tower, cells, cells[cell].getMob(), 1, direction));
                 break;
             case 2:
-                spells.add(new TowerProjectile(tl.getProjectileTower()[1], tower, cells, cells[cell].getMob(), 1, direction));
+                spells.add(new TowerProjectile(tl.getProjectileTower()[1], tower, cells, cells[cell].getMob(), 2, direction));
                 break;
             case 3:
                 spells.add(new TowerProjectile(tl.getProjectileTower()[3], tower, cells, cells[cell].getMob(), 1, direction));
                 break;
             case 4:
-                spells.add(new TowerProjectile(tl.getProjectileTower()[2], tower, cells, cells[cell].getMob(), 1, direction));
+                spells.add(new TowerProjectile(tl.getProjectileTower()[2], tower, cells, cells[cell].getMob(), 4, direction));
                 break;
             case 5:
                 spells.add( new SlowTowerSpell( tl.getSpellSlowTower(),tower,cells[cell].getMob(),cells));

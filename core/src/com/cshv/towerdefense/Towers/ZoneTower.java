@@ -40,7 +40,7 @@ public class ZoneTower extends Tower {
     }
 
     public void setStat( int lvlTower){
-        attaque = 20 + (lvlTower*3);
+        attaque = 15 + (lvlTower*3);
         portee = 3 + (lvlTower/15);
         atcSpeed = 3 - (float)(lvlTower /20);
         malus = 0;
