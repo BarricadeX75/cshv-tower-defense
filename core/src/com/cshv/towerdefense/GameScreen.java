@@ -460,16 +460,22 @@ public class GameScreen extends ScreenAdapter {
                             case 1:
                                 if (_player.getManaCombat() >= 30 + _player.getLvlFastTower()) {
                                     ((FastTower) tower).boosterOn();
+                                }else{
+                                    tower.noManaForSpell();
                                 }
                                 break;
                             case 2:
                                 if (_player.getManaCombat() >= 50 + (2*_player.getLvlSlowTower())) {
                                     tower.getTarget(1);
+                                }else{
+                                    tower.noManaForSpell();
                                 }
                                 break;
                             case 3:
                                 if (_player.getManaCombat() >= 60 + (2*_player.getLvlZoneTower())) {
                                     tower.getTarget(1);
+                                }else{
+                                    tower.noManaForSpell();
                                 }
                                 break;
                             case 4:
@@ -478,8 +484,9 @@ public class GameScreen extends ScreenAdapter {
                                     for (Cell cell : cells) {
                                         cell.spellVisionOk();
                                     }
+                                }else{
+                                    tower.noManaForSpell();
                                 }
-
                                 break;
                         }
                     }
