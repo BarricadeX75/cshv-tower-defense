@@ -89,7 +89,7 @@ public class GameScreen extends ScreenAdapter {
     private int gold = 0;
     private boolean waveFinal = false;
     private boolean win = false,lose = false;
-    private Label labelLose, labelWin, labelProsition;
+    private Label labelLose, labelWin, labelPosition;
     private ImageButton validButton, cancelButton;
 
     protected Timer.Task setWave;
@@ -271,17 +271,17 @@ public class GameScreen extends ScreenAdapter {
         uiStage.addActor(table);
         ///////////////////////////////////////////////////////////////////////////
 
-        labelLose = new Label(" You Lose ", labelStyleLose);
+        labelLose = new Label(" Défaite ", labelStyleLose);
         labelLose.setFontScale(1.5f);
         labelLose.setPosition((WORLD_WIDTH/3)+20, (4*WORLD_HEIGHT)/5, Align.center);
 
-        labelWin = new Label(" You Win ", labelStyle);
+        labelWin = new Label(" Victoire ", labelStyle);
         labelWin.setFontScale(1.5f);
-        labelWin.setPosition((WORLD_WIDTH/3)+20, WORLD_HEIGHT/2, Align.center);
+        labelWin.setPosition((WORLD_WIDTH/3)+20, (4*WORLD_HEIGHT)/5, Align.center);
 
-        labelProsition = new Label(" Need you Downgrade Stage ? ", labelStyleLose);
-        labelProsition.setFontScale(0.65f);
-        labelProsition.setPosition((3*WORLD_WIDTH)/4, WORLD_HEIGHT/2, Align.center);
+        labelPosition = new Label(" Voulez-vous revenir\nau stage précédent ? ", labelStyleLose);
+        labelPosition.setFontScale(0.65f);
+        labelPosition.setPosition((3*WORLD_WIDTH)/4-20, WORLD_HEIGHT/2, Align.center);
 
         Array<TextureRegion> textureControleButton = tl.getBigControleTexture();
 
@@ -383,7 +383,7 @@ public class GameScreen extends ScreenAdapter {
                     uiStage.addActor(labelLose);
                 } else {
                     uiStage.addActor(labelLose);
-                    uiStage.addActor(labelProsition);
+                    uiStage.addActor(labelPosition);
                     uiStage.addActor(validButton);
                     uiStage.addActor(cancelButton);
                     lose = true;
