@@ -45,13 +45,13 @@ public class Golem extends Mob {
             portee = 2;
         }else if(_type%2==1){
             vie = 100 + (lvlStage * 25);
-            attaque = 10 + (2 * lvlStage);
+            attaque = 10 + (3 * lvlStage);
             defense = 6 + (2 * lvlStage);
             vitesse = 0.5f;
             portee = 1;
         }else{
-            vie = 85 + (lvlStage * 15);
-            attaque = 30 + (2 * lvlStage);
+            vie = 85 + (lvlStage * 20);
+            attaque = 30 + (3 * lvlStage);
             defense = 2 + (lvlStage);
             vitesse = 1f;
             portee = 1;
