@@ -72,14 +72,24 @@ public class SlowTower extends Tower {
                 }
             }
         }else{
+            int poidsMax, poids, cell;
+            cell = 0;
+            poidsMax = 0;
             for (int i = 0; i < caseDistOk.size; i++) {
+                poids = 0;
                 if (parent.testCase(caseDistOk.get(i), 2)) {
-                    parent.getTargetMobTower(this, caseDistOk.get(i), 5);
-                    parent.manaUse(Tower.SPELL_SLOW + (2*lvlTower));
-                    break;
-                }else  {
-                    chargementSpell = 32f;
+                    poids += parent.getPoidsCell(caseDistOk.get(i));
                 }
+                if(poids > poidsMax){
+                    poidsMax = poids;
+                    cell = i;
+                }
+            }
+            if(poidsMax>0){
+                parent.getTargetMobTower(this, caseDistOk.get(cell), 5);
+                parent.manaUse(Tower.SPELL_SLOW + (2*lvlTower));
+            }else{
+                chargementSpell = 32f;
             }
         }
     }
