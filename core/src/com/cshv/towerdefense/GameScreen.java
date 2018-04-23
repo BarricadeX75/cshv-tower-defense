@@ -762,13 +762,13 @@ public class GameScreen extends ScreenAdapter {
         switch(type){
             case 0: spells.add( new ExplosionMushroomSpell( tl.getExploMushroom(), chemin[cell-1].getX(), chemin[cell-1].getY(), cells[cell-1]));
                 break;
-            case 1: _player.bonusVie(80);
+            case 1: _player.bonusVie(2*lvlStage);
                 break;
-            case 2: gold+=20;
+            case 2: gold+=lvlStage;
                 break;
-            case 3: gold += 40;
+            case 3: gold += (2*lvlStage);
                 break;
-            case 4: _player.bonusMana(50);
+            case 4: _player.bonusMana((int)(1.5*lvlStage));
                 break;
         }
     }
