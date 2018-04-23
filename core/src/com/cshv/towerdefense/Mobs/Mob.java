@@ -139,12 +139,14 @@ public abstract class Mob {
         }
     }
     public void addMalus(float malus) {
-        _malus = malus;
-        if(malus > vitesse){
-            _malus = vitesse;
+        if (!malusOn) {
+            _malus = malus;
+            if (malus > vitesse) {
+                _malus = vitesse;
+            }
+            malusOn = true;
+            Timer.schedule(malusOff, 5f);
         }
-        malusOn = true;
-        Timer.schedule(malusOff,5);
     }
     public boolean draw(SpriteBatch batch) {
         TextureRegion anime = currentAnimation.getKeyFrame(animationTimer);

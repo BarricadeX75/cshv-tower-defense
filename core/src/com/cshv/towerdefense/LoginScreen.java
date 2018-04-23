@@ -174,8 +174,8 @@ public class LoginScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                connect(loginTextField.getText(), mdpTextField.getText());
-                //towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, new Player()));
+                //connect(loginTextField.getText(), mdpTextField.getText());
+                towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, new Player()));
             }
         });
         connectTable.add(connectButton).padTop(padding*2);
