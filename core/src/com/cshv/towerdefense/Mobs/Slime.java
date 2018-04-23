@@ -30,6 +30,7 @@ public class Slime extends Mob {
         animeUp = new Animation<TextureRegion>(FRAME_DURATION,up);
         animeUp.setPlayMode(Animation.PlayMode.LOOP);
         setCarrac(lvlStage);
+        _type = type;
         currentAnimation = animeDown;
         parent = jeu;
         chemin = parent.getChemin();

@@ -32,6 +32,7 @@ public class Centaure extends Mob {
         setCarrac(lvlStage);
         currentAnimation = animeDown;
         parent = jeu;
+        _type = type;
         chemin = parent.getChemin();
         currentCase = chemin.length - 1;
         setPosition(chemin[currentCase].getX(), chemin[currentCase].getY() + World.DEPART);
