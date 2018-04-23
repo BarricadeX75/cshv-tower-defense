@@ -41,7 +41,7 @@ public class SlowTower extends Tower {
         attaque = 15 + (lvlTower*3);
         portee = 3 + (lvlTower/15);
         atcSpeed = 3 - (lvlTower / 20);
-        malus = 0.5f + (lvlTower/20);
+        malus = 0.5f ;
         if(atcSpeed < 1.5f){
             atcSpeed = 1.5f;
         }
