@@ -178,7 +178,7 @@ public class World {
     }
 
     public void draw(SpriteBatch batch){
-        for (int i=0; i<arrayNum; i++){
+        for (int i=arrayNum-1; i>=0; i--){
             batch.draw(blockImg[i],blocks[i].x, blocks[i].y);
             if(blockDecore[i] != null){
                 if (blockImg[i] != BLOCK_CHEMIN) {
