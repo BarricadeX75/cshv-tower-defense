@@ -50,7 +50,7 @@ public class FastTower extends Tower {
     }
 
     public void setStat( int lvlTower){
-        attaque = 20 + (lvlTower*4);
+        attaque = 15 + (lvlTower*4);
         portee = 3 + (lvlTower/15);
         atcSpeed = 3 - (float)(lvlTower/15);
         malus = 0;
