@@ -174,8 +174,8 @@ public class LoginScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //connect(loginTextField.getText(), mdpTextField.getText());
-                towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, new Player()));
+                connect(loginTextField.getText(), mdpTextField.getText());
+                //towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, new Player()));
             }
         });
         connectTable.add(connectButton).padTop(padding*2);
@@ -403,6 +403,7 @@ public class LoginScreen extends ScreenAdapter {
                 ArrayList<JsonValue> list = json.fromJson(ArrayList.class, JSONTxt);
                 for (JsonValue v : list) {
                     playerJsons.add(json.readValue(PlayerJson.class,v));
+                    System.out.println(v);
                 }
 
                 Gdx.app.postRunnable(new Runnable() {
@@ -454,16 +455,16 @@ public class LoginScreen extends ScreenAdapter {
         parameters.put("nom",_player.getNom());
         parameters.put("lvlStage",Integer.toString(_player.getLvlStage()));
         parameters.put("gold",Integer.toString(_player.getGold()));
-        parameters.put("lvlFastTower", Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlZoneTower", Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlSlowTower",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlVisionTower",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlChevalier",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlHealer",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlMage",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlRogue",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlMoine",Integer.toString(_player.getLvlStage()));
-        parameters.put("lvlFontaine",Integer.toString(_player.getLvlStage()));
+        parameters.put("lvlFastTower", Integer.toString(_player.getLvlFastTower()));
+        parameters.put("lvlZoneTower", Integer.toString(_player.getLvlZoneTower()));
+        parameters.put("lvlSlowTower",Integer.toString(_player.getLvlSlowTower()));
+        parameters.put("lvlVisionTower",Integer.toString(_player.getLvlVisionTower()));
+        parameters.put("lvlChevalier",Integer.toString(_player.getLvlChevalier()));
+        parameters.put("lvlHealer",Integer.toString(_player.getLvlHealer()));
+        parameters.put("lvlMage",Integer.toString(_player.getLvlMage()));
+        parameters.put("lvlRogue",Integer.toString(_player.getLvlRogue()));
+        parameters.put("lvlMoine",Integer.toString(_player.getLvlMoine()));
+        parameters.put("lvlFontaine",Integer.toString(_player.getLvlFontaine()));
         parameters.put("chemin",_player.getCheminString());
         parameters.put("posTowers",_player.getTowersString());
         parameters.put("date",Long.toString(_player.getDate()));

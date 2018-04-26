@@ -129,8 +129,10 @@ public class Cell {
     }
 
     public void spellVisionOk(){
-        visionTempo = true;
-        Timer.schedule(finSpellVision, 15f);
+        if(!visionTempo) {
+            visionTempo = true;
+            Timer.schedule(finSpellVision, 15f);
+        }
     }
 
     public void allDead(){

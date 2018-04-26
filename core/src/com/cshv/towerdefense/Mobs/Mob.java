@@ -144,6 +144,9 @@ public abstract class Mob {
             if (malus > vitesse) {
                 _malus = vitesse;
             }
+            if(vitesse == 2){
+                _malus = 1;
+            }
             malusOn = true;
             Timer.schedule(malusOff, 5f);
         }

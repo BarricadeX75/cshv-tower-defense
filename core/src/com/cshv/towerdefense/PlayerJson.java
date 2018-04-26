@@ -54,6 +54,6 @@ public class PlayerJson {
         if(ratio > 1){
             ratio = 1;
         }
-        return (int)(gold/ratio);
+        return (int)(gold*ratio);
     }
 }
