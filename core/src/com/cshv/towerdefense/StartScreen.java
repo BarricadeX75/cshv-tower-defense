@@ -212,7 +212,6 @@ public class StartScreen extends ScreenAdapter {
         parameters.put("chemin",_player.getCheminString());
         parameters.put("posTowers",_player.getTowersString());
         parameters.put("date",Long.toString(_player.getDate()));
-        System.out.println(parameters);
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
         Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.POST).url("http://10.16.0.74/towerdefense/sendData.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
         Gdx.net.sendHttpRequest (httpRequest, new Net.HttpResponseListener() {

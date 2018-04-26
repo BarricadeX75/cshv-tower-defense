@@ -1,9 +1,10 @@
 package com.cshv.towerdefense;
 
 
+import com.badlogic.gdx.utils.Array;
+
 import java.util.Date;
 import java.util.HashMap;
-import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by harri on 16/04/2018.
@@ -24,8 +25,10 @@ public class PlayerJson {
     }
 
     public Player getPlayer(){
-        return new Player( nom, getGold(), lvlChevalier, lvlMage, lvlMoine, lvlRogue, lvlHealer, lvlFastTower,
+        Player player = new Player( nom, getGold(), lvlChevalier, lvlMage, lvlMoine, lvlRogue, lvlHealer, lvlFastTower,
                 lvlSlowTower, lvlZoneTower, lvlVisionTower, lvlFontaine, getChemin(), getTowers(), lvlStage);
+        player.resetStatsCombat();
+        return player;
     }
 
     public Array<Integer> getChemin(){
@@ -48,12 +51,13 @@ public class PlayerJson {
     }
 
     public int getGold(){
-        int gold = (int) (200 * Math.pow(1.2,lvlStage-1));
+        int goldIdle = (int) (200 * Math.pow(1.2,lvlStage-1));
         long diffDate = new Date().getTime() - date;
         float ratio = diffDate/TIME_MAX;
         if(ratio > 1){
             ratio = 1;
         }
-        return (int)(gold*ratio);
+        gold += (int)(goldIdle*ratio);
+        return gold;
     }
 }

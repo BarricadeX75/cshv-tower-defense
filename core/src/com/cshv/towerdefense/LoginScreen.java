@@ -403,7 +403,6 @@ public class LoginScreen extends ScreenAdapter {
                 ArrayList<JsonValue> list = json.fromJson(ArrayList.class, JSONTxt);
                 for (JsonValue v : list) {
                     playerJsons.add(json.readValue(PlayerJson.class,v));
-                    System.out.println(v);
                 }
 
                 Gdx.app.postRunnable(new Runnable() {
