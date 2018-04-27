@@ -138,7 +138,7 @@ public class TextureLoader {
 
     private TextureRegion caret, dialogBackground;
     private TextureRegion buttonUp, buttonDown;
-    private TextureRegion barBack, barRed, barBlue;
+    private TextureRegion barBack, barRed, barBlue, barGold;
 
 
     public TextureLoader(TextureAtlas textureAtlas) {
@@ -601,6 +601,10 @@ public class TextureLoader {
 
     public TextureRegion getBarRed() {
         return barRed;
+    }
+
+    public TextureRegion getBarGold() {
+        return barGold;
     }
 
     public TextureRegion getBarBlue() {
@@ -1205,6 +1209,6 @@ public class TextureLoader {
             landTexture.add(textureAtlas.findRegion("land"+i));
         }
 
-
+        barGold = textureAtlas.findRegion("barGold");
     }
 }

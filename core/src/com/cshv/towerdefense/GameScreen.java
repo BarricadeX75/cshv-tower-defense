@@ -68,6 +68,7 @@ import java.util.HashMap;
 public class GameScreen extends ScreenAdapter {
     private static final float WORLD_WIDTH = TowerDefenseGame.WORLD_WIDTH;
     private static final float WORLD_HEIGHT = TowerDefenseGame.WORLD_HEIGHT;
+    public static final float BAR_HEIGHT = 6f;
 
     private final TowerDefenseGame towerDefenseGame;
     private Viewport viewport;
@@ -79,21 +80,22 @@ public class GameScreen extends ScreenAdapter {
     private Rectangle[] chemin;
     private int lvlStage = 1;
     private TextureLoader tl;
+    private float timerParti, ajoutTimer;
     private int nbMonster;
     private int mobCreer = 1;
     private int numWave = 1;
     private int gold = 0;
     private boolean waveFinal = false;
     private boolean win = false,lose = false;
-    private Label labelLose, labelWin, labelPosition;
+    private Label labelLose, labelWin, labelPosition, labelGold;
     private ImageButton validButton, cancelButton;
+    public TextureRegion barGold, barFront;
 
     protected Timer.Task setWave;
     protected Timer.Task setMob;
 
 
     private Cell cells[];
-    private Array<Integer> towerList = new Array<Integer>();
     private Array<Mob> mobs = new Array<Mob>();
     private Array<Unit> units = new Array<Unit>();
     private Array<Spell> spells = new Array<Spell>();
@@ -132,6 +134,8 @@ public class GameScreen extends ScreenAdapter {
         fondBackground.setPosition(0,0);
         stageBackground.addActor(fondBackground);
         touchPlayer = new Vector3();
+        barGold = tl.getBarGold();
+        barFront = tl.getBarBack();
         world = new World(tl.getLandTexture(),tl.getChemin(),_player.getChemin(), tl.getDecoreTexture());
         //world = new World(tl.getSol(), tl.getChemin(), _player.getChemin());
         chemin = world.getChemin();
@@ -141,7 +145,6 @@ public class GameScreen extends ScreenAdapter {
         }
         units.add(new Fontaine(tl.getSpriteFontaine(), this, _player.getLvlFontaine(), _player));
         createTower();
-        //TextureRegion boutonTest = textureAtlas.findRegion("button_carrer");
 
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
         TextureRegion buttonUpTexture = tl.getButtonUp();
@@ -153,6 +156,7 @@ public class GameScreen extends ScreenAdapter {
                 bitmapFont
         );
         Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
+        Label.LabelStyle labelStyleWin = new Label.LabelStyle(bitmapFont, Color.BLUE);
         Label.LabelStyle labelStyleLose = new Label.LabelStyle(bitmapFont, Color.RED);
         Label.LabelStyle labelStyleStage = new Label.LabelStyle(bitmapFont, Color.FIREBRICK);
         float nameScale = 0.5f;
@@ -160,9 +164,7 @@ public class GameScreen extends ScreenAdapter {
         float padding = 15f;
 
         uiStage = new Stage(viewport);
-        //loseStage = new Stage(viewport);
         Gdx.input.setInputProcessor(uiStage);
-        //Gdx.input.setInputProcessor(loseStage);
 
         Label nameLabel = new Label(_player.getNom(), labelStyle);
         nameLabel.setFontScale(nameScale);
@@ -271,9 +273,14 @@ public class GameScreen extends ScreenAdapter {
         labelLose.setFontScale(1.5f);
         labelLose.setPosition((WORLD_WIDTH/3)+20, (4*WORLD_HEIGHT)/5, Align.center);
 
-        labelWin = new Label(" Victoire ", labelStyle);
+        labelWin = new Label(" Victoire ", labelStyleWin);
         labelWin.setFontScale(1.5f);
         labelWin.setPosition((WORLD_WIDTH/3)+20, (4*WORLD_HEIGHT)/5, Align.center);
+
+        labelGold = new Label("", labelStyleWin);
+        labelGold.setFontScale(1f);
+        labelGold.setPosition((WORLD_WIDTH/5), (2*WORLD_HEIGHT)/5, Align.center);
+
 
         labelPosition = new Label(" Voulez-vous revenir\nau stage précédent ? ", labelStyleLose);
         labelPosition.setFontScale(0.65f);
@@ -313,6 +320,8 @@ public class GameScreen extends ScreenAdapter {
 
 
         nbMonster = 5 + lvlStage /4;
+        timerParti = 0;
+        ajoutTimer = WORLD_WIDTH / (1+(4*nbMonster));
         setMob = new Timer.Task() {
             @Override
             public void run() {
@@ -391,6 +400,8 @@ public class GameScreen extends ScreenAdapter {
                 System.out.println(gold);
                 _player.addGold(goldWin);
                 _player.setLvlStage(lvlStage + 1);
+                labelGold.setText(goldWin+"G gagnés");
+                uiStage.addActor(labelGold);
                 uiStage.addActor(labelWin);
                 win = true;
             }
@@ -821,6 +832,8 @@ public class GameScreen extends ScreenAdapter {
         drawMobs();
         drawUnits();
         drawTowers();
+        batch.draw(barFront, 0, 82, WORLD_WIDTH, BAR_HEIGHT);
+        batch.draw(barGold, 0, 82, timerParti, BAR_HEIGHT);
         batch.end();
 
         uiStage.draw();
@@ -835,8 +848,8 @@ public class GameScreen extends ScreenAdapter {
     private void drawMobs(){
         for(int i=0 ; i<mobs.size ; i++){
             if(mobs.get(i).draw(batch)){
-
                 mobs.removeIndex(i);
+                timerParti += ajoutTimer;
             }
         }
     }
