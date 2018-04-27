@@ -14,12 +14,14 @@ import com.cshv.towerdefense.World;
 public class Fontaine extends Unit {
     TextureRegion spriteFontaine;
     Player _player;
+    private  int lvlFontaine;
 
     public Fontaine(Array<TextureRegion> fontaine, GameScreen jeu, int lvlFontaine, Player player){
         int numSprite = lvlFontaine/10;
         if(numSprite>3){
             numSprite = 3;
         }
+        this.lvlFontaine = lvlFontaine;
         spriteFontaine = fontaine.get(numSprite);
         parent = jeu;
         chemin = parent.getChemin();
@@ -47,7 +49,11 @@ public class Fontaine extends Unit {
     }
 
     public boolean draw(SpriteBatch batch) {
-        batch.draw( spriteFontaine, _x-1, _y);
+        if(lvlFontaine>=10){
+            batch.draw(spriteFontaine,_x-5,_y);
+        }else {
+            batch.draw(spriteFontaine, _x - 1, _y);
+        }
         return dead;
     }
 }

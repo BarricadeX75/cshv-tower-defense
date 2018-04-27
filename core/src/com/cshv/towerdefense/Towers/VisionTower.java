@@ -76,8 +76,8 @@ public class VisionTower extends Tower {
     }
 
     public void draw(SpriteBatch batch) {
-        if(lvlTower>=30){
-            batch.draw(_tower,_x-11,_y);
+        if(lvlTower>=10){
+            batch.draw(_tower,_x-6,_y);
         }else {
             batch.draw(_tower, _x + 1, _y);
         }
