@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -70,6 +71,7 @@ public class GameScreen extends ScreenAdapter {
 
     private final TowerDefenseGame towerDefenseGame;
     private Viewport viewport;
+    private Vector3 touchPlayer;
     private Camera camera;
     private BitmapFont bitmapFont;
     private SpriteBatch batch;
@@ -129,7 +131,7 @@ public class GameScreen extends ScreenAdapter {
         Image fondBackground = new Image(tl.getBagroundTexture().get(2));
         fondBackground.setPosition(0,0);
         stageBackground.addActor(fondBackground);
-
+        touchPlayer = new Vector3();
         world = new World(tl.getLandTexture(),tl.getChemin(),_player.getChemin(), tl.getDecoreTexture());
         //world = new World(tl.getSol(), tl.getChemin(), _player.getChemin());
         chemin = world.getChemin();
@@ -443,8 +445,10 @@ public class GameScreen extends ScreenAdapter {
     private void acitivationSpell(){
         if(Gdx.input.justTouched()){
             if(!win) {
-                float x = (Gdx.input.getX() - 45) / 2;
-                float y = WORLD_HEIGHT - ((Gdx.input.getY()) / 2);
+                touchPlayer.set(Gdx.input.getX(),Gdx.input.getY(),0);
+                camera.unproject(touchPlayer);
+                float x = touchPlayer.x;
+                float y = touchPlayer.y;
 
                 for (Tower tower : towers) {
                     if (x >= tower.getX() && x <= tower.getX() + 32 && y >= tower.getY() && y <= tower.getY() + 32) {

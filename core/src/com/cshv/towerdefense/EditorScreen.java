@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -48,6 +50,7 @@ public class EditorScreen extends ScreenAdapter {
     private Label limTowerLabel, limCheminLabel;
     private int nbTowerMax;
     private int nbCellCheminMax;
+    private Vector3 touchPlayer;
 
     private Array<TextButton> uiButtons;
     private int editorState;
@@ -89,6 +92,7 @@ public class EditorScreen extends ScreenAdapter {
         Image fondBackground = new Image(tl.getBagroundTexture().get(2));
         fondBackground.setPosition(0,0);
         stageBackground.addActor(fondBackground);
+        touchPlayer = new Vector3();
         /////////////////////////////////////  USER INTERFACE  /////////////////////////////////////
 
         uiStage = new Stage(viewport) {
@@ -96,10 +100,14 @@ public class EditorScreen extends ScreenAdapter {
             public boolean touchDragged(int screenX, int screenY, int pointer) {
                 switch (editorState) {
                 case STATE_CHEMIN:
-                    insertCell(screenX, screenY);
+                    touchPlayer.set(screenX,screenY,0);
+                    camera.unproject(touchPlayer);
+                    insertCell();
                     break;
                 case STATE_EFFACER_CHEMIN:
-                    removeCell(screenX, screenY);
+                    touchPlayer.set(screenX,screenY,0);
+                    camera.unproject(touchPlayer);
+                    removeCell();
                     break;
                 }
 
@@ -108,24 +116,26 @@ public class EditorScreen extends ScreenAdapter {
 
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                touchPlayer.set(screenX,screenY,0);
+                camera.unproject(touchPlayer);
                 switch (editorState) {
                 case STATE_CHEMIN:
-                    insertCell(screenX, screenY);
+                    insertCell();
                     break;
                 case STATE_EFFACER_CHEMIN:
-                    removeCell(screenX, screenY);
+                    removeCell();
                     break;
                 case STATE_FAST_TOWER:
-                    insertTower(screenX, screenY, Tower.FAST_TOWER);
+                    insertTower( Tower.FAST_TOWER);
                     break;
                 case STATE_SLOW_TOWER:
-                    insertTower(screenX, screenY, Tower.SLOW_TOWER);
+                    insertTower( Tower.SLOW_TOWER);
                     break;
                 case STATE_ZONE_TOWER:
-                    insertTower(screenX, screenY, Tower.ZONE_TOWER);
+                    insertTower( Tower.ZONE_TOWER);
                     break;
                 case STATE_VISION_TOWER:
-                    insertTower(screenX, screenY, Tower.VISION_TOWER);
+                    insertTower( Tower.VISION_TOWER);
                     break;
                 }
 
@@ -305,10 +315,11 @@ public class EditorScreen extends ScreenAdapter {
         }
     }
 
-    private void insertCell(float x , float y){
+    private void insertCell(){
         boolean flag = true;
-        x = (x-45)/2;
-        y = WORLD_HEIGHT-( ( y + 176 ) /2);
+        float x,y;
+        x = touchPlayer.x;
+        y = touchPlayer.y - 88;
 
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
 
@@ -329,10 +340,11 @@ public class EditorScreen extends ScreenAdapter {
         }
     }
 
-    private void insertTower(float x, float y, int type){
+    private void insertTower( int type){
         boolean flag = true;
-        x = (x-45)/2;
-        y = WORLD_HEIGHT-( ( y + 176 ) /2);
+        float x,y;
+        x = touchPlayer.x;
+        y = touchPlayer.y - 88;
 
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
 
@@ -360,10 +372,10 @@ public class EditorScreen extends ScreenAdapter {
         }
     }
 
-    private void removeCell(float x , float y){
-
-        x = (x-45)/2;
-        y = WORLD_HEIGHT-( ( y + 176 ) /2);
+    private void removeCell(){
+        float x,y;
+        x = touchPlayer.x;
+        y = touchPlayer.y - 88;
 
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
         removeTower(numCell);
