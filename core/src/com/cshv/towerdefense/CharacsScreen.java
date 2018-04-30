@@ -29,13 +29,13 @@ public class CharacsScreen extends ScreenAdapter {
     private Stage stage, stageBackground;
     private Viewport viewport;
     private Player _player;
-    private int upgrage[] = new int[10];
-    private int goldtempo;
+    private int upgrade[] = new int[10];
+    private long goldtempo;
     private Label labelCout[] = new Label[10];
     private Label labelLvl[] = new Label[10];
     private Label labelGold;
     private TextureRegion img[];
-    private int depence = 0;
+    private long depense = 0;
     private int cout[];
     private int lvl[];
 
@@ -112,7 +112,7 @@ public class CharacsScreen extends ScreenAdapter {
 
 
         for(int i=0 ; i<10 ; i++){
-            upgrage[i] = 0;
+            upgrade[i] = 0;
         }
 
         Label.LabelStyle labelStyleGold = new Label.LabelStyle(bitmapFont, Color.WHITE);
@@ -345,7 +345,7 @@ public class CharacsScreen extends ScreenAdapter {
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
                 for(int i=0 ; i<10 ; i++){
-                    _player.addStat(upgrage[i],i);
+                    _player.addStat(upgrade[i],i);
                 }
                 _player.setGold(goldtempo);
                 towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
@@ -420,41 +420,52 @@ public class CharacsScreen extends ScreenAdapter {
     }
 
     private void upgradeUnit(int unit){
-        if(goldtempo >= (int)((cout[unit-1]*Math.pow(1.15,lvl[unit-1]-1))*Math.pow(1.15,upgrage[unit-1]))){
-            upgrage[unit - 1]++;
+        if(goldtempo >= (int)((cout[unit-1]*Math.pow(1.15,lvl[unit-1]-1))*Math.pow(1.15, upgrade[unit-1]))){
+            upgrade[unit - 1]++;
         }
 
     }
 
     public void upgradeTower(int tower){
-        if(goldtempo >= (int)((cout[tower+4]*Math.pow(1.15,lvl[tower+4]-1))*Math.pow(1.15,upgrage[tower+4]))){
-            upgrage[tower+4]++;
+        if(goldtempo >= (int)((cout[tower+4]*Math.pow(1.15,lvl[tower+4]-1))*Math.pow(1.15, upgrade[tower+4]))){
+            upgrade[tower+4]++;
         }
     }
 
     private void downgradeUnit(int unit){
-        if(upgrage[unit-1]>0){
-            upgrage[unit-1]--;
+        if(upgrade[unit-1]>0){
+            upgrade[unit-1]--;
         }
     }
 
     public void downgradeTower(int tower){
-        if(upgrage[tower+4]>0) {
-            upgrage[tower + 4]--;
+        if(upgrade[tower+4]>0) {
+            upgrade[tower + 4]--;
         }
     }
 
     public void update(){
         goldtempo = _player.getGold();
         for(int i=0 ; i<10 ; i++){
-            labelLvl[i].setText("Lvl: "+(lvl[i]+upgrage[i]));
-            labelCout[i].setText("("+(int)((cout[i]*Math.pow(1.15,lvl[i]-1))*Math.pow(1.15,upgrage[i]))+"G)");
-            for(int j=0 ; j<upgrage[i]; j++){
+            if (upgrade[i] > 0)
+                labelLvl[i].setColor(Color.GOLD);
+            else
+                labelLvl[i].setColor(Color.WHITE);
+
+            labelLvl[i].setText("Lvl: " + (lvl[i] + upgrade[i]));
+            labelCout[i].setText("("+(int)((cout[i]*Math.pow(1.15,lvl[i]-1))*Math.pow(1.15, upgrade[i]))+"G)");
+            for(int j = 0; j< upgrade[i]; j++){
                 goldtempo -= (int)((cout[i]*Math.pow(1.15,lvl[i]-1))*Math.pow(1.15,j));
             }
         }
-        labelGold.setText("Gold: "+goldtempo);
-        depence = goldtempo;
+
+        String labelGoldText = "Gold: " + goldtempo;
+
+        if (_player.getGold() != goldtempo)
+            labelGoldText += " (-" + (_player.getGold() - goldtempo) + "G)";
+
+        labelGold.setText(labelGoldText);
+        depense = goldtempo;
     }
 
 

@@ -453,7 +453,7 @@ public class LoginScreen extends ScreenAdapter {
         parameters.put("mdp", mdp);
         parameters.put("nom",_player.getNom());
         parameters.put("lvlStage",Integer.toString(_player.getLvlStage()));
-        parameters.put("gold",Integer.toString(_player.getGold()));
+        parameters.put("gold",Long.toString(_player.getGold()));
         parameters.put("lvlFastTower", Integer.toString(_player.getLvlFastTower()));
         parameters.put("lvlZoneTower", Integer.toString(_player.getLvlZoneTower()));
         parameters.put("lvlSlowTower",Integer.toString(_player.getLvlSlowTower()));

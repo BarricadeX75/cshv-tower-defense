@@ -14,14 +14,15 @@ public class Player {
 
     private String nom;
     private float vie, vieCombat, mana, manaCombat;
-    private int gold, lvlStage, lvlFastTower, lvlZoneTower, lvlVisionTower, lvlSlowTower;
+    private long gold;
+    private int lvlStage, lvlFastTower, lvlZoneTower, lvlVisionTower, lvlSlowTower;
     private int lvlChevalier, lvlHealer, lvlMage, lvlRogue, lvlMoine, lvlFontaine;
     private float regenMana;
     private Array<Integer> chemin;
     private HashMap<Integer, Integer> towers;
 
     //Constructeur pour un joueur existant
-    public Player(String nom, int gold, int lvlChevalier, int lvlMage, int lvlMoine, int lvlRogue,
+    public Player(String nom, long gold, int lvlChevalier, int lvlMage, int lvlMoine, int lvlRogue,
                   int lvlHealer, int lvlFastTower, int lvlSlowTower, int lvlZoneTower, int lvlVisionTower, int lvlFontaine, Array<Integer> chemin, HashMap<Integer, Integer> towers, int lvlStage){
         this.nom = nom;
         this.gold = gold;
@@ -105,11 +106,11 @@ public class Player {
         this.lvlStage = lvlStage;
     }
 
-    public int getGold() {
+    public long getGold() {
         return gold;
     }
 
-    public void setGold(int gold) {
+    public void setGold(long gold) {
         this.gold = gold;
     }
 

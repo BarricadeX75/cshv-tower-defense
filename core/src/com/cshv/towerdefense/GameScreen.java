@@ -88,6 +88,7 @@ public class GameScreen extends ScreenAdapter {
     private boolean waveFinal = false;
     private boolean win = false,lose = false;
     private Label labelLose, labelWin, labelPosition, labelGold;
+    private Label labelChevaliers, labelMages, labelMoines, labelRogues, labelHealers;
     private ImageButton validButton, cancelButton;
     public TextureRegion barGold, barFront;
 
@@ -159,16 +160,18 @@ public class GameScreen extends ScreenAdapter {
         Label.LabelStyle labelStyleWin = new Label.LabelStyle(bitmapFont, Color.BLUE);
         Label.LabelStyle labelStyleLose = new Label.LabelStyle(bitmapFont, Color.RED);
         Label.LabelStyle labelStyleStage = new Label.LabelStyle(bitmapFont, Color.FIREBRICK);
+        Label.LabelStyle labelStyleUnits = new Label.LabelStyle(bitmapFont, Color.BLACK);
         float nameScale = 0.5f;
         float textScale = 0.4f;
         float padding = 15f;
+        float height = 80f;
 
         uiStage = new Stage(viewport);
         Gdx.input.setInputProcessor(uiStage);
 
         Label nameLabel = new Label(_player.getNom(), labelStyle);
         nameLabel.setFontScale(nameScale);
-        nameLabel.setPosition(WORLD_WIDTH / 2 + ((nameLabel.getWidth() / 2) * nameScale), 70, Align.center);
+        nameLabel.setPosition(WORLD_WIDTH / 2 + ((nameLabel.getWidth() / 2) * nameScale), 68, Align.center);
         uiStage.addActor(nameLabel);
 
         Label lvlStageLabel = new Label("Stage: "+lvlStage, labelStyleStage);
@@ -200,7 +203,7 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         });
-        table.add(uiButton1).pad(padding);
+        table.add(uiButton1).pad(padding).height(height);
 
         TextButton uiButton2 = new TextButton("Mage", textButtonStyle);
         uiButton2.addListener(new ClickListener() {
@@ -216,7 +219,7 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         });
-        table.add(uiButton2).pad(padding);
+        table.add(uiButton2).pad(padding).height(height);
 
         TextButton uiButton3 = new TextButton("Moine", textButtonStyle);
         uiButton3.addListener(new ClickListener() {
@@ -232,7 +235,7 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         });
-        table.add(uiButton3).pad(padding);
+        table.add(uiButton3).pad(padding).height(height);
 
         TextButton uiButton4 = new TextButton("Rogue", textButtonStyle);
         uiButton4.addListener(new ClickListener() {
@@ -248,7 +251,7 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         });
-        table.add(uiButton4).pad(padding);
+        table.add(uiButton4).pad(padding).height(height);
 
         TextButton uiButton5 = new TextButton("Healer", textButtonStyle);
         uiButton5.addListener(new ClickListener() {
@@ -264,10 +267,10 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         });
-        table.add(uiButton5).pad(padding);
+        table.add(uiButton5).pad(padding).height(height);
 
         uiStage.addActor(table);
-        ///////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
         labelLose = new Label(" Défaite ", labelStyleLose);
         labelLose.setFontScale(1.5f);
@@ -279,7 +282,7 @@ public class GameScreen extends ScreenAdapter {
 
         labelGold = new Label("", labelStyleWin);
         labelGold.setFontScale(1f);
-        labelGold.setPosition((WORLD_WIDTH/5), (2*WORLD_HEIGHT)/5, Align.center);
+        labelGold.setPosition((WORLD_WIDTH/5), (3*WORLD_HEIGHT)/5, Align.center);
 
 
         labelPosition = new Label(" Voulez-vous revenir\nau stage précédent ? ", labelStyleLose);
@@ -312,10 +315,33 @@ public class GameScreen extends ScreenAdapter {
 
             }
         });
-        cancelButton.setPosition( (2*WORLD_WIDTH)/3, WORLD_HEIGHT/3  , Align.center );
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
+        Table unitsTable = new Table();
+        unitsTable.setTransform(true);
+        unitsTable.setScale(textScale);
+        unitsTable.setPosition(45, 135);
 
+        labelChevaliers = new Label("Chevaliers: ", labelStyleUnits);
+        unitsTable.add(labelChevaliers).align(Align.right);
+        unitsTable.row();
 
+        labelMages = new Label("Mages: ", labelStyleUnits);
+        unitsTable.add(labelMages).align(Align.right);
+        unitsTable.row();
+
+        labelMoines = new Label("Moines: ", labelStyleUnits);
+        unitsTable.add(labelMoines).align(Align.right);
+        unitsTable.row();
+
+        labelRogues = new Label("Rogues: ", labelStyleUnits);
+        unitsTable.add(labelRogues).align(Align.right);
+        unitsTable.row();
+
+        labelHealers = new Label("Healers: ", labelStyleUnits);
+        unitsTable.add(labelHealers).align(Align.right);
+
+        uiStage.addActor(unitsTable);
         ////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -361,7 +387,8 @@ public class GameScreen extends ScreenAdapter {
         updateTowers(delta);
         updateUnits(delta);
         updateSpells(delta);
-        acitivationSpell();
+        updateUnitsLabels();
+        activationSpell();
         uiStage.act(delta);
     }
 
@@ -383,14 +410,20 @@ public class GameScreen extends ScreenAdapter {
         if(!win && !lose) {
             if (_player.getVieCombat() == 0) {
                 _player.addGold(gold);
-                if (lvlStage < 2) {
+                if (lvlStage == 1) {
                     win = true;
                     uiStage.addActor(labelLose);
+
+                    cancelButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT / 3, Align.center);
+                    uiStage.addActor(cancelButton);
                 } else {
                     uiStage.addActor(labelLose);
                     uiStage.addActor(labelPosition);
                     uiStage.addActor(validButton);
+
+                    cancelButton.setPosition((2 * WORLD_WIDTH) / 3, WORLD_HEIGHT / 3, Align.center);
                     uiStage.addActor(cancelButton);
+
                     lose = true;
                 }
             } else if (numWave == 5 && mobs.size == 0 && waveFinal) {
@@ -403,6 +436,10 @@ public class GameScreen extends ScreenAdapter {
                 labelGold.setText(goldWin+"G gagnés");
                 uiStage.addActor(labelGold);
                 uiStage.addActor(labelWin);
+
+                cancelButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT / 3, Align.center);
+                uiStage.addActor(cancelButton);
+
                 win = true;
             }
         }
@@ -453,7 +490,30 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
-    private void acitivationSpell(){
+    private void updateUnitsLabels() {
+        int nbChevaliers = 0, nbMages = 0, nbMoines = 0, nbRogues = 0, nbHealers = 0;
+
+        for (Unit unit : units) {
+            if (unit instanceof Chevalier)
+                nbChevaliers++;
+            else if (unit instanceof Mage)
+                nbMages++;
+            else if (unit instanceof Moine)
+                nbMoines++;
+            else if (unit instanceof Rogue)
+                nbRogues++;
+            else if (unit instanceof Healer)
+                nbHealers++;
+        }
+
+        labelChevaliers.setText("Chevaliers: " + nbChevaliers);
+        labelMages.setText("Mages: " + nbMages);
+        labelMoines.setText("Moines: " + nbMoines);
+        labelRogues.setText("Rogues: " + nbRogues);
+        labelHealers.setText("Healers: " + nbHealers);
+    }
+
+    private void activationSpell(){
         if(Gdx.input.justTouched()){
             if(!win) {
                 touchPlayer.set(Gdx.input.getX(),Gdx.input.getY(),0);
@@ -499,10 +559,6 @@ public class GameScreen extends ScreenAdapter {
                         }
                     }
                 }
-            }else{
-                towerDefenseGame.setScreen(new StartScreen(towerDefenseGame, _player));
-                _player.resetStatsCombat();
-                dispose();
             }
         }
     }

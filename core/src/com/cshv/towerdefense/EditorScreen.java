@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -172,7 +171,7 @@ public class EditorScreen extends ScreenAdapter {
                 verifChemin();
             }
         });
-        table.add(validButton).pad(padding).colspan(1).align(Align.left);
+        table.add(validButton).pad(padding).colspan(1).align(Align.center);
         uiButtons.add(validButton);
 
         final TextButton uiButton1 = new TextButton("Chemin", textButtonStyle);
@@ -348,7 +347,7 @@ public class EditorScreen extends ScreenAdapter {
 
         int numCell = ( ( (int) (y/32) )*11) + (int) (x/32);
 
-        if(numCell <= 175 && numCell >= 0 && towers.size() < nbTowerMax){
+        if(numCell <= 165 && numCell >= 11 && towers.size() < nbTowerMax){
 
                 for (int i = 0; i < trajet.size; i++) {
                     if (numCell == trajet.get(i)) {
@@ -392,7 +391,7 @@ public class EditorScreen extends ScreenAdapter {
     }
 
     private void removeTower(int numCell){
-        if(numCell <= 175 && numCell >= 0 ) {
+        if(numCell <= 165 && numCell >= 11 ) {
             towers.remove(numCell);
             world.removeTower(numCell);
         }

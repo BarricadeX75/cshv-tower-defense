@@ -15,7 +15,7 @@ public class World {
 
     public static final int NB_CASE_WIDTH = 11;
     public static final int NB_CASE_HEIGHT = 16;
-    public static final int DEPART = 32;
+    public static final int DEPART = 0;
 
     public Rectangle[] blocks;
     public boolean[] isSolid;
