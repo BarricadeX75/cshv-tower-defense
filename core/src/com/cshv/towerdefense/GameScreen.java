@@ -88,7 +88,7 @@ public class GameScreen extends ScreenAdapter {
     private boolean waveFinal = false;
     private boolean win = false,lose = false;
     private Label labelLose, labelWin, labelPosition, labelGold;
-    private Label labelChevaliers, labelMages, labelMoines, labelRogues, labelHealers;
+    private Label labelChevaliersNb, labelMagesNb, labelMoinesNb, labelRoguesNb, labelHealersNb;
     private ImageButton validButton, cancelButton;
     public TextureRegion barGold, barFront;
 
@@ -284,7 +284,6 @@ public class GameScreen extends ScreenAdapter {
         labelGold.setFontScale(1f);
         labelGold.setPosition((WORLD_WIDTH/5), (3*WORLD_HEIGHT)/5, Align.center);
 
-
         labelPosition = new Label(" Voulez-vous revenir\nau stage précédent ? ", labelStyleLose);
         labelPosition.setFontScale(0.65f);
         labelPosition.setPosition((3*WORLD_WIDTH)/4-20, WORLD_HEIGHT/2, Align.center);
@@ -320,26 +319,45 @@ public class GameScreen extends ScreenAdapter {
         Table unitsTable = new Table();
         unitsTable.setTransform(true);
         unitsTable.setScale(textScale);
-        unitsTable.setPosition(45, 135);
+        unitsTable.setPosition(50, 135);
 
-        labelChevaliers = new Label("Chevaliers: ", labelStyleUnits);
+        Label labelChevaliers = new Label("Chevaliers: ", labelStyleUnits);
         unitsTable.add(labelChevaliers).align(Align.right);
+
+        labelChevaliersNb = new Label("", labelStyleUnits);
+        unitsTable.add(labelChevaliersNb).align(Align.left);
+
         unitsTable.row();
 
-        labelMages = new Label("Mages: ", labelStyleUnits);
+        Label labelMages = new Label("Mages: ", labelStyleUnits);
         unitsTable.add(labelMages).align(Align.right);
+
+        labelMagesNb = new Label("", labelStyleUnits);
+        unitsTable.add(labelMagesNb).align(Align.left);
+
         unitsTable.row();
 
-        labelMoines = new Label("Moines: ", labelStyleUnits);
+        Label labelMoines = new Label("Moines: ", labelStyleUnits);
         unitsTable.add(labelMoines).align(Align.right);
+
+        labelMoinesNb = new Label("", labelStyleUnits);
+        unitsTable.add(labelMoinesNb).align(Align.left);
+
         unitsTable.row();
 
-        labelRogues = new Label("Rogues: ", labelStyleUnits);
+        Label labelRogues = new Label("Rogues: ", labelStyleUnits);
         unitsTable.add(labelRogues).align(Align.right);
+
+        labelRoguesNb = new Label("", labelStyleUnits);
+        unitsTable.add(labelRoguesNb).align(Align.left);
+
         unitsTable.row();
 
-        labelHealers = new Label("Healers: ", labelStyleUnits);
+        Label labelHealers = new Label("Healers: ", labelStyleUnits);
         unitsTable.add(labelHealers).align(Align.right);
+
+        labelHealersNb = new Label("", labelStyleUnits);
+        unitsTable.add(labelHealersNb).align(Align.left);
 
         uiStage.addActor(unitsTable);
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -506,11 +524,11 @@ public class GameScreen extends ScreenAdapter {
                 nbHealers++;
         }
 
-        labelChevaliers.setText("Chevaliers: " + nbChevaliers);
-        labelMages.setText("Mages: " + nbMages);
-        labelMoines.setText("Moines: " + nbMoines);
-        labelRogues.setText("Rogues: " + nbRogues);
-        labelHealers.setText("Healers: " + nbHealers);
+        labelChevaliersNb.setText(Integer.toString(nbChevaliers));
+        labelMagesNb.setText(Integer.toString(nbMages));
+        labelMoinesNb.setText(Integer.toString(nbMoines));
+        labelRoguesNb.setText(Integer.toString(nbRogues));
+        labelHealersNb.setText(Integer.toString(nbHealers));
     }
 
     private void activationSpell(){

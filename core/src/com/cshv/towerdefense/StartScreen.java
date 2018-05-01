@@ -19,6 +19,8 @@ import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -103,6 +105,22 @@ public class StartScreen extends ScreenAdapter {
 
         thunder = new Animation<TextureRegion>(FRAME_DURATION, tl.getProjectileTower()[MathUtils.random(3)]);
         thunder.setPlayMode(Animation.PlayMode.LOOP);
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
+
+        Table playerInfoTable = new Table();
+        playerInfoTable.setTransform(true);
+        playerInfoTable.setScale(0.5f);
+        playerInfoTable.setPosition(WORLD_WIDTH / 2, 380);
+
+        Label labelNomJoueur = new Label("Joueur: " + _player.getNom(), labelStyle);
+        playerInfoTable.add(labelNomJoueur).align(Align.center);
+        playerInfoTable.row();
+
+        Label labelStageActuel = new Label("Stage actuel: " + _player.getLvlStage(), labelStyle);
+        playerInfoTable.add(labelStageActuel).align(Align.center);
+
+        stage.addActor(playerInfoTable);
 
         TextureRegion buttonUpTexture = tl.getButtonUp();
         TextureRegion buttonDownTexture = tl.getButtonDown();

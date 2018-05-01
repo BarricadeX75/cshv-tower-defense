@@ -271,7 +271,7 @@ public class EditorScreen extends ScreenAdapter {
 
         limTowerLabel = new Label("Tours: "+towers.size()+"/"+nbTowerMax,labelStyle);
         limTowerLabel.setFontScale(0.5f);
-        limTowerLabel.setPosition((2*WORLD_WIDTH) / 8 , WORLD_HEIGHT-15, Align.center);
+        limTowerLabel.setPosition((2*WORLD_WIDTH) / 8 + 10, WORLD_HEIGHT-15, Align.center);
         uiStage.addActor(limTowerLabel);
 
     }

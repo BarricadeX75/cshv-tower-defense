@@ -369,7 +369,7 @@ public class CharacsScreen extends ScreenAdapter {
         for(int i=0 ; i<10 ; i++){
             labelCout[i] = new Label("("+(int)(cout[i]*Math.pow(1.2,lvl[i]-1))+"G)", labelStyleDepence);
             labelCout[i].setFontScale(nameScale);
-            labelCout[i].setPosition(((5*WORLD_WIDTH)/8)+20, WORLD_HEIGHT-padding*(i+1), Align.center);
+            labelCout[i].setPosition(((5*WORLD_WIDTH)/8)+40, WORLD_HEIGHT-padding*(i+1), Align.center);
             stage.addActor(labelCout[i]);
         }
 
@@ -459,12 +459,7 @@ public class CharacsScreen extends ScreenAdapter {
             }
         }
 
-        String labelGoldText = "Gold: " + goldtempo;
-
-        if (_player.getGold() != goldtempo)
-            labelGoldText += " (-" + (_player.getGold() - goldtempo) + "G)";
-
-        labelGold.setText(labelGoldText);
+        labelGold.setText("Gold: " + goldtempo);
         depense = goldtempo;
     }
 
