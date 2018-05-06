@@ -225,7 +225,7 @@ public class StartScreen extends ScreenAdapter {
     public void requestBdPostPlayer(String login, String mdp){
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("login", login);
-        parameters.put("mdp", mdp);
+        parameters.put("mdp", mdp);     // TODO: Hacher le mdp
         parameters.put("nom",_player.getNom());
         parameters.put("lvlStage",Integer.toString(_player.getLvlStage()));
         parameters.put("gold",Long.toString(_player.getGold()));
