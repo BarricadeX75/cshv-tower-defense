@@ -131,9 +131,9 @@ public class StartScreen extends ScreenAdapter {
                 bitmapFont
         );
 
-        TextButton playButton = new TextButton("Jouer", textButtonStyle);
-        playButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 3 / 6, Align.center);
-        playButton.addListener(new ClickListener() {
+        TextButton normalButton = new TextButton("Normal Game", textButtonStyle);
+        normalButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 4 / 9, Align.center);
+        normalButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -141,10 +141,22 @@ public class StartScreen extends ScreenAdapter {
                 dispose();
             }
         });
-        stage.addActor(playButton);
+        stage.addActor(normalButton);
+
+        TextButton survivalButton = new TextButton("Survival Game", textButtonStyle);
+        survivalButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 3 / 9, Align.center);
+        survivalButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                towerDefenseGame.setScreen(new SurvivalMode(towerDefenseGame, _player));////////
+                dispose();
+            }
+        });
+        stage.addActor(survivalButton);
 
         TextButton editorButton = new TextButton("Éditeur", textButtonStyle);
-        editorButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 2 / 6, Align.center);
+        editorButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 2 / 9, Align.center);
         editorButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -156,7 +168,7 @@ public class StartScreen extends ScreenAdapter {
         stage.addActor(editorButton);
 
         TextButton characsButton = new TextButton("Caractéristiques", textButtonStyle);
-        characsButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 1 / 6, Align.center);
+        characsButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 1 / 9, Align.center);
         characsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
