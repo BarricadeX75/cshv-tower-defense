@@ -611,6 +611,7 @@ public class GameScreen extends ScreenAdapter {
         int type;
         int range = 2+ (lvlStage /3);
         int rand = MathUtils.random(range);
+
         switch (rand){
             case 0:
                 type = MathUtils.random(7);

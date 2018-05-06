@@ -35,11 +35,12 @@ public class MagicSpell extends Spell {
 
     private void setDegat(){
         if(_type == 1){
+            Cell cell = _cells[_unit.getCurrentCase()];
+            cell.degatZone(_mob.getDegats(),2);
+
+        }else{
             Cell cell = _cells[_mob.getCurrentCase()];
             cell.degatZone(_unit.getDegats(),1);
-        }else{
-            Cell cell = _cells[_unit.getCurrentCase()];
-            cell.degatZone(_mob.getDegats(),1);
         }
     }
 

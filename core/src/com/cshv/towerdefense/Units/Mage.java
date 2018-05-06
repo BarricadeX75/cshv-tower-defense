@@ -37,7 +37,7 @@ public class Mage extends Unit {
     public void setCarrac(int lvlStage) {
         vieMax = 50 + ( lvlStage * 10 );
         vie = vieMax;
-        attaque = 15 + (3* lvlStage );
+        attaque = 10 + (3* lvlStage );
         defense = (int)(0.25f * lvlStage );
         vitesse = 1 ;
         portee = 3;
