@@ -29,6 +29,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,7 +83,7 @@ public class StartScreen extends ScreenAdapter {
 
         toastFactory = new Toast.ToastFactory.Builder().font(bitmapFont).build();
 
-        requestBdPostPlayer( preferences.getString("login", ""), preferences.getString("mdp", ""));
+        updatePlayerData( preferences.getString("login", ""), preferences.getString("mdp", ""));
 
         Image background = new Image(tl.getBagroundTexture().get(0));
         background.setPosition(0,0);
@@ -222,10 +224,30 @@ public class StartScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
-    public void requestBdPostPlayer(String login, String mdp){
+    private String hacherMdp(String mdp) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(mdp.getBytes());
+            byte[] byteData = md.digest();
+
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < byteData.length; i++) {
+                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+            }
+
+            return sb.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void updatePlayerData(String login, String mdp){
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("login", login);
-        parameters.put("mdp", mdp);     // TODO: Hacher le mdp
+        parameters.put("mdp", hacherMdp(mdp));
         parameters.put("nom",_player.getNom());
         parameters.put("lvlStage",Integer.toString(_player.getLvlStage()));
         parameters.put("gold",Long.toString(_player.getGold()));

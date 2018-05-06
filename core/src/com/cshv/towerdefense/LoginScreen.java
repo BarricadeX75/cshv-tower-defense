@@ -34,6 +34,8 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -338,7 +340,7 @@ public class LoginScreen extends ScreenAdapter {
             toast = toastFactory.create("Le mot de passe est vide !", Toast.Length.SHORT);
         }
         else {
-            requestBdGetPlayer(login, mdp);
+            getPlayerData(login, mdp);
         }
     }
 
@@ -367,14 +369,34 @@ public class LoginScreen extends ScreenAdapter {
         else {
             _player = new Player(nom);
 
-            requestBdPostPlayer(login, mdp);
+            sendNewPlayerData(login, mdp);
         }
     }
 
-    public void requestBdGetPlayer(final String login, final String mdp){
+    private String hacherMdp(String mdp) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(mdp.getBytes());
+            byte[] byteData = md.digest();
+
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < byteData.length; i++) {
+                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+            }
+
+            return sb.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void getPlayerData(final String login, final String mdp){
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("login", login);
-        parameters.put("mdp", mdp);     // TODO: Hacher le mdp
+        parameters.put("mdp", hacherMdp(mdp));
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
         Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.POST).url("http://10.16.0.74/towerdefense/getData.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
         Gdx.net.sendHttpRequest (httpRequest, new Net.HttpResponseListener() {
@@ -447,10 +469,10 @@ public class LoginScreen extends ScreenAdapter {
         });
     }
 
-    public void requestBdPostPlayer(final String login, final String mdp){
+    public void sendNewPlayerData(final String login, final String mdp){
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("login", login);
-        parameters.put("mdp", mdp);     // TODO: Hacher le mdp
+        parameters.put("mdp", hacherMdp(mdp));
         parameters.put("nom",_player.getNom());
         parameters.put("lvlStage",Integer.toString(_player.getLvlStage()));
         parameters.put("gold",Long.toString(_player.getGold()));
