@@ -137,7 +137,7 @@ public class StartScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                towerDefenseGame.setScreen(new GameScreen(towerDefenseGame, _player));
+                towerDefenseGame.setScreen(new NormalMode(towerDefenseGame, _player));////////
                 dispose();
             }
         });

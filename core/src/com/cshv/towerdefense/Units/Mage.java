@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
+import com.cshv.towerdefense.NormalMode;
 import com.cshv.towerdefense.World;
 
 /**
@@ -37,7 +38,7 @@ public class Mage extends Unit {
     public void setCarrac(int lvlStage) {
         vieMax = 50 + ( lvlStage * 10 );
         vie = vieMax;
-        attaque = 10 + (3* lvlStage );
+        attaque = 8 + (3* lvlStage );
         defense = (int)(0.25f * lvlStage );
         vitesse = 1 ;
         portee = 3;

@@ -1,11 +1,11 @@
 package com.cshv.towerdefense.Towers;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
+import com.cshv.towerdefense.NormalMode;
 
 /**
  * Created by harri on 31/03/2018.
@@ -22,8 +22,8 @@ public class ZoneTower extends Tower {
     //private Array<Rectangle> caseDistOk;
     private TextureRegion towerFireEnd;
 
-    public ZoneTower( Array<TextureRegion> tower, GameScreen jeu, int lvlTower, float x, float y,
-                      TextureRegion barBack, TextureRegion barFront) {
+    public ZoneTower(Array<TextureRegion> tower, GameScreen jeu, int lvlTower, float x, float y,
+                     TextureRegion barBack, TextureRegion barFront) {
         super(barBack, barFront);
         type = ZONE_TOWER;
         this.lvlTower = lvlTower;

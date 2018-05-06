@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
+import com.cshv.towerdefense.NormalMode;
 
 public abstract class Mob {
 

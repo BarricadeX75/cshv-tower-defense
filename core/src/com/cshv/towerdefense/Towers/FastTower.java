@@ -1,11 +1,11 @@
 package com.cshv.towerdefense.Towers;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
+import com.cshv.towerdefense.NormalMode;
 
 /**
  * Created by harri on 16/03/2018.

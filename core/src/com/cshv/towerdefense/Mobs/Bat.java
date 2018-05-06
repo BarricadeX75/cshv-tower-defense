@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.cshv.towerdefense.GameScreen;
+import com.cshv.towerdefense.NormalMode;
 import com.cshv.towerdefense.World;
 
 /**
