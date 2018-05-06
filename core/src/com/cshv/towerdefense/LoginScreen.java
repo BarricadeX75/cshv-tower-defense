@@ -374,7 +374,7 @@ public class LoginScreen extends ScreenAdapter {
     public void requestBdGetPlayer(final String login, final String mdp){
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("login", login);
-        parameters.put("mdp", mdp);
+        parameters.put("mdp", mdp);     // TODO: Hacher le mdp
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
         Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.POST).url("http://10.16.0.74/towerdefense/getData.php").content(HttpParametersUtils.convertHttpParameters(parameters)).build();
         Gdx.net.sendHttpRequest (httpRequest, new Net.HttpResponseListener() {
@@ -450,7 +450,7 @@ public class LoginScreen extends ScreenAdapter {
     public void requestBdPostPlayer(final String login, final String mdp){
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("login", login);
-        parameters.put("mdp", mdp);
+        parameters.put("mdp", mdp);     // TODO: Hacher le mdp
         parameters.put("nom",_player.getNom());
         parameters.put("lvlStage",Integer.toString(_player.getLvlStage()));
         parameters.put("gold",Long.toString(_player.getGold()));

@@ -264,6 +264,15 @@ public class StartScreen extends ScreenAdapter {
 
                     return;
                 }
+
+                if (httpResponse.getResultAsString().equals("ok")) {
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            toast = toastFactory.create("Données mises à jour", Toast.Length.SHORT);
+                        }
+                    });
+                }
             }
 
             @Override
