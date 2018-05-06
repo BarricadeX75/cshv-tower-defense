@@ -396,7 +396,7 @@ public class NormalMode extends GameScreen {
                 }
             } else if (numWave == 5 && mobs.size == 0 && waveFinal) {
                 int goldWin = (int) (200 * Math.pow(1.15, lvlStage - 1));
-                goldWin = (int) (goldWin / (_player.getVieCombat() / _player.getVie()));
+                goldWin = (int) (goldWin * (_player.getVieCombat() / _player.getVie()));
                 gold += goldWin;
                 System.out.println(gold);
                 _player.addGold(goldWin);
