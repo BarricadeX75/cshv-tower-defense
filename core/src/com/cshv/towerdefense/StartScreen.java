@@ -133,7 +133,7 @@ public class StartScreen extends ScreenAdapter {
                 bitmapFont
         );
 
-        TextButton normalButton = new TextButton("Normal Game", textButtonStyle);
+        TextButton normalButton = new TextButton("Jeu normal", textButtonStyle);
         normalButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 4 / 9, Align.center);
         normalButton.addListener(new ClickListener() {
             @Override
@@ -145,7 +145,7 @@ public class StartScreen extends ScreenAdapter {
         });
         stage.addActor(normalButton);
 
-        TextButton survivalButton = new TextButton("Survival Game", textButtonStyle);
+        TextButton survivalButton = new TextButton("Jeu de survie", textButtonStyle);
         survivalButton.setPosition(WORLD_WIDTH / 2, WORLD_HEIGHT * 3 / 9, Align.center);
         survivalButton.addListener(new ClickListener() {
             @Override

@@ -127,7 +127,7 @@ public class SurvivalMode extends GameScreen {
         nameLabel.setPosition(WORLD_WIDTH / 2 + ((nameLabel.getWidth() / 2) * nameScale), 68, Align.center);
         uiStage.addActor(nameLabel);
 
-        labelWave = new Label("Wave: "+numWave, labelStyleStage);
+        labelWave = new Label("Vague: "+numWave, labelStyleStage);
         labelWave.setFontScale(nameScale);
         labelWave.setPosition((2*WORLD_WIDTH) / 8 + ((labelWave.getWidth() / 2) * nameScale), WORLD_HEIGHT-15, Align.center);
         uiStage.addActor(labelWave);
@@ -337,7 +337,7 @@ public class SurvivalMode extends GameScreen {
                 nbMonster++;
                 mobCreer = 0;
                 numWave++;
-                int pauseInvocMob = 1 + (int)(numWave/10);
+                int pauseInvocMob = 1 + numWave/10;
                 Timer.schedule(setMob, 0,pauseInvocMob);
             }
         };
