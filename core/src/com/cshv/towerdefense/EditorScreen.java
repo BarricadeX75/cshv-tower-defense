@@ -167,12 +167,11 @@ public class EditorScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                selectButton(validButton, uiButtons);
+                validButton.setChecked(false);
                 verifChemin();
             }
         });
         table.add(validButton).pad(padding).colspan(1).align(Align.center);
-        uiButtons.add(validButton);
 
         final TextButton uiButton1 = new TextButton("Chemin", textButtonStyle);
         uiButton1.addListener(new ClickListener() {
@@ -306,9 +305,6 @@ public class EditorScreen extends ScreenAdapter {
 
     private void selectButton(TextButton button, Array<TextButton> buttons) {
         for (TextButton b : buttons) {
-            if(button == buttons.first()){
-                button.setChecked(false);
-            }
             if (b != button)
                 b.setChecked(false);
         }
@@ -326,6 +322,12 @@ public class EditorScreen extends ScreenAdapter {
             if (trajet.peek() + 11 == numCell || trajet.peek() - 11 == numCell || trajet.peek() + 1 == numCell || trajet.peek() - 1 == numCell) {
                 for (int i = 0; i < trajet.size; i++) {
                     if (numCell == trajet.get(i)) {
+                        flag = false;
+                        break;
+                    }
+                }
+                for(Integer pos : towers.keySet()){
+                    if(numCell == pos){
                         flag = false;
                         break;
                     }
