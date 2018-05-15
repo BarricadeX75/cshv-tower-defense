@@ -129,7 +129,7 @@ public class SurvivalMode extends GameScreen {
 
         labelWave = new Label("Vague: "+numWave, labelStyleStage);
         labelWave.setFontScale(nameScale);
-        labelWave.setPosition((2*WORLD_WIDTH) / 8 + ((labelWave.getWidth() / 2) * nameScale), WORLD_HEIGHT-15, Align.center);
+        labelWave.setPosition((1*WORLD_WIDTH) / 8 + ((labelWave.getWidth() / 2) * nameScale), WORLD_HEIGHT-15, Align.center);
         uiStage.addActor(labelWave);
 
         Label lvlStageLabel = new Label("Stage: "+lvlStage, labelStyleStage);
@@ -456,7 +456,7 @@ public class SurvivalMode extends GameScreen {
         labelMoinesNb.setText(Integer.toString(nbMoines));
         labelRoguesNb.setText(Integer.toString(nbRogues));
         labelHealersNb.setText(Integer.toString(nbHealers));
-        labelWave.setText("Wave: "+(numWave-1));
+        labelWave.setText("Vague: "+(numWave-1));
 
     }
 
